@@ -8,10 +8,13 @@ require '../../includes/db.php';
 
 // Tambah Data Petugas
 if (isset($_POST['tambah'])) {
+    $nip = $_POST['nip'];
     $nama_petugas = $_POST['nama_petugas'];
+    $jabatan = $_POST['jabatan'];
+    $mapel = $_POST['mapel'];
 
-    $stmt = $pdo->prepare("INSERT INTO petugas (nama_petugas) VALUES (?)");
-    $stmt->execute([$nama_petugas]);
+    $stmt = $pdo->prepare("INSERT INTO petugas (nip, nama_petugas, jabatan, mapel) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel]);
     header('Location: data_petugas.php');
     exit;
 }
@@ -19,10 +22,13 @@ if (isset($_POST['tambah'])) {
 // Edit Data Petugas
 if (isset($_POST['edit'])) {
     $id = $_POST['id'];
+    $nip = $_POST['nip'];
     $nama_petugas = $_POST['nama_petugas'];
+    $jabatan = $_POST['jabatan'];
+    $mapel = $_POST['mapel'];
 
-    $stmt = $pdo->prepare("UPDATE petugas SET nama_petugas = ? WHERE id = ?");
-    $stmt->execute([$nama_petugas, $id]);
+    $stmt = $pdo->prepare("UPDATE petugas SET nip= >, nama_petugas = ?, jabatan = ?, mapel = ? WHERE id = ?");
+    $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
     header('Location: data_petugas.php');
     exit;
 }
@@ -51,7 +57,7 @@ $petugas = $stmt->fetchAll();
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <a class="navbar-brand" href="#">Aplikasi Pesantren</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -110,7 +116,10 @@ $petugas = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>NIP</th>
                     <th>Nama Petugas</th>
+                    <th>Jabatan</th>
+                    <th>Mata Pelajaran</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -118,7 +127,10 @@ $petugas = $stmt->fetchAll();
                 <?php foreach ($petugas as $key => $row): ?>
                 <tr>
                     <td><?php echo $key + 1; ?></td>
+                    <td><?php echo $row['nip']; ?></td>
                     <td><?php echo $row['nama_petugas']; ?></td>
+                    <td><?php echo $row['jabatan']; ?></td>
+                    <td><?php echo $row['mapel']; ?></td>
                     <td>
                         <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
                         <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
@@ -139,8 +151,20 @@ $petugas = $stmt->fetchAll();
                                 <form action="" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                     <div class="form-group">
+                                        <label for="nip">NIP</label>
+                                        <input type="text" class="form-control" id="nip" name="nip" value="<?php echo $row['nip']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="nama_petugas">Nama Petugas</label>
                                         <input type="text" class="form-control" id="nama_petugas" name="nama_petugas" value="<?php echo $row['nama_petugas']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="jabatan">Jabatan</label>
+                                        <input type="text" class="form-control" id="jabatan" name="jabatan" value="<?php echo $row['jabatan']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mapel">Mata Pelajaran</label>
+                                        <input type="text" class="form-control" id="mapel" name="mapel" value="<?php echo $row['mapel']; ?>" required>
                                     </div>
                                     <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
                                 </form>
@@ -166,8 +190,20 @@ $petugas = $stmt->fetchAll();
                 <div class="modal-body">
                     <form action="" method="POST">
                         <div class="form-group">
+                            <label for="nip">NIP</label>
+                            <input type="text" class="form-control" id="nip" name="nip" required>
+                        </div>
+                        <div class="form-group">
                             <label for="nama_petugas">Nama Petugas</label>
                             <input type="text" class="form-control" id="nama_petugas" name="nama_petugas" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jabatan">Jabatan</label>
+                            <input type="text" class="form-control" id="jabatan" name="jabatan" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mapel">Mata Pelajaran</label>
+                            <input type="text" class="form-control" id="mapel" name="mapel" required>
                         </div>
                         <button type="submit" name="tambah" class="btn btn-primary">Simpan</button>
                     </form>

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-center text-md-left">
-                <p class="mb-0">&copy; <?php echo date('Y'); ?> Copyright &copy; IT Development IHBS </p>
+                <p class="mb-0">&copy; <?php echo date('Y'); ?> IT Development IHBS </p>
             </div>
             <div class="col-md-6 text-center text-md-right">
                 <a href="#" class="text-white mr-3">Kebijakan Privasi</a>

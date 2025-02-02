@@ -16,8 +16,9 @@ require '../../includes/db.php';
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Aplikasi Pesantren</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+        <img src="../../assets/pudamah-logo.png" style="width: 100px; margin-left: 2%; margin-top: 1%">
+        <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,7 +34,7 @@ require '../../includes/db.php';
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-4 mb-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card">
@@ -82,12 +83,16 @@ require '../../includes/db.php';
                                 <label for="keterangan">Keterangan</label>
                                 <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                            <button type="submit" class="btn btn-success btn-block">Submit</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="mb-3"></div>
+
+     <!-- Footer -->
+     <?php include '../../includes/footer.php'; ?>
 </body>
 </html>
