@@ -27,7 +27,7 @@ if (isset($_POST['edit'])) {
     $jabatan = $_POST['jabatan'];
     $mapel = $_POST['mapel'];
 
-    $stmt = $pdo->prepare("UPDATE petugas SET nip= >, nama_petugas = ?, jabatan = ?, mapel = ? WHERE id = ?");
+    $stmt = $pdo->prepare("UPDATE petugas SET nip= ?, nama_petugas = ?, jabatan = ?, mapel = ? WHERE id = ?");
     $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
     header('Location: data_petugas.php');
     exit;
@@ -58,7 +58,8 @@ $petugas = $stmt->fetchAll();
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <a class="navbar-brand" href="#">Aplikasi Pesantren</a>
+        <img src="../../assets/pudamah-logo.png" style="width: 100px; margin-left: 1%; margin-top: 1%">
+        <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -103,12 +104,19 @@ $petugas = $stmt->fetchAll();
                             <div class="form-group">
                                 <label for="csv_file">Pilih File CSV</label>
                                 <input type="file" class="form-control-file" id="csv_file" name="csv_file" accept=".csv" required>
+                                <!-- <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan NIP, Nama Petugas, Jabatan, atau Mapel..."> -->
                             </div>
                             <button type="submit" name="upload_csv" class="btn btn-primary">Upload</button>
+                           
                         </form>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Input Pencarian -->
+        <div class="form-group">
+            <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan NIP, Nama Petugas, Jabatan, atau Mapel...">
         </div>
 
         <!-- Tabel Data Petugas -->
@@ -217,5 +225,18 @@ $petugas = $stmt->fetchAll();
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- search -->
+    <script>
+        $(document).ready(function() {
+            // Fungsi pencarian
+            $("#searchInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase(); // Ambil nilai input dan ubah ke lowercase
+                $("#dataTable tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1); // Tampilkan/sembunyikan baris yang sesuai
+                });
+            });
+        });
+    </script>
 </body>
 </html>
