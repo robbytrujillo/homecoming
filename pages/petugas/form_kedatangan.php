@@ -25,7 +25,7 @@ if (isset($_POST['tambah'])) {
     // Simpan data perijinan
     $stmtp = $pdo->prepare("INSERT INTO kedatangan (nomor_induk, nama_siswa, kelas, nama_orang_tua, keperluan, tanggal_datang, petugas, keterangan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmtp->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $keperluan, $tanggal_datang, $petugas['nama_petugas'], $keterangan]);
-    echo "<script>alert('Data perijinan berhasil ditambahkan!'); window.location='form_kedatangan.php';</script>";
+    echo "<script>alert('Data kedatangan berhasil ditambahkan!'); window.location='form_kedatangan.php';</script>";
 }
 ?>
 
@@ -47,18 +47,22 @@ if (isset($_POST['tambah'])) {
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
+                </li> -->
                 <li class="nav-item active">
+                    <a style="color: blue;" class="nav-link" href="form_kedatangan.php"><b>Form Kedatangan</b></a>
+                </li>
+                <li class="nav-item ">
                     <a class="nav-link" href="data_kedatangan.php">Data kedatangan</a>
                 </li>
-                <li class="nav-item active">
+                <!-- <li class="nav-item active">
                     <a class="nav-link" href="form_perijinan.php">Form Perpulangan</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="form_kedatangan.php">Form Kedatangan</a>
-                </li>
+                </li> -->
+                
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
                 </li>
@@ -94,8 +98,8 @@ if (isset($_POST['tambah'])) {
                             <div class="form-group">
                                 <label for="keperluan">Keperluan</label>
                                 <select class="form-control" id="keperluan" name="keperluan" required>
-                                    <option value="perpulangan">Perpulangan</option>
-                                    <option value="penjengukan">Penjengukan</option>
+                                    <option value="kedatangan">Kedatangan</option>
+                                    <option value="ijin">Ijin</option>
                                     <!-- <option value="kedatangan">Kedatangan</option> -->
                                 </select>
                             </div>
@@ -112,6 +116,7 @@ if (isset($_POST['tambah'])) {
                                 <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
                             </div>
                             <button type="submit" name="tambah" class="btn btn-success">Submit</button>
+                            <a href="data_kedatangan.php">Data Kedatangan</a>
                         </form>
                     </div>
                 </div>

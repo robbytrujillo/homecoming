@@ -5,6 +5,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'petugas') {
     exit;
 }
 require '../../includes/db.php';
+
+// $petugas = $_GET('nama_petugas');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +19,7 @@ require '../../includes/db.php';
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-    <img src="../../assets/pudamah-logo.png" style="width: 100px; margin-left: 2%; margin-top: 1%">    
+    <img src="../../assets/pudamah-logo.png" style="width: 100px; margin-left: 1%; margin-top: 1%">    
     <!-- <a class="navbar-brand" href="#">Aplikasi Pudamah</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -25,14 +27,14 @@ require '../../includes/db.php';
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Dashboard</a>
+                    <a style="color: blue;" class="nav-link" href="#"><b>Dashboard</b></a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="form_perijinan.php">Input Perijinan</a>
                 </li>
@@ -85,6 +87,8 @@ require '../../includes/db.php';
                 </div>
             </div>
         </div>
+
+        <!-- <h1>Selamat datang <?= $petugas; ?></h1> -->
 
         <div class="row mt-4">
             <div class="col-md-8">

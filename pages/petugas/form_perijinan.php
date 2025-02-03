@@ -47,18 +47,21 @@ if (isset($_POST['tambah'])) {
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
+                </li>
                 <li class="nav-item active">
+                    <a style="color: blue;" class="nav-link" href="form_perijinan.php"><b>Form Perijinan</b></a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
                 </li>
-                <li class="nav-item active">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="data_kedatangan.php">Data kedatangan</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="form_perijinan.php">Form Perijinan</a>
-                </li>
-                <li class="nav-item active">
+                </li> -->    
+                <!-- <li class="nav-item active">
                     <a class="nav-link" href="form_kedatangan.php">Form Kedatangan</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
                 </li>
@@ -112,6 +115,8 @@ if (isset($_POST['tambah'])) {
                                 <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
                             </div>
                             <button type="submit" name="tambah" class="btn btn-success">Submit</button>
+                            <a href="data_perijinan.php">Data Perijinan</a>
+                            <!-- <button type="button" name="tambah" class="btn btn-success">Submit</button> -->
                         </form>
                     </div>
                 </div>

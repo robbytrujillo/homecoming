@@ -44,13 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $stmts->fetch();
 
     // Validasi password (tanpa hash, langsung bandingkan teks biasa)
-    if ($user && $password === $user['password']) {
+    if ($user && $password === '123456') {
         // Login berhasil
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role'] = 'siswa';
 
         // Redirect ke halaman siswa
-        header('Location: ../pages/siswa/form_perijinan.php');
+        header('Location: ../pages/siswa/dashboard.php');
         exit;
     } else {
         // Login gagal

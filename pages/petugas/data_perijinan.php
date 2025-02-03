@@ -71,17 +71,17 @@ $perijinan = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
+                    <a class="nav-link" href="form_perijinan.php">Form Perijinan</a>
                 </li>
                 <li class="nav-item active">
+                    <a style="color: blue;"  class="nav-link" href="data_perijinan.php"><b>Data Perijinan</b></a>
+                </li>
+                <!-- <li class="nav-item active">
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="form_perijinan.php">Input Perijinan</a>
-                </li>
-                <li class="nav-item active">
+                </li> -->                
+                <!-- <li class="nav-item active">
                     <a class="nav-link" href="form_kedatangan.php">Input Kedatangan</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
                 </li>
