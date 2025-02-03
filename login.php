@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Aplikasi Pesantren</title>
+    <title>Login - PuDaMah</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -16,7 +16,7 @@
                     <div class="card-header">
                         <!-- <h3 class="text-center">Login</h3> -->
                         <img src="./assets/pudamah-logo.png" style="width: 200px; margin-left: 15%; margin-top: 5%">
-                        <marquee><h6 style="text-align: center; color: rgb(54, 50, 50)">Selamat Datang di Aplikasi PuDaMah - Pulang Datang Ma'had, Silahkan login terlebih dahulu!</h6></marquee>
+                        <marquee><h6 style="text-align: center; color: rgb(54, 50, 50)">Selamat Datang di Sistem Informasi PuDaMah - Pulang Datang Ma'had, Silahkan login terlebih dahulu!</h6></marquee>
                     </div>
                     <div class="card-body">
                         <form action="includes/auth.php" method="POST">
@@ -32,7 +32,7 @@
                         </form>
                     </div>
                     <div class="card-footer text-center py-3">
-                        <div class="small">Copyright &copy; IT Development IHBS 2025 </div>
+                        <div class="small">&copy; <?php echo date('Y'); ?> IT Development IHBS </div>
                     </div>
                 </div>
             </div>

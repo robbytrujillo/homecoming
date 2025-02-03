@@ -82,7 +82,13 @@ $siswa = $stmt->fetchAll();
         <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#tambahSiswaModal">Tambah Siswa</button>
         <button class="btn btn-success mb-3" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
         <a href="template_siswa.csv" class="btn btn-secondary mb-3" download>Download Template CSV</a>
-        <table class="table table-bordered">
+        
+         <!-- Input Pencarian -->
+         <div class="form-group">
+            <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
+        </div>
+        
+        <table class="table table-bordered" id="dataTable">
             <thead>
                 <tr>
                     <th>No</th>
@@ -210,5 +216,18 @@ $siswa = $stmt->fetchAll();
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script Pencarian -->
+    <script>
+    $(document).ready(function() {
+        // Fungsi pencarian
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase(); // Ambil nilai input dan ubah ke lowercase
+            $("#dataTable tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1); // Tampilkan/sembunyikan baris yang sesuai
+            });
+        });
+    });
+    </script>
 </body>
 </html>
