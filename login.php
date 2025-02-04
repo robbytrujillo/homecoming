@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - PuDaMah</title>
+    <title>Login - Homecoming</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <!-- <h3 class="text-center">Login</h3> -->
-                        <img src="./assets/pudamah-logo.png" style="width: 200px; margin-left: 15%; margin-top: 5%">
+                        <img src="./assets/homecoming-logo.png" style="width: 200px; margin-left: 15%; margin-top: 5%">
                         <marquee><h6 style="text-align: center; color: rgb(54, 50, 50)">Selamat Datang di Sistem Informasi PuDaMah - Pulang Datang Ma'had, Silahkan login terlebih dahulu!</h6></marquee>
                     </div>
                     <div class="card-body">

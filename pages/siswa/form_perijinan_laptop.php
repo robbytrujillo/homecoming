@@ -68,65 +68,70 @@ if (isset($_POST['tambah'])) {
     </nav>
 
     <div class="container mt-4 mb-5">
-        <!-- <h2>Form Perijinan Laptop</h2> -->
-        <div class="card">
-            <div class="card-header">
-                        <h3 class="text-center">Form Perijinan Laptop</h3>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                            <h3 class="text-center">Form Perijinan Laptop</h3>
                     </div>
-            <div class="card-body">
-                <form action="" method="POST">
-                    <div class="form-group">
-                        <label for="nomor_induk">Nomor Induk</label>
-                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $siswa['nomor_induk']; ?>" readonly>
+                    <div class="card-body">
+                        <form action="" method="POST">
+                            <div class="form-group">
+                                <label for="nomor_induk">Nomor Induk</label>
+                                <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $siswa['nomor_induk']; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="nama_siswa">Nama Siswa</label>
+                                <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $siswa['nama_siswa']; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="kelas">Kelas</label>
+                                <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $siswa['kelas']; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_pengambilan">Tanggal Pengambilan</label>
+                                <input type="date" class="form-control" id="tanggal_pengambilan" name="tanggal_pengambilan" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="perijinan">Perijinan</label>
+                                <select class="form-control" id="perijinan" name="perijinan" required>
+                                    <?php
+                                    // Ambil data pimpinan dari database
+                                    $stmt = $pdo->query("SELECT * FROM pimpinan");
+                                    while ($row = $stmt->fetch()) {
+                                        echo "<option value='{$row['nama_pimpinan']}'>{$row['nama_pimpinan']}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_pengembalian">Tanggal Pengembalian</label>
+                                <input type="date" class="form-control" id="tanggal_pengembalian" name="tanggal_pengembalian" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="alasan_membawa_laptop">Alasan Membawa Laptop</label>
+                                <textarea class="form-control" id="alasan_membawa_laptop" name="alasan_membawa_laptop" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="persetujuan">Persetujuan</label>
+                                <select class="form-control" id="persetujuan" name="persetujuan" required>
+                                    <?php
+                                    // Ambil data pimpinan dari database untuk persetujuan
+                                    $stmt = $pdo->query("SELECT * FROM pimpinan");
+                                    while ($row = $stmt->fetch()) {
+                                        echo "<option value='{$row['nama_pimpinan']}'>{$row['nama_pimpinan']}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <button type="submit" name="tambah" class="btn btn-success">Ajukan Perijinan</button>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label for="nama_siswa">Nama Siswa</label>
-                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $siswa['nama_siswa']; ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="kelas">Kelas</label>
-                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $siswa['kelas']; ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggal_pengambilan">Tanggal Pengambilan</label>
-                        <input type="date" class="form-control" id="tanggal_pengambilan" name="tanggal_pengambilan" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="perijinan">Perijinan</label>
-                        <select class="form-control" id="perijinan" name="perijinan" required>
-                            <?php
-                            // Ambil data pimpinan dari database
-                            $stmt = $pdo->query("SELECT * FROM pimpinan");
-                            while ($row = $stmt->fetch()) {
-                                echo "<option value='{$row['nama_pimpinan']}'>{$row['nama_pimpinan']}</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggal_pengembalian">Tanggal Pengembalian</label>
-                        <input type="date" class="form-control" id="tanggal_pengembalian" name="tanggal_pengembalian" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="alasan_membawa_laptop">Alasan Membawa Laptop</label>
-                        <textarea class="form-control" id="alasan_membawa_laptop" name="alasan_membawa_laptop" rows="3" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="persetujuan">Persetujuan</label>
-                        <select class="form-control" id="persetujuan" name="persetujuan" required>
-                            <?php
-                            // Ambil data pimpinan dari database untuk persetujuan
-                            $stmt = $pdo->query("SELECT * FROM pimpinan");
-                            while ($row = $stmt->fetch()) {
-                                echo "<option value='{$row['nama_pimpinan']}'>{$row['nama_pimpinan']}</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <button type="submit" name="tambah" class="btn btn-success">Ajukan Perijinan</button>
-                </form>
+                </div>
             </div>
         </div>
+        <!-- <h2>Form Perijinan Laptop</h2> -->
+       
     </div>
     <br>
 

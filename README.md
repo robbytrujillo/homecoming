@@ -1,3 +1,3 @@
-## Perpulangan Siswa Information System
+## Student Homecoming Information System
 
-<h2>Pudamah</h2>
+<h2>Homecoming</h2>

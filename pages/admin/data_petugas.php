@@ -86,6 +86,7 @@ $petugas = $stmt->fetchAll();
             <button class="btn btn-primary" data-toggle="modal" data-target="#tambahPetugasModal">Tambah Petugas</button>
             <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a>
+            <button class="btn btn-success" onclick="window.print()">Print</button>
         </div>
 
         <!-- Modal Upload CSV -->
@@ -105,6 +106,7 @@ $petugas = $stmt->fetchAll();
                                 <input type="file" class="form-control-file" id="csv_file" name="csv_file" accept=".csv" required>
                             </div>
                             <button type="submit" name="upload_csv" class="btn btn-primary">Upload</button>
+                           
                             <!-- <div class="form-group">
                                 <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan NIP, Nama Petugas, Jabatan, atau Mapel...">
                             </div> -->
