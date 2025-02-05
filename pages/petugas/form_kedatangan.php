@@ -27,6 +27,11 @@ if (isset($_POST['tambah'])) {
     $stmtp->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $keperluan, $tanggal_datang, $petugas['nama_petugas'], $keterangan]);
     echo "<script>alert('Data kedatangan berhasil ditambahkan!'); window.location='form_kedatangan.php';</script>";
 }
+
+// Ambil Data Siswa
+$stmt = $pdo->query("SELECT * FROM siswa");
+$siswa = $stmt->fetchAll();
+?>
 ?>
 
 <!DOCTYPE html>

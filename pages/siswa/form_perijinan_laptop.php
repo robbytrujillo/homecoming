@@ -72,7 +72,7 @@ if (isset($_POST['tambah'])) {
             <div class="col-md-6 offset-md-3">
                 <div class="card">
                     <div class="card-header">
-                            <h3 class="text-center">Form Perijinan Laptop</h3>
+                            <h3 class="text-center">Perijinan Laptop Perpulangan</h3>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST">

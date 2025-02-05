@@ -24,9 +24,62 @@ if (isset($_POST['tambah'])) {
 
     // Simpan data perijinan
     $stmtp = $pdo->prepare("INSERT INTO perijinan (nomor_induk, nama_siswa, kelas, nama_orang_tua, keperluan, tanggal_pulang, petugas, keterangan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmtp->execute([$nomor_induk, $nama_siswa, $kelas['nama_kelas'], $nama_orang_tua, $keperluan, $tanggal_pulang, $petugas['nama_petugas'], $keterangan]);
+    $stmtp->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $keperluan, $tanggal_pulang, $petugas['nama_petugas'], $keterangan]);
     echo "<script>alert('Data perijinan berhasil ditambahkan!'); window.location='form_perijinan.php';</script>";
 }
+
+// Ambil Data Siswa
+// $stmt = $pdo->query("SELECT * FROM siswa");
+// $siswa = $stmt->fetchAll();
+
+// Ambil daftar siswa untuk select option
+$stmt = $pdo->query("SELECT nama_siswa FROM siswa ORDER BY nama_siswa ASC");
+$siswa_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+// ambil data
+if (isset($_GET['nama_siswa'])) {
+    $nama_siswa = $_GET['nama_siswa'];
+
+    $stmt = $pdo->prepare("SELECT nomor_induk, kelas, nama_orang_tua FROM siswa WHERE nama_siswa = ?");
+    $stmt->execute([$nama_siswa]);
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Debugging: tampilkan data
+    header('Content-Type: application/json');
+    echo json_encode($data);
+    exit;
+
+    // if ($data) {
+    //     echo json_encode($data);
+    // } else {
+    //     echo json_encode(["error" => "Data tidak ditemukan"]);
+    // }
+}
+
+
+// Jika nomor induk dipilih, ambil data siswa tersebut
+// 
+$selectedSiswa = null;
+// if (isset($_POST['nama_siswa'])) {
+//     $nomor_induk = $_POST['nomor_siswa'];
+//     foreach ($siswaList as $siswa) {
+//         if ($siswa['nama_siswa'] == $nama_siswa) {
+//             $selectedSiswa = $siswa;
+//             break;
+//         }
+//     }
+// }
+// Ambil nama guru dan nama mata pelajaran berdasarkan NIP dan kode_mapel
+// $nomor_induk = isset($_POST['nomor_induk']) ? $_POST['nomor_induk'] : '';
+// $sql_siswa = "SELECT nama_siswa FROM siswa WHERE nomor_induk = ?";
+// $stmt = $pdo->prepare($sql_siswa);
+// $stmt->execute([$nomor_induk]);
+// $row_siswa = $stmt->fetch();
+// $nama_siswa = $row_siswa['nama_siswa'] ?? '';
+
+    
+
 ?>
 
 <!DOCTYPE html>
@@ -82,23 +135,38 @@ if (isset($_POST['tambah'])) {
                                 <label for="nomor_induk">Nomor Induk Siswa</label>
                                 <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" required>
                             </div>
+                            <!-- <div class="form-group"> -->
+                                <!-- <label for="nama_siswa">Nama Siswa</label> -->
+                                <!-- <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $siswa['nama_siswa']; ?>" required> -->
+                                <!-- <select class="form-control" id="nama_siswa" name="nama_siswa" required> -->
+                                    <!-- <option value="">Pilih Nama Siswa</option> -->
+                                    <?php
+                                    // Ambil data pimpinan dari database
+                                    // $stmt = $pdo->query("SELECT * FROM siswa");
+                                    // while ($row = $stmt->fetch()) {
+                                    //     echo "<option value='{$row['nama_siswa']}'>{$row['nama_siswa']}</option>";
+                                    // }
+
+                                    // foreach ($siswa as $row) {
+                                    //     echo "<option value='{$row['nama_siswa']}'>{$row['nama_siswa']}</option>";
+                                    // }
+                                    ?>
+                                    
+                                    
+                                <!-- </select> -->
+                            <!-- </div> -->
                             <div class="form-group">
                                 <label for="nama_siswa">Nama Siswa</label>
-                                <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" required>
+                                <select class="form-control" id="nama_siswa" name="nama_siswa" required>
+                                    <option value="">-- Pilih Siswa --</option>
+                                    <?php foreach ($siswa_list as $siswa): ?>
+                                        <option value="<?= htmlspecialchars($siswa['nama_siswa']) ?>"><?= htmlspecialchars($siswa['nama_siswa']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
-                            
                             <div class="form-group">
                                 <label for="kelas">Kelas</label>
-                                <select class="form-control" id="kelas" name="kelas" required>
-                                    <option value="">-- Pilih Kelas --</option>
-                                        <?php
-                                        // Ambil data kelas dari database
-                                        $stmtp = $pdo->query("SELECT * FROM kelas");
-                                        while ($row = $stmtp->fetch()) {
-                                            echo "<option value='{$row['nama_kelas']}'>{$row['nama_kelas']}</option>";
-                                        }
-                                        ?>
-                                </select>
+                                <input type="text" class="form-control" id="kelas" name="kelas" required>
                             </div>
                             <div class="form-group">
                                 <label for="nama_orang_tua">Nama Orang Tua</label>
@@ -121,8 +189,8 @@ if (isset($_POST['tambah'])) {
                                 <select class="form-control" id="petugas" name="petugas" required>
                                     <?php
                                     // Ambil data pimpinan dari database
-                                    $stmtp = $pdo->query("SELECT * FROM petugas");
-                                    while ($row = $stmtp->fetch()) {
+                                    $stmt = $pdo->query("SELECT * FROM petugas");
+                                    while ($row = $stmt->fetch()) {
                                         echo "<option value='{$row['nama_petugas']}'>{$row['nama_petugas']}</option>";
                                     }
                                     ?>
