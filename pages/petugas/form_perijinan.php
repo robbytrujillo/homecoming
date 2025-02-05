@@ -23,8 +23,10 @@ if (isset($_POST['tambah'])) {
     $keterangan = $_POST['keterangan'];
 
     // Simpan data perijinan
-    $stmtp = $pdo->prepare("INSERT INTO perijinan (nomor_induk, nama_siswa, kelas, nama_orang_tua, keperluan, tanggal_pulang, petugas, keterangan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmtp->execute([$nomor_induk, $nama_siswa, $kelas['nama_kelas'], $nama_orang_tua, $keperluan, $tanggal_pulang, $petugas['nama_petugas'], $keterangan]);
+    $stmt = $pdo->prepare("INSERT INTO perijinan (nomor_induk, nama_siswa, kelas, nama_orang_tua, keperluan, tanggal_pulang, petugas, keterangan) 
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $keperluan, $tanggal_pulang, $petugas['nama_petugas'], $keterangan]);
+
     echo "<script>alert('Data perijinan berhasil ditambahkan!'); window.location='form_perijinan.php';</script>";
 }
 ?>
@@ -39,7 +41,7 @@ if (isset($_POST['tambah'])) {
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+<nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 2%; margin-top: 1%">    
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +73,7 @@ if (isset($_POST['tambah'])) {
 
     <div class="container mt-4 mb-5">
         <div class="row">
-            <div class="col-md-6 offset-md-3">                
+            <div class="col-md-6 offset-md-3">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="text-center">Form Perijinan Pulang</h3>
@@ -79,26 +81,17 @@ if (isset($_POST['tambah'])) {
                     <div class="card-body">
                         <form action="" method="POST">
                             <div class="form-group">
+                                <label for="nama_siswa">Nama Siswa</label>
+                                <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" autocomplete="off">
+                                <div id="suggestions" class="list-group" style="position: absolute; z-index: 1000;"></div> 
+                            </div>
+                            <div class="form-group">
                                 <label for="nomor_induk">Nomor Induk Siswa</label>
                                 <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" required>
                             </div>
                             <div class="form-group">
-                                <label for="nama_siswa">Nama Siswa</label>
-                                <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" required>
-                            </div>
-                            
-                            <div class="form-group">
                                 <label for="kelas">Kelas</label>
-                                <select class="form-control" id="kelas" name="kelas" required>
-                                    <option value="">-- Pilih Kelas --</option>
-                                        <?php
-                                        // Ambil data kelas dari database
-                                        $stmtp = $pdo->query("SELECT * FROM kelas");
-                                        while ($row = $stmtp->fetch()) {
-                                            echo "<option value='{$row['nama_kelas']}'>{$row['nama_kelas']}</option>";
-                                        }
-                                        ?>
-                                </select>
+                                <input type="text" class="form-control" id="kelas" name="kelas" required>
                             </div>
                             <div class="form-group">
                                 <label for="nama_orang_tua">Nama Orang Tua</label>
@@ -109,8 +102,8 @@ if (isset($_POST['tambah'])) {
                                 <select class="form-control" id="keperluan" name="keperluan" required>
                                     <option value="perpulangan">Perpulangan</option>
                                     <option value="penjengukan">Penjengukan</option>
-                                    <!-- <option value="kedatangan">Kedatangan</option> -->
-                                </select>
+                                    <!-- <option value="kedatangan">Kedatangan</option>  -->
+                                </select> 
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_pulang">Tanggal Perpulangan</label>
@@ -134,7 +127,6 @@ if (isset($_POST['tambah'])) {
                             </div>
                             <button type="submit" name="tambah" class="btn btn-success">Submit</button>
                             <a href="data_perijinan.php">Data Perijinan</a>
-                            <!-- <button type="button" name="tambah" class="btn btn-success">Submit</button> -->
                         </form>
                     </div>
                 </div>
@@ -147,40 +139,71 @@ if (isset($_POST['tambah'])) {
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-    <!-- <script>
+
+    <script>
         $(document).ready(function() {
-            $("#nama_siswa").change(function() {
-                var nama_siswa = $(this).val();
-                if (nama_siswa) {
-                    $.ajax({
-                        url: "get_siswa.php",
-                        type: "GET",
-                        data: { nama_siswa: nama_siswa },
-                        dataType: "json",
-                        success: function(response) {
-                            console.log("Response:", response); // Debugging
-                            if (response && response.nomor_induk) {
-                                $("#nomor_induk").val(response.nomor_induk);
-                                $("#kelas").val(response.kelas);
-                                $("#nama_orang_tua").val(response.nama_orang_tua);
+        $("#nama_siswa").on("input", function() {
+            var nama = $(this).val();
+            if (nama.length > 2) {
+                $.ajax({
+                    url: "cari_siswa.php",
+                    type: "GET",
+                    data: { nama_siswa: nama },
+                    success: function(response) {
+                        console.log(response); // Debugging
+
+                        try {
+                            let data = JSON.parse(response);
+                            if (data.length > 0) {
+                                $("#suggestions").empty().show();
+                                data.forEach(function(item) {
+                                    $("#suggestions").append(
+                                        `<a href="#" class="list-group-item list-group-item-action pilih-siswa" 
+                                        data-nama="${item.nama_siswa}" 
+                                        data-nomor_induk="${item.nomor_induk}" 
+                                        data-kelas="${item.kelas}" 
+                                        data-orangtua="${item.nama_orang_tua}">
+                                        ${item.nama_siswa}
+                                        </a>`
+                                    );
+                                });
+
+                                // Tambahkan event click setelah data di-load
+                                $(".pilih-siswa").on("click", function(e) {
+                                    e.preventDefault();
+                                    pilihSiswa(
+                                        $(this).data("nama"),
+                                        $(this).data("nomor_induk"),
+                                        $(this).data("kelas"),
+                                        $(this).data("orangtua")
+                                    );
+                                });
+
                             } else {
-                                alert("Data tidak ditemukan di database!");
+                                $("#suggestions").hide();
                             }
-                        },
-                        error: function(xhr, status, error) {
-                            console.log("AJAX Error:", xhr.responseText);
-                            alert("Terjadi kesalahan saat mengambil data!");
+                        } catch (error) {
+                            console.error("Parsing error:", error);
                         }
-                    });
-                } else {
-                    $("#nomor_induk, #kelas, #nama_orang_tua").val('');
-                }
-            });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error: " + error);
+                    }
+                });
+            } else {
+                $("#suggestions").hide();
+            }
         });
+    });
 
-    </script> -->
-    <script src="../js/script-ijin.js"></script>
+    function pilihSiswa(nama, nomor_induk, kelas, nama_orang_tua) {
+        $("#nama_siswa").val(nama);
+        $("#nomor_induk").val(nomor_induk);
+        $("#kelas").val(kelas);
+        $("#nama_orang_tua").val(nama_orang_tua);
+        $("#suggestions").hide();
+    }
 
+    </script>
 </body>
 </html>
