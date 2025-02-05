@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-muted">
     <br><br><br><br>
-    <div class="container mt-5">
+    <div class="container mt-5 ">
         <div class="row justify-content-center mt-3">
             <div class="col-md-6 col-lg-4">
                 <div class="card">
                     <div class="card-header">
                         <!-- <h3 class="text-center">Login</h3> -->
                         <img src="./assets/homecoming-logo.png" style="width: 200px; margin-left: 15%; margin-top: 5%">
-                        <marquee><h6 style="text-align: center; color: rgb(54, 50, 50)">Selamat Datang di Sistem Informasi PuDaMah - Pulang Datang Ma'had, Silahkan login terlebih dahulu!</h6></marquee>
+                        <marquee><h6 style="text-align: center; color: rgb(54, 50, 50)">Selamat Datang di Sistem Informasi Homecoming - Perpulangan Siswa Ma'had, Silahkan login terlebih dahulu..</h6></marquee>
                     </div>
                     <div class="card-body">
                         <form action="includes/auth.php" method="POST">

@@ -25,7 +25,7 @@ $kedatangan = $stmt->fetchAll();
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
-        <img src="../../assets/pudamah-logo.png" style="width: 100px; margin-left: 1%; margin-top: 1%">
+        <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 1%; margin-top: 1%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -51,7 +51,7 @@ $kedatangan = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-4">
-        <h2>Data Kedatangan</h2>
+        <h2 class="mt-5 mb-3">Data Kedatangan</h2>
          <!-- Input Pencarian -->
          <div class="form-group">
             <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>

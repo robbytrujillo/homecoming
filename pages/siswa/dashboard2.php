@@ -21,21 +21,19 @@ $siswa = $stmt->fetch();
     <title>Dashboard Siswa</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
-
     <!-- Library untuk QR Code -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
-        <img src="../../assets/pudamah-logo.png" style="width: 100px; margin-left: 0.5%; margin-top: 1%">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Aplikasi Pesantren</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="dashboard.php"><b>Dashboard</b></a>
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
@@ -54,36 +52,7 @@ $siswa = $stmt->fetch();
     </nav>
 
     <div class="container mt-4">
-        <h2 class="mt-5 mb-3">Dashboard Siswa</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card bg-light mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Data Perijinan</h5>
-                        <p class="card-text">Lihat data perijinan siswa.</p>
-                        <a href="data_perijinan.php" class="btn btn-primary">Lihat Data</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-light mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Data Kedatangan</h5>
-                        <p class="card-text">Lihat data kedatangan siswa.</p>
-                        <a href="data_kedatangan.php" class="btn btn-success">Lihat Data</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-light mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Perijinan Laptop</h5>
-                        <p class="card-text">Ajukan perijinan membawa laptop.</p>
-                        <a href="form_perijinan_laptop.php" class="btn btn-danger">Ajukan</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <h2>Dashboard Siswa</h2>
         <div class="row">
             <div class="col-md-6">
                 <!-- Card Profil Siswa -->
@@ -136,8 +105,8 @@ $siswa = $stmt->fetch();
     // Generate QR Code
     const qrcode = new QRCode(document.getElementById("qrcode"), {
         text: dataString,
-        width: 160,
-        height: 160
+        width: 200,
+        height: 200
     });
     </script>
 </body>
