@@ -20,19 +20,15 @@ if (isset($_POST['tambah'])) {
 }
 
 // Edit Data Siswa
-if (isset($_POST['ijin'])) {
-    // $id = $_POST['ijin'];
+if (isset($_POST['edit'])) {
+    $id = $_POST['id'];
     $nomor_induk = $_POST['nomor_induk'];
     $nama_siswa = $_POST['nama_siswa'];
     $kelas = $_POST['kelas'];
     $nama_orang_tua = $_POST['nama_orang_tua'];
-    $keperluan = $_POST['keperluan'];
-    $tanggal_pulang = $_POST['tanggal_pulang'];
-    $petugas = $_POST['petugas'];
-    $keterangan = $_POST['keterangan'];
 
-    $stmt = $pdo->prepare("INSERT INTO perijinan (nomor_induk, nama_siswa, kelas, nama_orang_tua, keperluan, tanggal_pulang, petugas, keterangan) VALUES (?, ?, ?, ?,?,?,?,?)");
-    $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $keperluan, $tanggal_pulang, $petugas, $keterangan]);
+    $stmt = $pdo->prepare("UPDATE siswa SET nomor_induk = ?, nama_siswa = ?, kelas = ?, nama_orang_tua = ? WHERE id = ?");
+    $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $id]);
     header('Location: data_siswa.php');
     exit;
 }
@@ -49,7 +45,6 @@ if (isset($_GET['hapus'])) {
 // Ambil Data Siswa
 $stmt = $pdo->query("SELECT * FROM siswa");
 $siswa = $stmt->fetchAll();
-
 ?>
 
 <!DOCTYPE html>
@@ -82,8 +77,8 @@ $siswa = $stmt->fetchAll();
         </div>
     </nav>
     
-    <div class="container mt-4">
-        <h2 class="mt-5 mb-3">Data Siswa</h2>
+    <div class="container mt-4 mb-5">
+        <h2>Data Siswa</h2>
         <!-- <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#tambahSiswaModal">Tambah Siswa</button>
         <button class="btn btn-success mb-3" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
         <a href="template_siswa.csv" class="btn btn-secondary mb-3" download>Download Template CSV</a> -->
@@ -112,23 +107,18 @@ $siswa = $stmt->fetchAll();
                     <td><?php echo $row['nama_siswa']; ?></td>
                     <td><?php echo $row['kelas']; ?></td>
                     <td><?php echo $row['nama_orang_tua']; ?></td>
-                    <!-- <td>
-                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editSiswaModal<?php echo $row['id']; ?>">Edit</button>
-                        <a href="data_siswa.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                    </td> -->
                     <td>
-                        <a href="form_perijinan.php" name="ambil">Perijinan</a>
-                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ijinSiswaModal">Edit</button>
+                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editSiswaModal<?php echo $row['id']; ?>">Edit</button>
                         <a href="data_siswa.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td>
                 </tr>
 
                 <!-- Modal Edit Siswa -->
-                <div class="modal fade" id="ijinSiswaModal" tabindex="-1" aria-labelledby="editSiswaModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editSiswaModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editSiswaModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="ijinSiswaModalLabel">Edit Siswa</h5>
+                                <h5 class="modal-title" id="editSiswaModalLabel">Edit Siswa</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -152,35 +142,7 @@ $siswa = $stmt->fetchAll();
                                         <label for="nama_orang_tua">Nama Orang Tua</label>
                                         <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" value="<?php echo $row['nama_orang_tua']; ?>" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="keperluan">Keperluan</label>
-                                        <select class="form-control" id="keperluan" name="keperluan" required>
-                                            <option value="perpulangan">Perpulangan</option>
-                                            <option value="penjengukan">Penjengukan</option>
-                                            <option value="kedatangan">Kedatangan</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nama_siswa">Tanggal_Pulang</label>
-                                        <input type="text" class="form-control" id="tanggal_pulang" name="tanggal_pulang" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="perijinan">Petugas</label>
-                                        <select class="form-control" id="petugas" name="petugas" required>
-                                            <?php
-                                            // Ambil data pimpinan dari database
-                                            $stmt = $pdo->query("SELECT * FROM petugas");
-                                            while ($row = $stmt->fetch()) {
-                                                echo "<option value='{$row['nama_petugas']}'>{$row['nama_petugas']}</option>";
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="kelas">Keterangan</label>
-                                        <textarea type="text" class="form-control" id="keterangan" name="keterangan" required>
-                                    </div>
-                                    <button type="submit" name="ijin" class="btn btn-primary">Simpan</button>
+                                    <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
                                 </form>
                             </div>
                         </div>

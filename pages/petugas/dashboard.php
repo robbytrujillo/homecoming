@@ -19,7 +19,7 @@ require '../../includes/db.php';
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-    <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 1%; margin-top: 1%">    
+    <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 0.5%; margin-top: 1%">    
     <!-- <a class="navbar-brand" href="#">Aplikasi Pudamah</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -36,7 +36,7 @@ require '../../includes/db.php';
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="data_perijinan.php">Data Siswa</a>
+                    <a class="nav-link" href="data_siswa.php">Data Siswa</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="form_perijinan.php">Input Perijinan</a>
