@@ -82,16 +82,19 @@ if (isset($_POST['tambah'])) {
                         <form action="" method="POST">
                             <div class="form-group">
                                 <label for="nama_siswa">Nama Siswa</label>
-                                <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" autocomplete="off">
-                                <div id="suggestions" class="list-group" style="position: absolute; z-index: 1000;"></div> 
+                                <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" placeholder="Isi Nama Siswa" autocomplete="off">
+                                <!-- <div id="suggestions" class="list-group" style="position: absolute; z-index: 1000;"></div>  -->
+                                <div id="suggestions" class="list-group"></div>
                             </div>
                             <div class="form-group">
-                                <label for="nomor_induk">Nomor Induk Siswa</label>
-                                <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="kelas">Kelas</label>
-                                <input type="text" class="form-control" id="kelas" name="kelas" required>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control bg-light" id="nomor_induk" name="nomor_induk" placeholder="Nomor induk" disabled>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control bg-light" id="kelas" name="kelas" placeholder="Kelas" disabled>
+                                    </div>
+                                </div>    
                             </div>
                             <div class="form-group">
                                 <label for="nama_orang_tua">Nama Orang Tua</label>
@@ -139,8 +142,45 @@ if (isset($_POST['tambah'])) {
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    
     <script>
+        $(document).ready(function() {
+        // Saat user mengetik di input nama_siswa
+            $("#nama_siswa").on("input", function() {
+                var nama = $(this).val();
+                if (nama.length > 2) {  // Minimal 3 karakter untuk pencarian
+                    $.ajax({
+                        url: "cari_siswa.php",
+                        type: "GET",
+                        data: {nama_siswa: nama},
+                        success: function(response) {
+                            let data = JSON.parse(response);
+                            if (data.length > 0) {
+                                $("#suggestions").empty().show();
+                                data.forEach(function(item) {
+                                    $("#suggestions").append(`<a href="#" class="list-group-item list-group-item-action" onclick="pilihSiswa('${item.nama_siswa}', '${item.nomor_induk}', '${item.kelas}')">${item.nama_siswa}</a>`);
+                                });
+                            } else {
+                                $("#suggestions").hide();
+                            }
+                                            }
+                    });
+                } else {
+                    $("#suggestions").hide();
+                }
+            });
+        });
+
+        // Fungsi untuk mengisi input otomatis setelah memilih nama siswa
+        function pilihSiswa(nama, nomor_induk, kelas) {
+            $("#nama_siswa").val(nama);
+            $("#nomor_induk").val(nomor_induk);
+            $("#kelas").val(kelas);
+            $("#suggestions").hide();
+        }
+    </script>
+
+    <!-- <script>
         $(document).ready(function() {
         $("#nama_siswa").on("input", function() {
             var nama = $(this).val();
@@ -204,6 +244,6 @@ if (isset($_POST['tambah'])) {
         $("#suggestions").hide();
     }
 
-    </script>
+    </script> -->
 </body>
 </html>

@@ -1,23 +1,27 @@
 <?php
-require '../../includes/db.php'; // Pastikan path ini benar
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "pudamah";  // Ganti sesuai database Anda
+
+$conn = new mysqli($host, $user, $password, $database);
+
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
 
 if (isset($_GET['nama_siswa'])) {
-    $nama_siswa = "%" . $_GET['nama_siswa'] . "%";
+    $nama_siswa = $_GET['nama_siswa'];
+    $query = "SELECT nama_siswa, nomor_induk, kelas FROM siswa WHERE nama_siswa LIKE '%$nama_siswa%' LIMIT 5";
+    $result = $conn->query($query);
 
-    try {
-        $stmt = $pdo->prepare("SELECT nomor_induk, nama_siswa, kelas, nama_orang_tua FROM siswa WHERE nama_siswa LIKE ?");
-        $stmt->execute([$nama_siswa]);
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        header('Content-Type: application/json'); // Pastikan respons dalam format JSON
-
-        if ($result) {
-            echo json_encode(["status" => "success", "data" => $result]);
-        } else {
-            echo json_encode(["status" => "error", "message" => "Tidak ada data ditemukan"]);
-        }
-    } catch (PDOException $e) {
-        echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+    $data = [];
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
     }
+
+    echo json_encode($data);
 }
+
+$conn->close();
 ?>
