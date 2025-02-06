@@ -5,6 +5,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'petugas') {
     exit;
 }
 require '../../includes/db.php';
+require '../../includes/connect.php';
 
 // Edit Data Perijinan
 if (isset($_POST['edit'])) {
@@ -33,21 +34,21 @@ if (isset($_GET['hapus'])) {
 }
 
 // pagination
-$batas = 8;
-$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
-$halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+// $batas = 5;
+// $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+// $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
 // Hitung total data
-$stmt = $pdo->prepare("SELECT COUNT(*) FROM perijinan");
-$jumlah_data = $stmt->fetchColumn();
-$total_halaman = ceil($jumlah_data / $batas);
+// $stmt = $pdo->prepare("SELECT COUNT(*) FROM perijinan");
+// $jumlah_data = $stmt->fetchColumn();
+// $total_halaman = ceil($jumlah_data / $batas);
 
 // Ambil Data Perijinan Dengan Pagination
-$stmt = $pdo->prepare("SELECT * FROM perijinan LIMIT :offset, :batas");
-$stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
-$stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
-$stmt->execute();
-$perijinan = $stmt->fetchAll();
+// $stmt = $pdo->prepare("SELECT * FROM perijinan LIMIT :offset, :batas");
+// $stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
+// $stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
+// $stmt->execute();
+// $perijinan = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -147,26 +148,44 @@ $perijinan = $stmt->fetchAll();
             </thead>
             <tbody>
                 <?php 
-                $nomor = $halaman_awal + 1;
-                
-                // foreach ($perijinan as $key => $row): 
-                foreach ($perijinan as $row): 
-                ?>
+                    $batas = 10;
+                    $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
+                    $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;	
+    
+                    $previous = $halaman - 1;
+                    $next = $halaman + 1;
+                    
+                    $data = mysqli_query($connect,"select * from perijinan");
+                    $jumlah_data = mysqli_num_rows($data);
+                    $total_halaman = ceil($jumlah_data / $batas);
+    
+                    $data_perijinan = mysqli_query($connect,"select * from perijinan limit $halaman_awal, $batas");
+                    $nomor = $halaman_awal + 1;
+                    while($d = mysqli_fetch_array($data_perijinan)){
+				?>
                 <tr>
                     <!-- <td><?php echo $key + 1; ?></td> -->
-                    <td><?= $nomor++; ?></td>
+                    <!-- <td><?= $nomor++; ?></td> -->
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
-                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
+                    <!-- <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
-                    <td><?= htmlspecialchars($row['kelas']); ?></td>
+                    <td><?= htmlspecialchars($row['kelas']); ?></td> -->
                     <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
-                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
+                    <!-- <td><?= htmlspecialchars($row['keperluan']); ?></td>
                     <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
-                    <td><?= htmlspecialchars($row['keterangan']); ?></td>
+                    <td><?= htmlspecialchars($row['keterangan']); ?></td> -->
                     <!-- <td>
                         <a href="form_perijinan.php?id<?= $row['id']; ?>" class="btn btn-primary btn-sm">Isi Perijinan</a>
                     </td> -->
+                    <td><?= $nomor++; ?></td>
+                    <td><?= $d['nomor_induk']; ?></td>
+                    <td><?= $d['nama_siswa']; ?></td>
+                    <td><?= $d['kelas']; ?></td>
+                    <td><?= $d['keperluan']; ?></td>
+                    <td><?= $d['tanggal_pulang']; ?></td>
+                    <td><?= $d['petugas']; ?></td>
+                    <td><?= $d['keterangan']; ?></td>
                 </tr>
 
                 
@@ -222,26 +241,27 @@ $perijinan = $stmt->fetchAll();
                         </div>
                     </div>
                 </div>
-                <?php endforeach; ?>
+                <?php } ?>
             </tbody>
         </table>
 
         <!-- Pagination -->
         <nav>
-            <ul class="pagination">
-                <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
-                    <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
-                </li>
-                <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
-                    <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
-                        <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
-                    </li>
-                <?php endfor; ?>
-                <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
-                    <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
-                </li>
-            </ul>
-
+            <ul class="pagination justify-content-center">
+				<li class="page-item">
+					<a class="page-link" <?php if($halaman > 1){ echo "href='?halaman=$previous'"; } ?>>Previous</a>
+				</li>
+				<?php 
+				for($x=1;$x<=$total_halaman;$x++){
+					?> 
+					<li class="page-item"><a class="page-link" href="?halaman=<?php echo $x ?>"><?php echo $x; ?></a></li>
+					<?php
+				}
+				?>				
+				<li class="page-item">
+					<a  class="page-link" <?php if($halaman < $total_halaman) { echo "href='?halaman=$next'"; } ?>>Next</a>
+				</li>
+			</ul>
             <!-- <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="?halaman=1">1</a></li>
                 <li class="page-item"><a class="page-link" href="?halaman=2">2</a></li>
