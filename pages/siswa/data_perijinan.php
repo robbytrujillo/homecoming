@@ -50,7 +50,7 @@ $perijinan = $stmt->fetchAll();
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-4 mb-5">
         <h2 class="mt-5 mb-3">Data Perijinan</h2>
 
         <!-- Input Pencarian -->

@@ -6,19 +6,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'petugas') {
 }
 require '../../includes/db.php';
 
-// Tambah Data Petugas
-// if (isset($_POST['tambah'])) {
-//     $nip = $_POST['nip'];
-//     $nama_petugas = $_POST['nama_petugas'];
-//     $jabatan = $_POST['jabatan'];
-//     $mapel = $_POST['mapel'];
-
-//     $stmt = $pdo->prepare("INSERT INTO petugas (nip, nama_petugas, jabatan, mapel) VALUES (?, ?, ?, ?)");
-//     $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel]);
-//     header('Location: data_petugas.php');
-//     exit;
-// }
-
 // Edit Data Perijinan
 if (isset($_POST['edit'])) {
     $id = $_POST['id'];
@@ -45,8 +32,21 @@ if (isset($_GET['hapus'])) {
     exit;
 }
 
-// Ambil Data Perijinan
-$stmt = $pdo->query("SELECT * FROM perijinan");
+// pagination
+$batas = 5;
+$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+$halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+// Hitung total data
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM perijinan");
+$jumlah_data = $stmt->fetchColumn();
+$total_halaman = ceil($jumlah_data / $batas);
+
+// Ambil Data Perijinan Dengan Pagination
+$stmt = $pdo->prepare("SELECT * FROM perijinan LIMIT :offset, :batas");
+$stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
+$stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
+$stmt->execute();
 $perijinan = $stmt->fetchAll();
 ?>
 
@@ -89,13 +89,13 @@ $perijinan = $stmt->fetchAll();
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-4 mb-5">
         <h2>Data Perijinan</h2>
-        <!-- <div class="mb-3">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#tambahPetugasModal">Tambah Petugas</button>
-            <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-            <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a>
-        </div> -->
+        <div class="mt-3">
+            <a href="form_perijinan.php" class="btn btn-success btn-md text-white">Isi Perijinan</a>
+            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
+            <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a> -->
+        </div>
 
         <!-- Modal Upload CSV -->
         <!-- <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModalLabel" aria-hidden="true">
@@ -142,25 +142,34 @@ $perijinan = $stmt->fetchAll();
                     <th>Tanggal Pulang</th>
                     <th>Petugas</th>
                     <th>Keterangan</th>
-                    <th>Aksi</th>
+                    <!-- <th>Aksi</th> -->
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($perijinan as $key => $row): ?>
+                <?php 
+                $nomor = $halaman_awal + 1;
+                
+                // foreach ($perijinan as $key => $row): 
+                foreach ($perijinan as $row): 
+                ?>
                 <tr>
-                    <td><?php echo $key + 1; ?></td>
-                    <td><?php echo $row['nomor_induk']; ?></td>
-                    <td><?php echo $row['nama_siswa']; ?></td>
-                    <td><?php echo $row['kelas']; ?></td>
-                    <!-- <td><?php echo $row['nama_orang_tua']; ?></td> -->
-                    <td><?php echo $row['keperluan']; ?></td>
-                    <td><?php echo $row['tanggal_pulang']; ?></td>
-                    <td><?php echo $row['petugas']; ?></td>
-                    <td><?php echo $row['keterangan']; ?></td>
-                    <td>
-                        <a href="form_perijinan.php" class="btn btn-primary btn-sm">Isi Perijinan</a>
-                    </td>
+                    <!-- <td><?php echo $key + 1; ?></td> -->
+                    <td><?= $nomor++; ?></td>
+                    <!-- <td><?= $row['nomor_induk']; ?></td> -->
+                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
+                    <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
+                    <td><?= htmlspecialchars($row['kelas']); ?></td>
+                    <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
+                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
+                    <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>
+                    <td><?= htmlspecialchars($row['petugas']); ?></td>
+                    <td><?= htmlspecialchars($row['keterangan']); ?></td>
+                    <!-- <td>
+                        <a href="form_perijinan.php?id<?= $row['id']; ?>" class="btn btn-primary btn-sm">Isi Perijinan</a>
+                    </td> -->
                 </tr>
+
+                
 
                 <!-- Modal Edit Petugas -->
                 <div class="modal fade" id="editPerijinanModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editPerijinanModalLabel" aria-hidden="true">
@@ -216,6 +225,29 @@ $perijinan = $stmt->fetchAll();
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination">
+                <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
+                </li>
+                <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
+                    <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
+                        <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
+                </li>
+            </ul>
+
+            <!-- <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?halaman=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?halaman=2">2</a></li>
+            </ul> -->
+
+        </nav>
     </div>
 
     <!-- Modal Tambah Petugas -->
