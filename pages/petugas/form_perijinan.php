@@ -14,9 +14,9 @@ $petugas = $stmtp->fetch();
 
 // Proses tambah perijinan
 if (isset($_POST['tambah'])) {
-    $nomor_induk = $_POST['nomor_induk'];
-    $nama_siswa = $_POST['nama_siswa'];
-    $kelas = $_POST['kelas'];
+    $nomor_induk = $_POST['nomor_induk'] ?? null;
+    $nama_siswa = $_POST['nama_siswa'] ;
+    $kelas = $_POST['kelas'] ?? null;
     $nama_orang_tua = $_POST['nama_orang_tua'];
     $keperluan = $_POST['keperluan'];
     $tanggal_pulang = $_POST['tanggal_pulang'];
@@ -89,13 +89,15 @@ if (isset($_POST['tambah'])) {
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col">
-                                        <input type="text" class="form-control bg-light" id="nomor_induk" name="nomor_induk" placeholder="Nomor induk" disabled>
+                                        <input type="text" class="form-control bg-light" id="nomor_induk" name="nomor_induk" placeholder="Nomor induk">
                                     </div>
                                     <div class="col">
-                                        <input type="text" class="form-control bg-light" id="kelas" name="kelas" placeholder="Kelas" disabled>
+                                        <input type="text" class="form-control bg-light" id="kelas" name="kelas" placeholder="Kelas">
                                     </div>
                                 </div>    
                             </div>
+                            <!-- <input type="hidden" id="hidden_nomor_induk" name="nomor_induk">
+                            <input type="hidden" id="hidden_kelas" name="kelas"> -->
                             <div class="form-group">
                                 <label for="nama_orang_tua">Nama Orang Tua</label>
                                 <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" required>
@@ -129,7 +131,7 @@ if (isset($_POST['tambah'])) {
                                 <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
                             </div>
                             <button type="submit" name="tambah" class="btn btn-success">Submit</button>
-                            <a href="data_perijinan.php">Data Perijinan</a>
+                            <a href="data_perijinan.php" class="btn btn-warning btn-md">Data Perijinan</a>
                         </form>
                     </div>
                 </div>
@@ -180,70 +182,6 @@ if (isset($_POST['tambah'])) {
         }
     </script>
 
-    <!-- <script>
-        $(document).ready(function() {
-        $("#nama_siswa").on("input", function() {
-            var nama = $(this).val();
-            if (nama.length > 2) {
-                $.ajax({
-                    url: "cari_siswa.php",
-                    type: "GET",
-                    data: { nama_siswa: nama },
-                    success: function(response) {
-                        console.log(response); // Debugging
-
-                        try {
-                            let data = JSON.parse(response);
-                            if (data.length > 0) {
-                                $("#suggestions").empty().show();
-                                data.forEach(function(item) {
-                                    $("#suggestions").append(
-                                        `<a href="#" class="list-group-item list-group-item-action pilih-siswa" 
-                                        data-nama="${item.nama_siswa}" 
-                                        data-nomor_induk="${item.nomor_induk}" 
-                                        data-kelas="${item.kelas}" 
-                                        data-orangtua="${item.nama_orang_tua}">
-                                        ${item.nama_siswa}
-                                        </a>`
-                                    );
-                                });
-
-                                // Tambahkan event click setelah data di-load
-                                $(".pilih-siswa").on("click", function(e) {
-                                    e.preventDefault();
-                                    pilihSiswa(
-                                        $(this).data("nama"),
-                                        $(this).data("nomor_induk"),
-                                        $(this).data("kelas"),
-                                        $(this).data("orangtua")
-                                    );
-                                });
-
-                            } else {
-                                $("#suggestions").hide();
-                            }
-                        } catch (error) {
-                            console.error("Parsing error:", error);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX Error: " + error);
-                    }
-                });
-            } else {
-                $("#suggestions").hide();
-            }
-        });
-    });
-
-    function pilihSiswa(nama, nomor_induk, kelas, nama_orang_tua) {
-        $("#nama_siswa").val(nama);
-        $("#nomor_induk").val(nomor_induk);
-        $("#kelas").val(kelas);
-        $("#nama_orang_tua").val(nama_orang_tua);
-        $("#suggestions").hide();
-    }
-
-    </script> -->
+    
 </body>
 </html>

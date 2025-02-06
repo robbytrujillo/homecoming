@@ -158,8 +158,7 @@ $perijinan = $stmt->fetchAll();
                     <td><?php echo $row['petugas']; ?></td>
                     <td><?php echo $row['keterangan']; ?></td>
                     <td>
-                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editPerijinanModal<?php echo $row['id']; ?>">Edit</button>
-                        <a href="data_perijinan.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                        <a href="form_perijinan.php" class="btn btn-primary btn-sm">Isi Perijinan</a>
                     </td>
                 </tr>
 

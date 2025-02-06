@@ -36,7 +36,7 @@ require '../../includes/db.php';
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="data_siswa.php">Data Siswa</a>
+                    <a class="nav-link" href="data_perijinan.php">Data Siswa</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="form_perijinan.php">Input Perijinan</a>

@@ -12,26 +12,23 @@ $stmtp = $pdo->prepare("SELECT * FROM petugas WHERE id = ?");
 $stmtp->execute([$petugas_id]);
 $petugas = $stmtp->fetch();
 
-// Proses tambah kedatangan
+// Proses tambah perijinan
 if (isset($_POST['tambah'])) {
-    $nomor_induk = $_POST['nomor_induk'];
-    $nama_siswa = $_POST['nama_siswa'];
-    $kelas = $_POST['kelas'];
+    $nomor_induk = $_POST['nomor_induk'] ?? null;
+    $nama_siswa = $_POST['nama_siswa'] ;
+    $kelas = $_POST['kelas'] ?? null;
     $nama_orang_tua = $_POST['nama_orang_tua'];
     $keperluan = $_POST['keperluan'];
     $tanggal_datang = $_POST['tanggal_datang'];
     $keterangan = $_POST['keterangan'];
 
     // Simpan data perijinan
-    $stmtp = $pdo->prepare("INSERT INTO kedatangan (nomor_induk, nama_siswa, kelas, nama_orang_tua, keperluan, tanggal_datang, petugas, keterangan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmtp->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $keperluan, $tanggal_datang, $petugas['nama_petugas'], $keterangan]);
+    $stmt = $pdo->prepare("INSERT INTO kedatangan (nomor_induk, nama_siswa, kelas, nama_orang_tua, keperluan, tanggal_datang, petugas, keterangan) 
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $keperluan, $tanggal_datang, $petugas['nama_petugas'], $keterangan]);
+
     echo "<script>alert('Data kedatangan berhasil ditambahkan!'); window.location='form_kedatangan.php';</script>";
 }
-
-// Ambil Data Siswa
-$stmt = $pdo->query("SELECT * FROM siswa");
-$siswa = $stmt->fetchAll();
-?>
 ?>
 
 <!DOCTYPE html>
@@ -39,12 +36,12 @@ $siswa = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Kedatangan - Petugas</title>
+    <title>Form Perijinan - Petugas</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+<nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 2%; margin-top: 1%">    
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,19 +52,18 @@ $siswa = $stmt->fetchAll();
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
-                <!-- <li class="nav-item active">
-                    <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
-                </li> -->
                 <li class="nav-item active">
-                    <a style="color: blue;" class="nav-link" href="form_kedatangan.php"><b>Form Kedatangan</b></a>
+                    <a style="color: blue;" class="nav-link" href="form_kedatangan.php"><at>Form Kedatangan</at></a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
+                    <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
+                </li>
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="data_kedatangan.php">Data kedatangan</a>
-                </li>
+                </li> -->    
                 <!-- <li class="nav-item active">
-                    <a class="nav-link" href="form_perijinan.php">Form Perpulangan</a>
+                    <a class="nav-link" href="form_kedatangan.php">Form Kedatangan</a>
                 </li> -->
-                
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
                 </li>
@@ -77,25 +73,31 @@ $siswa = $stmt->fetchAll();
 
     <div class="container mt-4 mb-5">
         <div class="row">
-            <div class="col-md-6 offset-md-3">                
+            <div class="col-md-6 offset-md-3">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="text-center">Form Kedatangan</h3>
+                        <h3 class="text-center">Form Kedatangan Mahad</h3>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST">
                             <div class="form-group">
-                                <label for="nomor_induk">Nomor Induk Siswa</label>
-                                <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" required>
-                            </div>
-                            <div class="form-group">
                                 <label for="nama_siswa">Nama Siswa</label>
-                                <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" required>
+                                <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" placeholder="Isi Nama Siswa" autocomplete="off">
+                                <!-- <div id="suggestions" class="list-group" style="position: absolute; z-index: 1000;"></div>  -->
+                                <div id="suggestions" class="list-group"></div>
                             </div>
                             <div class="form-group">
-                                <label for="kelas">Kelas</label>
-                                <input type="text" class="form-control" id="kelas" name="kelas" required>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control bg-light" id="nomor_induk" name="nomor_induk" placeholder="Nomor induk">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control bg-light" id="kelas" name="kelas" placeholder="Kelas">
+                                    </div>
+                                </div>    
                             </div>
+                            <!-- <input type="hidden" id="hidden_nomor_induk" name="nomor_induk">
+                            <input type="hidden" id="hidden_kelas" name="kelas"> -->
                             <div class="form-group">
                                 <label for="nama_orang_tua">Nama Orang Tua</label>
                                 <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" required>
@@ -105,23 +107,31 @@ $siswa = $stmt->fetchAll();
                                 <select class="form-control" id="keperluan" name="keperluan" required>
                                     <option value="kedatangan">Kedatangan</option>
                                     <option value="ijin">Ijin</option>
-                                    <!-- <option value="kedatangan">Kedatangan</option> -->
-                                </select>
+                                    <!-- <option value="kedatangan">Kedatangan</option>  -->
+                                </select> 
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_datang">Tanggal Kedatangan</label>
                                 <input type="date" class="form-control" id="tanggal_datang" name="tanggal_datang" required>
                             </div>
                             <div class="form-group">
-                                <label for="petugas">Petugas</label>
-                                <input type="text" class="form-control" id="petugas" name="petugas" required>
+                                <label for="perijinan">Petugas</label>
+                                <select class="form-control" id="petugas" name="petugas" required>
+                                    <?php
+                                    // Ambil data pimpinan dari database
+                                    $stmtp = $pdo->query("SELECT * FROM petugas");
+                                    while ($row = $stmtp->fetch()) {
+                                        echo "<option value='{$row['nama_petugas']}'>{$row['nama_petugas']}</option>";
+                                    }
+                                    ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="keterangan">Keterangan</label>
                                 <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
                             </div>
                             <button type="submit" name="tambah" class="btn btn-success">Submit</button>
-                            <a href="data_kedatangan.php">Data Kedatangan</a>
+                            <a href="data_kedatangan.php" class="btn btn-warning btn-md">Data Kedatangan</a>
                         </form>
                     </div>
                 </div>
@@ -134,5 +144,44 @@ $siswa = $stmt->fetchAll();
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+        // Saat user mengetik di input nama_siswa
+            $("#nama_siswa").on("input", function() {
+                var nama = $(this).val();
+                if (nama.length > 2) {  // Minimal 3 karakter untuk pencarian
+                    $.ajax({
+                        url: "cari_siswa.php",
+                        type: "GET",
+                        data: {nama_siswa: nama},
+                        success: function(response) {
+                            let data = JSON.parse(response);
+                            if (data.length > 0) {
+                                $("#suggestions").empty().show();
+                                data.forEach(function(item) {
+                                    $("#suggestions").append(`<a href="#" class="list-group-item list-group-item-action" onclick="pilihSiswa('${item.nama_siswa}', '${item.nomor_induk}', '${item.kelas}')">${item.nama_siswa}</a>`);
+                                });
+                            } else {
+                                $("#suggestions").hide();
+                            }
+                                            }
+                    });
+                } else {
+                    $("#suggestions").hide();
+                }
+            });
+        });
+
+        // Fungsi untuk mengisi input otomatis setelah memilih nama siswa
+        function pilihSiswa(nama, nomor_induk, kelas) {
+            $("#nama_siswa").val(nama);
+            $("#nomor_induk").val(nomor_induk);
+            $("#kelas").val(kelas);
+            $("#suggestions").hide();
+        }
+    </script>
+
+    
 </body>
 </html>
