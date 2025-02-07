@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$database = "pudamah";  // Ganti sesuai database Anda
+$database = "homecoming";  // Ganti sesuai database Anda
 
 $conn = new mysqli($host, $user, $password, $database);
 

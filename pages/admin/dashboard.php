@@ -17,8 +17,7 @@ require '../../includes/db.php';
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-    <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 2%; margin-top: 1%">    
-    <!-- <a class="navbar-brand" href="#">Aplikasi Pudamah</a> -->
+    <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 0.5%; margin-top: 1%">    
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

@@ -68,7 +68,7 @@ $siswa = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="data_siswa.php">Data Siswa</a>
+                    <a class="nav-link" href="data_siswa.php"><b>Data Siswa</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
@@ -96,7 +96,7 @@ $siswa = $stmt->fetchAll();
                     <th>Nama Siswa</th>
                     <th>Kelas</th>
                     <th>Nama Orang Tua</th>
-                    <th>Aksi</th>
+                    <!-- <th>Aksi</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -107,10 +107,10 @@ $siswa = $stmt->fetchAll();
                     <td><?php echo $row['nama_siswa']; ?></td>
                     <td><?php echo $row['kelas']; ?></td>
                     <td><?php echo $row['nama_orang_tua']; ?></td>
-                    <td>
+                    <!-- <td>
                         <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editSiswaModal<?php echo $row['id']; ?>">Edit</button>
                         <a href="data_siswa.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                    </td>
+                    </td> -->
                 </tr>
 
                 <!-- Modal Edit Siswa -->

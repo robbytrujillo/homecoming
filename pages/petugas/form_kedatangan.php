@@ -83,7 +83,6 @@ if (isset($_POST['tambah'])) {
                             <div class="form-group">
                                 <label for="nama_siswa">Nama Siswa</label>
                                 <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" placeholder="Isi Nama Siswa" autocomplete="off">
-                                <!-- <div id="suggestions" class="list-group" style="position: absolute; z-index: 1000;"></div>  -->
                                 <div id="suggestions" class="list-group"></div>
                             </div>
                             <div class="form-group">
@@ -96,8 +95,6 @@ if (isset($_POST['tambah'])) {
                                     </div>
                                 </div>    
                             </div>
-                            <!-- <input type="hidden" id="hidden_nomor_induk" name="nomor_induk">
-                            <input type="hidden" id="hidden_kelas" name="kelas"> -->
                             <div class="form-group">
                                 <label for="nama_orang_tua">Nama Orang Tua</label>
                                 <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" required>
