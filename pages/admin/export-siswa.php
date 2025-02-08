@@ -6,14 +6,14 @@
     }
     require '../../includes/db.php';
 
-    // Ambil Data Petugas
-    $stmt = $pdo->query("SELECT * FROM petugas");
-    $petugas = $stmt->fetchAll();
+    // Ambil Data Siswa
+    $stmt = $pdo->query("SELECT * FROM siswa");
+    $siswa = $stmt->fetchAll();
 ?>
 
 <html>
 <head>
-  <title>Data Petugas</title>
+  <title class="text-center">Data Siswa</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -27,9 +27,9 @@
 <body>
 <div class="container">
             <img src="../../assets/homecoming-logo.png" style="width: 120px; margin-left: 0%; margin-top: 0%; margin-right: 5%" href="index.php">
-			<h4 class="mt-3 mb-3 text-center">Data Petugas</h4>
+			<h4 class="mt-3 mb-3 text-center">Data Siswa</h4>
             <br>
-            <a href="data_petugas.php" class="btn btn-success rounded-pill">Kembali</a>
+            <a href="data_siswa.php" class="btn btn-success rounded-pill">Kembali</a>
             <br>
             <br>
 				<div class="data-tables datatable-dark">
@@ -39,30 +39,30 @@
                         <thead>
                             <tr>
                             <th>No</th>
-                            <th>NIP</th>
-                            <th>Nama Petugas</th>
-                            <th>Jabatan</th>
-                            <th>Mata Pelajaran</th>
+                            <th>Nomor Induk</th>
+                            <th>Nama Siswa</th>
+                            <th>Kelas</th>
+                            <th>Nama Orang Tua</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
                             
-                            $ambilsemuadatapetugas = $pdo->query( "SELECT * FROM petugas")->fetchAll();
+                            $ambilsemuadatasiswa = $pdo->query( "SELECT * FROM siswa")->fetchAll();
                             $i = 1;
 
-                            foreach($ambilsemuadatapetugas as $data) {                                          
-                                $nip = $data['nip'];
-                                $nama_petugas = $data['nama_petugas'];
-                                $jabatan = $data['jabatan'];
-                                $mapel = $data['mapel'];
+                            foreach($ambilsemuadatasiswa as $data) {                                          
+                                $nomor_induk = $data['nomor_induk'];
+                                $nama_siswa = $data['nama_siswa'];
+                                $kelas = $data['kelas'];
+                                $nama_ortu = $data['nama_orang_tua'];
                             ?>
                             <tr>
                                 <td><?= $i++; ?></td>
-                                <td><?php echo $nip; ?></td>
-                                <td><?php echo $nama_petugas; ?></td>
-                                <td><?php echo $jabatan; ?></td>
-                                <td><?php echo $mapel; ?></td>
+                                <td><?php echo $nomor_induk; ?></td>
+                                <td><?php echo $nama_siswa; ?></td>
+                                <td><?php echo $kelas; ?></td>
+                                <td><?php echo $nama_ortu; ?></td>
                             </tr>   
                             <?php 
                             };

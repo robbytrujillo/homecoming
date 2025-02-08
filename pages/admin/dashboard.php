@@ -17,7 +17,7 @@ require '../../includes/db.php';
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-    <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 0.5%; margin-top: 1%">    
+    <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">    
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -26,12 +26,22 @@ require '../../includes/db.php';
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Dashboard</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                        Data Master
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="data_siswa.php">Data Siswa</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="data_petugas.php">Data Petugas</a>
+                    </div>
+                </li>
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="data_siswa.php">Data Siswa</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="data_petugas.php">Data Petugas</a>
-                </li>
+                </li> -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                         Perpulangan
@@ -55,7 +65,7 @@ require '../../includes/db.php';
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-4 rounded">
         <div class="row">
             <div class="col-md-3">
                 <div class="card text-white bg-primary mb-3">
@@ -66,7 +76,7 @@ require '../../includes/db.php';
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 rounded">
                 <div class="card text-white bg-success mb-3">
                     <div class="card-header">Siswa</div>
                     <div class="card-body">
@@ -75,7 +85,7 @@ require '../../includes/db.php';
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 rounded">
                 <div class="card text-white bg-warning mb-3">
                     <div class="card-header">Petugas</div>
                     <div class="card-body">
@@ -85,7 +95,7 @@ require '../../includes/db.php';
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card text-white bg-info mb-3">
+                <div class="card text-white bg-info mb-3 rounded">
                     <div class="card-header">Perijinan</div>
                     <div class="card-body">
                         <h5 class="card-title">Total Perijinan</h5>

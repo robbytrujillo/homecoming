@@ -45,6 +45,24 @@ if (isset($_GET['hapus'])) {
 // Ambil Data Siswa
 $stmt = $pdo->query("SELECT * FROM siswa");
 $siswa = $stmt->fetchAll();
+
+// pagination
+$batas = 8;
+$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+$halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+// Hitung total data
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM siswa");
+$jumlah_data = $stmt->fetchColumn();
+$total_halaman = ceil($jumlah_data / $batas);
+
+// Ambil Data Siswa Dengan Pagination
+$stmt = $pdo->prepare("SELECT * FROM siswa LIMIT :offset, :batas");
+$stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
+$stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
+$stmt->execute();
+$siswa = $stmt->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +76,7 @@ $siswa = $stmt->fetchAll();
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 0.5%; margin-top: 1%">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -77,11 +95,12 @@ $siswa = $stmt->fetchAll();
         </div>
     </nav>
     
-    <div class="container mt-4">
-        <h2>Data Siswa</h2>
-        <button class="btn btn-primary mb-3 rounded-pill" data-toggle="modal" data-target="#tambahSiswaModal">Tambah Siswa</button>
-        <button class="btn btn-success mb-3 rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-        <a href="template_siswa.csv" class="btn btn-secondary mb-3 rounded-pill" download>Template CSV</a>
+    <div class="container mt-3 mb-3">
+        <h2 class="mt-3 mb-3">Data Siswa</h2>
+        <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahSiswaModal">Tambah Siswa</button>
+        <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
+        <a href="template_siswa.csv" class="btn btn-secondary rounded-pill" download>Template CSV</a>
+        <a href="export-siswa.php" class="btn btn-info rounded-pill">Print</a>
         
          <!-- Input Pencarian -->
          <div class="form-group">

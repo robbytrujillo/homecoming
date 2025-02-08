@@ -45,6 +45,23 @@ if (isset($_GET['hapus'])) {
 // Ambil Data Petugas
 $stmt = $pdo->query("SELECT * FROM petugas");
 $petugas = $stmt->fetchAll();
+
+// pagination
+$batas = 8;
+$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+$halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+// Hitung total data
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM petugas");
+$jumlah_data = $stmt->fetchColumn();
+$total_halaman = ceil($jumlah_data / $batas);
+
+// Ambil Data Perijinan Dengan Pagination
+$stmt = $pdo->prepare("SELECT * FROM petugas LIMIT :offset, :batas");
+$stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
+$stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
+$stmt->execute();
+$petugas = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +75,7 @@ $petugas = $stmt->fetchAll();
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 0.5%; margin-top: 1%">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%"> 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -80,9 +97,9 @@ $petugas = $stmt->fetchAll();
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <h2>Data Petugas</h2>
-        <div class="mb-3">
+    <div class="container mt-3 mb-3">
+        <h2 class="mb-3 mt-3">Data Petugas</h2>
+        <div>
             <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahPetugasModal">Tambah Petugas</button>
             <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Template CSV</a>
@@ -143,8 +160,8 @@ $petugas = $stmt->fetchAll();
                     <td><?php echo $row['jabatan']; ?></td>
                     <td><?php echo $row['mapel']; ?></td>
                     <td>
-                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
-                        <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
+                        <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td>
                 </tr>
 
@@ -186,6 +203,29 @@ $petugas = $stmt->fetchAll();
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination">
+                <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
+                </li>
+                <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
+                    <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
+                        <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
+                </li>
+            </ul>
+
+            <!-- <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?halaman=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?halaman=2">2</a></li>
+            </ul> -->
+
+        </nav>
     </div>
 
     <!-- Modal Tambah Petugas -->

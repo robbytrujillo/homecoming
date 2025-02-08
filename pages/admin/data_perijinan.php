@@ -61,7 +61,7 @@ $perijinan = $stmt->fetchAll();
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 0.5%; margin-top: 1%">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -89,12 +89,12 @@ $perijinan = $stmt->fetchAll();
         </div>
     </nav>
 
-    <div class="container mt-4 mb-5">
-        <h2>Data Perijinan</h2>
-        <div class="mt-3">
-            <a href="form_perijinan.php" class="btn btn-primary btn-md text-white">Isi Perijinan</a>
-            <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-            <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a>
+    <div class="container mt-3 mb-3">
+        <h2 class="mt-3 mb-3">Data Perijinan</h2>
+        <div>
+            <a href="form_perijinan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Perijinan</a>
+            <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
+            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a>
         </div>
 
         <!-- Modal Upload CSV -->
@@ -166,8 +166,8 @@ $perijinan = $stmt->fetchAll();
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
                     <td><?= htmlspecialchars($row['keterangan']); ?></td>
                     <td>
-                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
-                        <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
+                        <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td>
                 </tr>
 
@@ -229,7 +229,7 @@ $perijinan = $stmt->fetchAll();
         </table>
 
         <!-- Pagination -->
-        <nav>
+        <nav class="mb-5">
             <ul class="pagination">
                 <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
                     <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
