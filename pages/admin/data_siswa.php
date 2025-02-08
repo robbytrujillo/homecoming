@@ -95,7 +95,7 @@ $siswa = $stmt->fetchAll();
         </div>
     </nav>
     
-    <div class="container mt-3 mb-3">
+    <div class="container mt-3 mb-5">
         <h2 class="mt-3 mb-3">Data Siswa</h2>
         <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahSiswaModal">Tambah Siswa</button>
         <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
@@ -119,13 +119,25 @@ $siswa = $stmt->fetchAll();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($siswa as $key => $row): ?>
+                <?php 
+                $nomor = $halaman_awal + 1;
+                
+                // foreach ($siswa as $key => $row): 
+                foreach ($siswa as $row):
+                
+                ?>
                 <tr>
-                    <td><?php echo $key + 1; ?></td>
+                    <!-- <td><?php echo $key + 1; ?></td>
                     <td><?php echo $row['nomor_induk']; ?></td>
                     <td><?php echo $row['nama_siswa']; ?></td>
                     <td><?php echo $row['kelas']; ?></td>
-                    <td><?php echo $row['nama_orang_tua']; ?></td>
+                    <td><?php echo $row['nama_orang_tua']; ?></td> -->
+
+                    <td><?= $nomor++; ?></td>
+                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
+                    <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
+                    <td><?= htmlspecialchars($row['kelas']); ?></td>
+                    <td><?= htmlspecialchars($row['nama_orang_tua']); ?></td>
                     <td>
                         <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editSiswaModal<?php echo $row['id']; ?>"><i class="bi bi-pencil-square"></i>Edit</button>
                         <a href="data_siswa.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
@@ -170,6 +182,29 @@ $siswa = $stmt->fetchAll();
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+         <!-- Pagination -->
+         <nav class="mb-5 position-right">
+            <ul class="pagination">
+                <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
+                </li>
+                <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
+                    <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
+                        <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
+                </li>
+            </ul>
+
+            <!-- <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?halaman=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?halaman=2">2</a></li>
+            </ul> -->
+
+        </nav>
     </div>
 
     <!-- Modal Tambah Siswa -->

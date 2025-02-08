@@ -152,13 +152,25 @@ $petugas = $stmt->fetchAll();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($petugas as $key => $row): ?>
+                <?php 
+                $nomor = $halaman_awal + 1;
+                // foreach ($petugas as $key => $row): 
+                foreach ($petugas as $row):
+
+                ?>
                 <tr>
-                    <td><?php echo $key + 1; ?></td>
-                    <td><?php echo $row['nip']; ?></td>
+                    <!-- <td><?php echo $key + 1; ?></td> -->
+                    <!-- <td><?php echo $row['nip']; ?></td>
                     <td><?php echo $row['nama_petugas']; ?></td>
                     <td><?php echo $row['jabatan']; ?></td>
-                    <td><?php echo $row['mapel']; ?></td>
+                    <td><?php echo $row['mapel']; ?></td> -->
+
+                    <td><?= $nomor++; ?></td>
+                    <td><?= htmlspecialchars($row['nip']); ?></td>
+                    <td><?= htmlspecialchars($row['nama_petugas']); ?></td>
+                    <td><?= htmlspecialchars($row['jabatan']); ?></td>
+                    <td><?= htmlspecialchars($row['mapel']); ?></td>
+                   
                     <td>
                         <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
                         <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
