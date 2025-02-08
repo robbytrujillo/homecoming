@@ -83,10 +83,10 @@ $petugas = $stmt->fetchAll();
     <div class="container mt-4">
         <h2>Data Petugas</h2>
         <div class="mb-3">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#tambahPetugasModal">Tambah Petugas</button>
-            <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-            <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a>
-            <button class="btn btn-success" onclick="window.print()">Print</button>
+            <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahPetugasModal">Tambah Petugas</button>
+            <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
+            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Template CSV</a>
+            <a href="export-petugas.php" class="btn btn-info rounded-pill">Print</a>
         </div>
 
         <!-- Modal Upload CSV -->

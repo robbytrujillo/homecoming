@@ -79,16 +79,16 @@ $siswa = $stmt->fetchAll();
     
     <div class="container mt-4">
         <h2>Data Siswa</h2>
-        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#tambahSiswaModal">Tambah Siswa</button>
-        <button class="btn btn-success mb-3" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-        <a href="template_siswa.csv" class="btn btn-secondary mb-3" download>Download Template CSV</a>
+        <button class="btn btn-primary mb-3 rounded-pill" data-toggle="modal" data-target="#tambahSiswaModal">Tambah Siswa</button>
+        <button class="btn btn-success mb-3 rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
+        <a href="template_siswa.csv" class="btn btn-secondary mb-3 rounded-pill" download>Template CSV</a>
         
          <!-- Input Pencarian -->
          <div class="form-group">
             <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
         </div>
         
-        <table class="table table-bordered" id="dataTable">
+        <table class="table table-bordered rounded-pill" id="dataTable">
             <thead>
                 <tr>
                     <th>No</th>
@@ -108,8 +108,8 @@ $siswa = $stmt->fetchAll();
                     <td><?php echo $row['kelas']; ?></td>
                     <td><?php echo $row['nama_orang_tua']; ?></td>
                     <td>
-                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editSiswaModal<?php echo $row['id']; ?>">Edit</button>
-                        <a href="data_siswa.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editSiswaModal<?php echo $row['id']; ?>"><i class="bi bi-pencil-square"></i>Edit</button>
+                        <a href="data_siswa.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td>
                 </tr>
 
