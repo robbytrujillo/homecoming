@@ -23,6 +23,7 @@ $perijinan = $stmt->fetchAll();
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 1%; margin-top: 1%">

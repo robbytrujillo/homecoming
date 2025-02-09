@@ -184,7 +184,7 @@ $siswa = $stmt->fetchAll();
         </table>
 
          <!-- Pagination -->
-         <nav class="mb-5 position-right">
+         <nav class="mb-5">
             <ul class="pagination">
                 <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
                     <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
