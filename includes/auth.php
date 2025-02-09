@@ -76,6 +76,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script>alert('NIP atau Password salah!'); window.location='../login.php';</script>";
     }
 
+    // Cari pimpnan berdasarkan username (nip)
+    $stmts = $pdo->prepare("SELECT * FROM pimpinan WHERE nip = ?");
+    $stmts->execute([$username]);
+    $user = $stmts->fetch();
+
+    // Validasi password (tanpa hash, langsung bandingkan teks biasa)
+    if ($user && $password === 'khususpimpinan1234') {
+        // Login berhasil
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['role'] = 'pimpinan';
+
+        // Redirect ke halaman siswa
+        header('Location: ../pages/pimpinan/dashboard.php');
+        exit;
+    } else {
+        // Login gagal
+        echo "<script>alert('Nomor Induk atau Password salah!'); window.location='../login.php';</script>";
+    }
+
 }
 
 
