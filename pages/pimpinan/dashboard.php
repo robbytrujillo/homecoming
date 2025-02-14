@@ -36,28 +36,18 @@ require '../../includes/db.php';
                         <a class="dropdown-item" href="data_petugas.php">Data Petugas</a>
                     </div>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="data_siswa.php">Data Siswa</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="data_petugas.php">Data Petugas</a>
-                </li> -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                         Perpulangan
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="data_perijinan.php">Perijinan</a>
+                        <a class="dropdown-item" href="data-perijinan.php">Perijinan</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="data_kedatangan.php">Kedatangan</a>
+                        <a class="dropdown-item" href="data-kedatangan.php">Kedatangan</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="data-perijinan-laptop.php">Perijinan Laptop</a>
                     </div>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
-                </li> -->
                 <li class="nav-item">
                     <a class="nav-link rounded-pill" href="../../logout.php">Logout</a>
                 </li>
@@ -69,15 +59,6 @@ require '../../includes/db.php';
         <div class="row">
             <div class="col-md-3">
                 <div class="card text-white bg-primary mb-3">
-                    <div class="card-header">User</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Total User</h5>
-                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn(); ?></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 rounded">
-                <div class="card text-white bg-success mb-3">
                     <div class="card-header">Siswa</div>
                     <div class="card-body">
                         <h5 class="card-title">Total Siswa</h5>
@@ -86,11 +67,20 @@ require '../../includes/db.php';
                 </div>
             </div>
             <div class="col-md-3 rounded">
-                <div class="card text-white bg-warning mb-3">
-                    <div class="card-header">Petugas</div>
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-header">Perijinan Pulang</div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Petugas</h5>
-                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM petugas")->fetchColumn(); ?></p>
+                        <h5 class="card-title">Total Perijinan Pulang</h5>
+                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan")->fetchColumn(); ?></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 rounded">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-header">Kedatangan Mahad</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Kedatangan Mahad</h5>
+                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM kedatangan")->fetchColumn(); ?></p>
                     </div>
                 </div>
             </div>

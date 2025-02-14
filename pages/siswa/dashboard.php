@@ -123,22 +123,37 @@ $siswa = $stmt->fetch();
     <!-- Script untuk Generate QR Code -->
     <script>
     // Data yang akan dienkripsi ke QR Code
-    const dataSiswa = {
-        nomor_induk: "<?php echo $siswa['nomor_induk']; ?>",
-        nama_siswa: "<?php echo $siswa['nama_siswa']; ?>",
-        kelas: "<?php echo $siswa['kelas']; ?>",
-        nama_orang_tua: "<?php echo $siswa['nama_orang_tua']; ?>"
-    };
+    // const dataSiswa = {
+    //     nomor_induk: "<?php echo $siswa['nomor_induk']; ?>",
+    //     nama_siswa: "<?php echo $siswa['nama_siswa']; ?>",
+    //     kelas: "<?php echo $siswa['kelas']; ?>",
+    //     nama_orang_tua: "<?php echo $siswa['nama_orang_tua']; ?>"
+    // };
 
     // Konversi data ke format JSON
-    const dataString = JSON.stringify(dataSiswa);
+    // const dataString = JSON.stringify(dataSiswa);
 
     // Generate QR Code
+    // const qrcode = new QRCode(document.getElementById("qrcode"), {
+    //     text: dataString,
+    //     width: 160,
+    //     height: 160
+    // });
+
+    // Data dalam format string biasa, bukan JSON
+    const dataSiswa = 
+        "Nomor Induk    : <?php echo $siswa['nomor_induk']; ?>\n" +
+        "Nama Siswa     : <?php echo $siswa['nama_siswa']; ?>\n" +
+        "Kelas          : <?php echo $siswa['kelas']; ?>\n" +
+        "Nama Orang Tua : <?php echo $siswa['nama_orang_tua']; ?>";
+
+    // Generate QR Code dengan format teks biasa
     const qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: dataString,
+        text: dataSiswa,
         width: 160,
         height: 160
     });
+
     </script>
 </body>
 </html>
