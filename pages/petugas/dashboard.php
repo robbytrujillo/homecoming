@@ -6,6 +6,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'petugas') {
 }
 require '../../includes/db.php';
 
+// Ambil data petugas yang login
+$petugas_id = $_SESSION['user_id'];
+$stmtp = $pdo->prepare("SELECT * FROM petugas WHERE id = ?");
+$stmtp->execute([$petugas_id]);
+$petugas = $stmtp->fetch();
+
 // $petugas = $_GET('nama_petugas');
 ?>
 <!DOCTYPE html>
@@ -89,6 +95,10 @@ require '../../includes/db.php';
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div>
+            <h4>Selamat datang <strong><?= $petugas['nama_petugas'] ?></strong> di halaman dashboard petugas</h4>
         </div>
 
         <!-- <h1>Selamat datang <?= $petugas; ?></h1> -->

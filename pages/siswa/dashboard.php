@@ -143,8 +143,8 @@ $siswa = $stmt->fetch();
     // Data dalam format string biasa, bukan JSON
     const dataSiswa = 
         "Nomor Induk    : <?php echo $siswa['nomor_induk']; ?>\n" +
-        "Nama Siswa     : <?php echo $siswa['nama_siswa']; ?>\n" +
-        "Kelas          : <?php echo $siswa['kelas']; ?>\n" +
+        "Nama Siswa      : <?php echo $siswa['nama_siswa']; ?>\n" +
+        "Kelas             : <?php echo $siswa['kelas']; ?>\n" +
         "Nama Orang Tua : <?php echo $siswa['nama_orang_tua']; ?>";
 
     // Generate QR Code dengan format teks biasa
