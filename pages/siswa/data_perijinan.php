@@ -8,7 +8,7 @@ require '../../includes/db.php';
 
 // Ambil data perijinan siswa yang login
 $siswa_id = $_SESSION['user_id'];
-$stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?)");
+$stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_pulang DESC");
 $stmt->execute([$siswa_id]);
 $perijinan = $stmt->fetchAll();
 ?>
@@ -26,7 +26,7 @@ $perijinan = $stmt->fetchAll();
     
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
-        <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 1%; margin-top: 1%">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -52,7 +52,7 @@ $perijinan = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-4 mb-5">
-        <h2 class="mt-5 mb-3">Data Perijinan</h2>
+        <h2 class="mt-5 mb-3">Data Perijinan Perpulangan</h2>
 
         <!-- Input Pencarian -->
         <div class="form-group">
@@ -63,11 +63,11 @@ $perijinan = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nomor Induk</th>
+                    <th>Tanggal Pulang</th>
                     <th>Nama Siswa</th>
+                    <th>Nomor Induk</th>
                     <th>Kelas</th>
                     <th>Keperluan</th>
-                    <th>Tanggal Pulang</th>
                     <th>Petugas</th>
                     <th>Keterangan</th>
                 </tr>
@@ -76,11 +76,11 @@ $perijinan = $stmt->fetchAll();
                 <?php foreach ($perijinan as $key => $row): ?>
                 <tr>
                     <td><?php echo $key + 1; ?></td>
-                    <td><?php echo $row['nomor_induk']; ?></td>
+                    <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td>                   
                     <td><?php echo $row['nama_siswa']; ?></td>
+                    <td><?php echo $row['nomor_induk']; ?></td>
                     <td><?php echo $row['kelas']; ?></td>
-                    <td><?php echo $row['keperluan']; ?></td>
-                    <td><?php echo $row['tanggal_pulang']; ?></td>
+                    <td><?php echo $row['keperluan']; ?></td>                    
                     <td><?php echo $row['petugas']; ?></td>
                     <td><?php echo $row['keterangan']; ?></td>
                 </tr>

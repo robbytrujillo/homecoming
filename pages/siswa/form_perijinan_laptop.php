@@ -42,7 +42,7 @@ if (isset($_POST['tambah'])) {
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
-        <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 1%; margin-top: 1%">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -109,7 +109,7 @@ if (isset($_POST['tambah'])) {
                                 <input type="date" class="form-control" id="tanggal_pengembalian" name="tanggal_pengembalian" required>
                             </div>
                             <div class="form-group">
-                                <label for="alasan_membawa_laptop">Alasan Membawa Laptop</label>
+                                <label for="alasan_membawa_laptop">Alasan Ijin Membawa Laptop</label>
                                 <textarea class="form-control" id="alasan_membawa_laptop" name="alasan_membawa_laptop" rows="3" required></textarea>
                             </div>
                             <div class="form-group">
