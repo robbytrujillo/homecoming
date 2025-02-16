@@ -19,14 +19,14 @@ if (isset($_POST['tambah'])) {
     $kelas = $siswa['kelas'];
     $tanggal_pengambilan = $_POST['tanggal_pengambilan'];
     $perijinan = $_POST['perijinan'];
-    $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
+    // $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
     $alasan_membawa_laptop = $_POST['alasan_membawa_laptop'];
     $persetujuan = $_POST['persetujuan'];
 
     // Simpan data perijinan laptop
-    $stmt = $pdo->prepare("INSERT INTO perijinan_laptop (nomor_induk, nama_siswa, kelas, tanggal_pengambilan, perijinan, tanggal_pengembalian, alasan_membawa_laptop, persetujuan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $tanggal_pengambilan, $perijinan, $tanggal_pengembalian, $alasan_membawa_laptop, $persetujuan]);
-    echo "<script>alert('Perijinan laptop berhasil diajukan!'); window.location='form_perijinan_laptop.php';</script>";
+    $stmt = $pdo->prepare("INSERT INTO perijinan_laptop (nomor_induk, nama_siswa, kelas, tanggal_pengambilan, perijinan, alasan_membawa_laptop, persetujuan) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $tanggal_pengambilan, $perijinan, $alasan_membawa_laptop, $persetujuan]);
+    echo "<script>alert('Perijinan laptop berhasil diajukan!'); window.location='data-perijinan-laptop.php';</script>";
 }
 ?>
 
@@ -40,7 +40,7 @@ if (isset($_POST['tambah'])) {
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,13 +52,13 @@ if (isset($_POST['tambah'])) {
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
+                    <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
+                    <a class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="form_perijinan_laptop.php">Perijinan Laptop</a>
+                    <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
@@ -67,17 +67,17 @@ if (isset($_POST['tambah'])) {
         </div>
     </nav>
 
-    <div class="container mt-4 mb-5">
+    <div class="container mt-4 mb-5 rounded">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card">
                     <div class="card-header">
-                            <h3 class="text-center">Perijinan Laptop Perpulangan</h3>
+                            <h3 class="text-center">Perijinan Membawa Laptop</h3>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST">
                             <div class="form-group">
-                                <label for="nomor_induk">Nomor Induk</label>
+                                <label for="nomor_induk">Nomor Induk Siswa</label>
                                 <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $siswa['nomor_induk']; ?>" readonly>
                             </div>
                             <div class="form-group">
@@ -104,10 +104,10 @@ if (isset($_POST['tambah'])) {
                                     ?>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="tanggal_pengembalian">Tanggal Pengembalian</label>
-                                <input type="date" class="form-control" id="tanggal_pengembalian" name="tanggal_pengembalian" required>
-                            </div>
+                                <input type="date" class="form-control" id="tanggal_pengembalian" name="tanggal_pengembalian" disabled>
+                            </div> -->
                             <div class="form-group">
                                 <label for="alasan_membawa_laptop">Alasan Ijin Membawa Laptop</label>
                                 <textarea class="form-control" id="alasan_membawa_laptop" name="alasan_membawa_laptop" rows="3" required></textarea>
@@ -115,12 +115,14 @@ if (isset($_POST['tambah'])) {
                             <div class="form-group">
                                 <label for="persetujuan">Persetujuan</label>
                                 <select class="form-control" id="persetujuan" name="persetujuan" required>
+                                    <option value="Belum">Belum</option>
+                                    <option value="Sudah">Sudah</option>
                                     <?php
                                     // Ambil data pimpinan dari database untuk persetujuan
-                                    $stmt = $pdo->query("SELECT * FROM pimpinan");
-                                    while ($row = $stmt->fetch()) {
-                                        echo "<option value='{$row['nama_pimpinan']}'>{$row['nama_pimpinan']}</option>";
-                                    }
+                                    // $stmt = $pdo->query("SELECT * FROM pimpinan");
+                                    // while ($row = $stmt->fetch()) {
+                                    //     echo "<option value='{$row['nama_pimpinan']}'>{$row['nama_pimpinan']}</option>";
+                                    // }
                                     ?>
                                 </select>
                             </div>

@@ -24,9 +24,13 @@ $siswa = $stmt->fetch();
 
     <!-- Library untuk QR Code -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <!-- Librady untuk Print QRCode -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,13 +42,13 @@ $siswa = $stmt->fetch();
                     <a class="nav-link" href="dashboard.php"><b>Dashboard</b></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
+                    <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
+                    <a class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="form_perijinan_laptop.php">Perijinan Laptop</a>
+                    <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
@@ -53,38 +57,61 @@ $siswa = $stmt->fetch();
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <h2 class="mt-5 mb-3">Dashboard Siswa</h2>
+    <div class="container mt-5">
+        <h4 class="mt-5 mb-3">Selamat datang <strong><?= $siswa['nama_siswa'] ?></strong> di halaman utama siswa</h4>
         <div class="row">
             <div class="col-md-4">
                 <div class="card bg-light mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Data Perijinan</h5>
-                        <p class="card-text">Lihat data perijinan siswa.</p>
-                        <a href="data_perijinan.php" class="btn btn-primary">Lihat Data</a>
+                        <!-- <h5 class="card-title">Data Perijinan</h5> -->
+                        <img src="../../assets/permissions.svg" style="height: 320px" class="cover img-fluid">
+                        <h5 class="card-text text-center mt-3 mb-3">Melihat data perijinan siswa</h5>
+                        <div class="d-flex justify-content-center">
+                            <a href="data-perijinan.php" class="btn btn-outline-success btn-block font-weight-bold rounded-pill">Lihat Data</a>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card bg-light mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Data Kedatangan</h5>
-                        <p class="card-text">Lihat data kedatangan siswa.</p>
-                        <a href="data_kedatangan.php" class="btn btn-success">Lihat Data</a>
+                        <!-- <h5 class="card-title">Data Kedatangan</h5> -->
+                        <img src="../../assets/holiday.svg" style="height: 320px" class="cover img-fluid">
+                        <h5 class="card-text text-center mt-3 mb-3">Melihat data kedatangan siswa</h5>
+                        <div class="d-flex justify-content-center">
+                            <a href="data-kedatangan.php" class="btn btn-outline-success btn-block font-weight-bold rounded-pill">Lihat Data</a>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card bg-light mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Perijinan Laptop</h5>
-                        <p class="card-text">Ajukan perijinan membawa laptop.</p>
-                        <a href="form_perijinan_laptop.php" class="btn btn-danger">Ajukan</a>
+                        <!-- <h5 class="card-title">Perijinan Laptop</h5> -->
+                        <img src="../../assets/laptops.svg" style="height: 320px" class="cover img-fluid">
+                        <h5 class="card-text text-center mt-3 mb-3">Perijinan membawa laptop</h5>
+                        <div class="d-flex justify-content-center">
+                            <a href="form-perijinan-laptop.php" class="btn btn-outline-success btn-block font-weight-bold rounded-pill">Ajukan Perijinan</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <!-- Card QR Code -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">QRCode Siswa</h5>
+                        <!-- <button id="printQR" class="btn btn-outline-success">Print QR Code</button> -->
+                    </div>
+                    <div class="card-body text-center">
+                        <!-- Tempat untuk menampilkan QR Code -->
+                        <div id="qrcode"></div>
+                        
+                    </div>
+                </div>
+            </div>
             <div class="col-md-6">
                 <!-- Card Profil Siswa -->
                 <div class="card">
@@ -92,27 +119,17 @@ $siswa = $stmt->fetch();
                         <h5 class="card-title">Profil Siswa</h5>
                     </div>
                     <div class="card-body">
-                        <p><strong>Nomor Induk:</strong> <?php echo $siswa['nomor_induk']; ?></p>
-                        <p><strong>Nama Siswa:</strong> <?php echo $siswa['nama_siswa']; ?></p>
-                        <p><strong>Kelas:</strong> <?php echo $siswa['kelas']; ?></p>
-                        <p><strong>Nama Orang Tua:</strong> <?php echo $siswa['nama_orang_tua']; ?></p>
+                        <p>Nomor Induk: <strong><?php echo $siswa['nomor_induk']; ?></strong></p>
+                        <p>Nama Siswa: <strong><?php echo $siswa['nama_siswa']; ?></strong></p>
+                        <p>Kelas: <strong><?php echo $siswa['kelas']; ?></strong></p>
+                        <p>Nama Orang Tua: <strong><?php echo $siswa['nama_orang_tua']; ?></strong></p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <!-- Card QR Code -->
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">QR Code Profil</h5>
-                    </div>
-                    <div class="card-body text-center">
-                        <!-- Tempat untuk menampilkan QR Code -->
-                        <div id="qrcode"></div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
+    <br>
 
     <!-- Footer -->
     <?php include '../../includes/footer.php'; ?>
@@ -152,6 +169,78 @@ $siswa = $stmt->fetch();
         text: dataSiswa,
         width: 160,
         height: 160
+    });
+
+    // document.getElementById("printQR").addEventListener("click", function() {
+    // const { jsPDF } = window.jspdf;
+    // let doc = new jsPDF();
+
+    // html2canvas(document.querySelector("#qrcode")).then(canvas => {
+    //     let imgData = canvas.toDataURL("image/png");
+    //     doc.text("QR Code Profil", 80, 10); // Judul PDF
+    //     doc.addImage(imgData, 'PNG', 50, 20, 100, 100); // Tambahkan QR Code
+    //     doc.save("QRCode-Profile.pdf"); // Simpan sebagai PDF
+    //     });
+    // });
+
+    // document.getElementById("printQR").addEventListener("click", function() {
+    //     const { jsPDF } = window.jspdf;
+    //     let doc = new jsPDF();
+
+    //     html2canvas(document.querySelector("#qrcode")).then(canvas => {
+    //         let imgData = canvas.toDataURL("image/png");
+
+    //         // Ukuran dan posisi gambar QR Code agar rata tengah
+    //         let pageWidth = doc.internal.pageSize.getWidth();
+    //         let pageHeight = doc.internal.pageSize.getHeight();
+    //         let imgWidth = 180; // Sesuaikan ukuran QR Code
+    //         let imgHeight = 180;
+    //         let centerX = (pageWidth - imgWidth) / 2; // Posisi tengah horizontal
+    //         let centerY = (pageHeight - imgHeight) / 2; // Posisi tengah vertikal
+
+    //         // Tambahkan teks judul
+    //         doc.setFontSize(16);
+    //         doc.text("QR Code Profil", pageWidth / 2, 30, { align: "center" });
+
+    //         // Tambahkan gambar QR Code
+    //         doc.addImage(imgData, 'PNG', centerX, centerY, imgWidth, imgHeight);
+
+    //         // Simpan sebagai PDF
+    //         doc.save("QRCode-Profile.pdf");
+    //     });
+    // });
+
+    document.getElementById("printQR").addEventListener("click", function() {
+    const { jsPDF } = window.jspdf;
+    let doc = new jsPDF({
+        orientation: "portrait", // Mode potrait
+        unit: "mm", 
+        format: "A4" // Ukuran kertas A4
+    });
+
+    html2canvas(document.querySelector("#qrcode")).then(canvas => {
+        let imgData = canvas.toDataURL("image/png");
+
+        // Ukuran halaman
+        let pageWidth = doc.internal.pageSize.getWidth();
+        let pageHeight = doc.internal.pageSize.getHeight();
+
+        // Tentukan ukuran gambar
+        let imgWidth = 100; // Ukuran QR Code lebih kecil agar tidak terlalu besar
+        let imgHeight = 100;
+        let centerX = (pageWidth - imgWidth) / 2; // Tengah secara horizontal
+        let centerY = (pageHeight - imgHeight) / 2; // Tengah secara vertikal
+
+        // Tambahkan teks judul
+        doc.setFontSize(16);
+        doc.text("QR Code Profil", pageWidth / 2, 30, { align: "center" });
+
+        // Tambahkan gambar QR Code di tengah
+        doc.addImage(imgData, 'PNG', centerX, centerY, imgWidth, imgHeight);
+
+        // Simpan sebagai PDF
+        doc.save("QRCode-Profile.pdf");
+        });
     });
 
     </script>

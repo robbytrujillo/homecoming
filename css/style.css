@@ -46,3 +46,11 @@ canvas {
 .footer a:hover {
     color:rgb(37, 84, 12); /* Warna biru saat hover */
 }
+
+#qrcode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh; /* Tengah halaman penuh */
+}

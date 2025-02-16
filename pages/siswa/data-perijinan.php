@@ -6,11 +6,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'siswa') {
 }
 require '../../includes/db.php';
 
-// Ambil data kedatangan siswa yang login
+// Ambil data perijinan siswa yang login
 $siswa_id = $_SESSION['user_id'];
-$stmt = $pdo->prepare("SELECT * FROM kedatangan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?)");
+$stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_pulang DESC");
 $stmt->execute([$siswa_id]);
-$kedatangan = $stmt->fetchAll();
+$perijinan = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -18,11 +18,12 @@ $kedatangan = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Kedatangan - Siswa</title>
+    <title>Data Perijinan - Siswa</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
@@ -34,14 +35,14 @@ $kedatangan = $stmt->fetchAll();
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
-                </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
+                    <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="form_perijinan_laptop.php">Perijinan Laptop</a>
+                    <a class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
@@ -50,35 +51,37 @@ $kedatangan = $stmt->fetchAll();
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <h2 class="mt-5 mb-3">Data Kedatangan</h2>
-         <!-- Input Pencarian -->
-         <div class="form-group">
+    <div class="container mt-4 mb-5">
+        <h2 class="mt-5 mb-3">Data Perijinan Perpulangan</h2>
+
+        <!-- Input Pencarian -->
+        <div class="form-group">
             <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
         </div>
-        
+
         <table class="table table-bordered" id="dataTable">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nomor Induk</th>
+                    <th>Tanggal Pulang</th>
                     <th>Nama Siswa</th>
+                    <th>Nomor Induk</th>
                     <th>Kelas</th>
                     <th>Keperluan</th>
-                    <th>Tanggal Kedatangan</th>
                     <th>Petugas</th>
                     <th>Keterangan</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($kedatangan as $key => $row): ?>
+                <?php foreach ($perijinan as $key => $row): ?>
                 <tr>
                     <td><?php echo $key + 1; ?></td>
-                    <td><?php echo $row['nomor_induk']; ?></td>
+                    <!-- <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td> -->
+                    <td><?php echo date('d F Y', strtotime($row['tanggal_pulang'])); ?></td>                   
                     <td><?php echo $row['nama_siswa']; ?></td>
+                    <td><?php echo $row['nomor_induk']; ?></td>
                     <td><?php echo $row['kelas']; ?></td>
-                    <td><?php echo $row['keperluan']; ?></td>
-                    <td><?php echo $row['tanggal_datang']; ?></td>
+                    <td><?php echo $row['keperluan']; ?></td>                    
                     <td><?php echo $row['petugas']; ?></td>
                     <td><?php echo $row['keterangan']; ?></td>
                 </tr>
@@ -92,7 +95,7 @@ $kedatangan = $stmt->fetchAll();
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    
     <!-- Script Pencarian -->
     <script>
     $(document).ready(function() {
@@ -105,5 +108,8 @@ $kedatangan = $stmt->fetchAll();
         });
     });
     </script>
+
+    
+
 </body>
 </html>

@@ -55,41 +55,47 @@ require '../../includes/db.php';
         </div>
     </nav>
 
-    <div class="container mt-4 rounded">
+    <div class="container mt-4 ">
         <div class="row">
             <div class="col-md-3">
-                <div class="card text-white bg-primary mb-3">
+                <div class="card text-white bg-primary mb-3 rounded-3">
                     <div class="card-header">Siswa</div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Siswa</h5>
+                        <h5 class="card-title">Total :</h5>
                         <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM siswa")->fetchColumn(); ?></p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 rounded">
-                <div class="card text-white bg-success mb-3">
-                    <div class="card-header">Perijinan Pulang</div>
+            <div class="col-md-3 ">
+                <div class="card text-white bg-secondary mb-3 rounded-3">
+                    <div class="card-header">
+                    Perijinan Pulang
+                    <!-- <img src="../../assets/permissions.svg" style="height: 320px" class="cover img-fluid"> -->
+                    </div>
+                    
                     <div class="card-body">
-                        <h5 class="card-title">Total Perijinan Pulang</h5>
+                        <h5 class="card-title">Total :</h5>
                         <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan")->fetchColumn(); ?></p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 rounded">
-                <div class="card text-white bg-warning mb-3">
-                    <div class="card-header">Kedatangan Mahad</div>
+            <div class="col-md-3 ">
+                <div class="card text-white bg-warning mb-3 rounded-3">
+                    <div class="card-header">Kedatangan Mahad
+                        <!-- <img src="../../assets/holiday.svg" style="height: 320px" class="cover img-fluid"> -->
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Kedatangan Mahad</h5>
+                        <h5 class="card-title">Total :</h5>
                         <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM kedatangan")->fetchColumn(); ?></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card text-white bg-info mb-3 rounded">
-                    <div class="card-header">Perijinan</div>
+                <div class="card text-white bg-info mb-3 rounded-3">
+                    <div class="card-header">Perijinan Laptop</div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Perijinan</h5>
-                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan")->fetchColumn(); ?></p>
+                        <h5 class="card-title">Total :</h5>
+                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan_laptop")->fetchColumn(); ?></p>
                     </div>
                 </div>
             </div>
