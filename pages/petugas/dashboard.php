@@ -25,7 +25,7 @@ $petugas = $stmtp->fetch();
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-    <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 0.5%; margin-top: 1%">    
+    <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">    
     <!-- <a class="navbar-brand" href="#">Aplikasi Pudamah</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@ $petugas = $stmtp->fetch();
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a style="color: blue;" class="nav-link" href="#"><b>Dashboard</b></a>
+                    <a style="color: #28A745;" class="nav-link" href="#"><b>Dashboard</b></a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
@@ -57,10 +57,15 @@ $petugas = $stmtp->fetch();
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <div class="row">
+    
+
+    <div class="container mt-4 mb-4">
+        <div>
+            <h4>Selamat datang <strong><?= $petugas['nama_petugas'] ?></strong> di halaman dashboard petugas</h4>
+        </div>
+        <div class="row mt-3">
             <div class="col-md-3">
-                <div class="card text-white bg-primary mb-3">
+                <div class="card text-white bg-primary mb-3 border-0 shadow-lg">
                     <div class="card-header">Perijinan</div>
                     <div class="card-body">
                         <h5 class="card-title">Total Perijinan</h5>
@@ -69,7 +74,7 @@ $petugas = $stmtp->fetch();
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card text-white bg-success mb-3">
+                <div class="card text-white bg-success mb-3 border-0 shadow-lg">
                     <div class="card-header">Kedatangan</div>
                     <div class="card-body">
                         <h5 class="card-title">Total Kedatangan</h5>
@@ -78,7 +83,7 @@ $petugas = $stmtp->fetch();
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card text-white bg-warning mb-3">
+                <div class="card text-white bg-warning mb-3 border-0 shadow-lg">
                     <div class="card-header">Petugas</div>
                     <div class="card-body">
                         <h5 class="card-title">Total Petugas</h5>
@@ -87,7 +92,7 @@ $petugas = $stmtp->fetch();
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card text-white bg-danger mb-3">
+                <div class="card text-white bg-danger mb-3 border-0 shadow-lg">
                     <div class="card-header">Siswa</div>
                     <div class="card-body">
                         <h5 class="card-title">Total Siswa</h5>
@@ -97,9 +102,7 @@ $petugas = $stmtp->fetch();
             </div>
         </div>
 
-        <div>
-            <h4>Selamat datang <strong><?= $petugas['nama_petugas'] ?></strong> di halaman dashboard petugas</h4>
-        </div>
+        
 
         <!-- <h1>Selamat datang <?= $petugas; ?></h1> -->
 

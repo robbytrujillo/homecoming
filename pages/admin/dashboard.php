@@ -5,6 +5,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
     exit;
 }
 require '../../includes/db.php';
+
+// Ambil data pimpinan yang login
+$users_id = $_SESSION['user_id'];
+$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->execute([$users_id]);
+$users = $stmt->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +22,8 @@ require '../../includes/db.php';
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-    <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
+    <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">    
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -65,10 +71,13 @@ require '../../includes/db.php';
         </div>
     </nav>
 
-    <div class="container mt-4 rounded">
-        <div class="row">
+    <div class="container mt-4 mb-4 rounded">
+        <div>
+            <h4>Selamat datang <strong><?= $users['username'] ?></strong> di halaman utama administrator</h4>
+        </div>
+        <div class="row mt-3">
             <div class="col-md-3">
-                <div class="card text-white bg-primary mb-3">
+                <div class="card text-white bg-primary mb-3 border-0 shadow-lg">
                     <div class="card-header">User</div>
                     <div class="card-body">
                         <h5 class="card-title">Total User</h5>
@@ -77,7 +86,7 @@ require '../../includes/db.php';
                 </div>
             </div>
             <div class="col-md-3 rounded">
-                <div class="card text-white bg-success mb-3">
+                <div class="card text-white bg-success mb-3 border-0 shadow-lg">
                     <div class="card-header">Siswa</div>
                     <div class="card-body">
                         <h5 class="card-title">Total Siswa</h5>
@@ -86,7 +95,7 @@ require '../../includes/db.php';
                 </div>
             </div>
             <div class="col-md-3 rounded">
-                <div class="card text-white bg-warning mb-3">
+                <div class="card text-white bg-warning mb-3 border-0 shadow-lg">
                     <div class="card-header">Petugas</div>
                     <div class="card-body">
                         <h5 class="card-title">Total Petugas</h5>
@@ -95,7 +104,7 @@ require '../../includes/db.php';
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card text-white bg-info mb-3 rounded">
+                <div class="card text-white bg-info mb-3 border-0 shadow-lg">
                     <div class="card-header">Perijinan</div>
                     <div class="card-body">
                         <h5 class="card-title">Total Perijinan</h5>

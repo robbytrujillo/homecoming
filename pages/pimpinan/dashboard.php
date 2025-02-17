@@ -5,6 +5,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'pimpinan') {
     exit;
 }
 require '../../includes/db.php';
+
+// Ambil data pimpinan yang login
+$pimpinan_id = $_SESSION['user_id'];
+$stmt = $pdo->prepare("SELECT * FROM pimpinan WHERE id = ?");
+$stmt->execute([$pimpinan_id]);
+$pimpinan = $stmt->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,10 +61,13 @@ require '../../includes/db.php';
         </div>
     </nav>
 
-    <div class="container mt-4 ">
-        <div class="row">
+    <div class="container mt-5 mb-3">
+        <div>
+            <h4>Selamat datang <strong><?= $pimpinan['nama_pimpinan'] ?></strong> di halaman utama pimpinan</h4>
+        </div>
+        <div class="row mt-3">
             <div class="col-md-3">
-                <div class="card text-white bg-primary mb-3 rounded-3">
+                <div class="card text-white bg-primary mb-3 rounded-3 border-0 shadow-lg">
                     <div class="card-header">Siswa</div>
                     <div class="card-body">
                         <h5 class="card-title">Total :</h5>
@@ -67,7 +76,7 @@ require '../../includes/db.php';
                 </div>
             </div>
             <div class="col-md-3 ">
-                <div class="card text-white bg-secondary mb-3 rounded-3">
+                <div class="card text-white bg-secondary mb-3 rounded-3 border-0 shadow-lg">
                     <div class="card-header">
                     Perijinan Pulang
                     <!-- <img src="../../assets/permissions.svg" style="height: 320px" class="cover img-fluid"> -->
@@ -80,7 +89,7 @@ require '../../includes/db.php';
                 </div>
             </div>
             <div class="col-md-3 ">
-                <div class="card text-white bg-warning mb-3 rounded-3">
+                <div class="card text-white bg-warning mb-3 rounded-3 border-0 shadow-lg">
                     <div class="card-header">Kedatangan Mahad
                         <!-- <img src="../../assets/holiday.svg" style="height: 320px" class="cover img-fluid"> -->
                     </div>
@@ -91,7 +100,7 @@ require '../../includes/db.php';
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card text-white bg-info mb-3 rounded-3">
+                <div class="card text-white bg-info mb-3 rounded-3 border-0 shadow-lg">
                     <div class="card-header">Perijinan Laptop</div>
                     <div class="card-body">
                         <h5 class="card-title">Total :</h5>
