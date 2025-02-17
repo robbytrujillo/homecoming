@@ -12,21 +12,21 @@
     <div class="container mt-5 ">
         <div class="row justify-content-center mt-3">
             <div class="col-md-6 col-lg-4">
-                <div class="card">
+                <div class="card shadow-lg rounded-2">
                     <div class="card-header">
                         <!-- <h3 class="text-center">Login</h3> -->
                         <img src="./assets/homecoming-logo.png" style="width: 200px; margin-left: 15%; margin-top: 5%">
-                        <marquee><h6 style="text-align: center; color: rgb(54, 50, 50)">Selamat Datang di Sistem Informasi Homecoming - Perpulangan Siswa Ma'had, Silahkan login terlebih dahulu..</h6></marquee>
+                        <!-- <marquee><h6 style="text-align: center; color: rgb(54, 50, 50)">Selamat Datang di Sistem Informasi Homecoming - Perpulangan Siswa Ma'had, Silahkan login terlebih dahulu..</h6></marquee> -->
                     </div>
                     <div class="card-body">
                         <form action="includes/auth.php" method="POST">
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" required>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Ketik nisn atau nip anda" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Ketik password anda" required>
                             </div>
                             <button type="submit" class="btn btn-success btn-block">Login</button>
                         </form>

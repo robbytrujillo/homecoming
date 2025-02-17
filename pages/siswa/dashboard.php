@@ -60,8 +60,8 @@ $siswa = $stmt->fetch();
     <div class="container mt-5">
         <h4 class="mt-5 mb-3">Selamat datang <strong><?= $siswa['nama_siswa'] ?></strong> di halaman utama siswa</h4>
         <div class="row">
-            <div class="col-md-4">
-                <div class="card bg-light mb-3">
+            <div class="col-md-4 bg-white">
+                <div class="card bg-light mb-3 shadow-sm rounded-lg border-0">
                     <div class="card-body">
                         <!-- <h5 class="card-title">Data Perijinan</h5> -->
                         <img src="../../assets/permissions.svg" style="height: 320px" class="cover img-fluid">
@@ -73,7 +73,7 @@ $siswa = $stmt->fetch();
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card bg-light mb-3">
+                <div class="card bg-light mb-3 shadow-sm rounded-lg border-0">
                     <div class="card-body">
                         <!-- <h5 class="card-title">Data Kedatangan</h5> -->
                         <img src="../../assets/holiday.svg" style="height: 320px" class="cover img-fluid">
@@ -85,7 +85,7 @@ $siswa = $stmt->fetch();
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card bg-light mb-3">
+                <div class="card bg-light mb-3 shadow-sm rounded-lg border-0">
                     <div class="card-body">
                         <!-- <h5 class="card-title">Perijinan Laptop</h5> -->
                         <img src="../../assets/laptops.svg" style="height: 320px" class="cover img-fluid">
@@ -97,9 +97,9 @@ $siswa = $stmt->fetch();
                 </div>
             </div>
         </div>
-        <div class="row d-flex justify-content-center mb-4 rounded">
+        <div class="row d-flex justify-content-center mb-4 ">
             <div class="col-md-6 d-flex align-items-center">
-                <div class="card w-100">
+                <div class="card w-100 shadow-sm rounded-lg border-0">
                     <div class="card-header">
                         <h5 class="card-title text-center">QRCode Siswa</h5>
                     </div>
@@ -109,7 +109,7 @@ $siswa = $stmt->fetch();
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card w-100">
+                <div class="card w-100 shadow-sm rounded-lg border-0">
                     <div class="card-header">
                         <h5 class="card-title text-center">Profil Siswa</h5>
                     </div>
