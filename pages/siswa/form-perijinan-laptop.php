@@ -21,11 +21,11 @@ if (isset($_POST['tambah'])) {
     $perijinan = $_POST['perijinan'];
     // $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
     $alasan_membawa_laptop = $_POST['alasan_membawa_laptop'];
-    $persetujuan = $_POST['persetujuan'];
+    // $persetujuan = $_POST['persetujuan'];
 
     // Simpan data perijinan laptop
-    $stmt = $pdo->prepare("INSERT INTO perijinan_laptop (nomor_induk, nama_siswa, kelas, tanggal_pengambilan, perijinan, alasan_membawa_laptop, persetujuan) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $tanggal_pengambilan, $perijinan, $alasan_membawa_laptop, $persetujuan]);
+    $stmt = $pdo->prepare("INSERT INTO perijinan_laptop (nomor_induk, nama_siswa, kelas, tanggal_pengambilan, perijinan, alasan_membawa_laptop) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $tanggal_pengambilan, $perijinan, $alasan_membawa_laptop]);
     echo "<script>alert('Perijinan laptop berhasil diajukan!'); window.location='data-perijinan-laptop.php';</script>";
 }
 ?>
@@ -112,11 +112,11 @@ if (isset($_POST['tambah'])) {
                                 <label for="alasan_membawa_laptop">Alasan Ijin Membawa Laptop</label>
                                 <textarea class="form-control" id="alasan_membawa_laptop" name="alasan_membawa_laptop" rows="3" required></textarea>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="persetujuan">Persetujuan</label>
                                 <select class="form-control" id="persetujuan" name="persetujuan" required>
                                     <option value="Belum">Belum</option>
-                                    <option value="Sudah">Sudah</option>
+                                    <option value="Sudah">Sudah</option> -->
                                     <?php
                                     // Ambil data pimpinan dari database untuk persetujuan
                                     // $stmt = $pdo->query("SELECT * FROM pimpinan");
@@ -124,9 +124,10 @@ if (isset($_POST['tambah'])) {
                                     //     echo "<option value='{$row['nama_pimpinan']}'>{$row['nama_pimpinan']}</option>";
                                     // }
                                     ?>
-                                </select>
-                            </div>
-                            <button type="submit" name="tambah" class="btn btn-success">Ajukan Perijinan</button>
+                                <!-- </select>
+                            </div> -->
+                            <button type="submit" name="tambah" class="btn btn-success rounded-pill">Ajukan Perijinan</button>
+                            <a href="data-perijinan-laptop.php" type="button" name="data_perijinan_laptop" class="btn btn-secondary rounded-pill">Lihat Data</a>
                         </form>
                     </div>
                 </div>

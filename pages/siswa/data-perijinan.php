@@ -54,6 +54,12 @@ $perijinan = $stmt->fetchAll();
     <div class="container mt-4 mb-5">
         <h2 class="mt-5 mb-3">Data Perijinan Perpulangan</h2>
 
+        <div class="mt-3">
+            <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
+            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
+            <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a> -->
+        </div>
+
         <!-- Input Pencarian -->
         <div class="form-group">
             <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>

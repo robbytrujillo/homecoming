@@ -53,6 +53,11 @@ $perijinan_laptop = $stmt->fetchAll();
 
     <div class="container mt-4 mb-5">
         <h2 class="mt-5 mb-3">Data Perijinan Laptop</h2>
+        <div class="mt-3">
+            <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
+            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
+            <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a> -->
+        </div>
 
         <!-- Input Pencarian -->
         <div class="form-group">
@@ -75,6 +80,7 @@ $perijinan_laptop = $stmt->fetchAll();
             <tbody>
                 <?php foreach ($perijinan_laptop as $key => $row): ?>
                 <tr>
+
                     <td><?php echo $key + 1; ?></td>
                     <!-- <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td> -->
                     <td><?php echo date('d F Y', strtotime($row['tanggal_pengambilan'])); ?></td>                   
