@@ -97,40 +97,34 @@ $siswa = $stmt->fetch();
                 </div>
             </div>
         </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <!-- Card QR Code -->
-                <div class="card">
+        <div class="row d-flex justify-content-center mb-4 rounded">
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="card w-100">
                     <div class="card-header">
-                        <h5 class="card-title">QRCode Siswa</h5>
-                        <!-- <button id="printQR" class="btn btn-outline-success">Print QR Code</button> -->
+                        <h5 class="card-title text-center">QRCode Siswa</h5>
                     </div>
-                    <div class="card-body text-center">
-                        <!-- Tempat untuk menampilkan QR Code -->
+                    <div class="card-body d-flex justify-content-center">
                         <div id="qrcode"></div>
-                        
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <!-- Card Profil Siswa -->
-                <div class="card">
+                <div class="card w-100">
                     <div class="card-header">
-                        <h5 class="card-title">Profil Siswa</h5>
+                        <h5 class="card-title text-center">Profil Siswa</h5>
                     </div>
                     <div class="card-body">
-                        <p>Nomor Induk: <strong><?php echo $siswa['nomor_induk']; ?></strong></p>
-                        <p>Nama Siswa: <strong><?php echo $siswa['nama_siswa']; ?></strong></p>
-                        <p>Kelas: <strong><?php echo $siswa['kelas']; ?></strong></p>
-                        <p>Nama Orang Tua: <strong><?php echo $siswa['nama_orang_tua']; ?></strong></p>
+                        <p>Nomor Induk Siswa &nbsp; &nbsp;: <strong><?php echo $siswa['nomor_induk']; ?></strong></p>
+                        <p>Nama Siswa  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <strong><?php echo $siswa['nama_siswa']; ?></strong></p>
+                        <p>Kelas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <strong><?php echo $siswa['kelas']; ?></strong></p>
+                        <p>Nama Orang Tua &nbsp; &nbsp; &nbsp; &nbsp;: <strong><?php echo $siswa['nama_orang_tua']; ?></strong></p>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
     <br>
-
+    
     <!-- Footer -->
     <?php include '../../includes/footer.php'; ?>
 
@@ -139,23 +133,6 @@ $siswa = $stmt->fetch();
 
     <!-- Script untuk Generate QR Code -->
     <script>
-    // Data yang akan dienkripsi ke QR Code
-    // const dataSiswa = {
-    //     nomor_induk: "<?php echo $siswa['nomor_induk']; ?>",
-    //     nama_siswa: "<?php echo $siswa['nama_siswa']; ?>",
-    //     kelas: "<?php echo $siswa['kelas']; ?>",
-    //     nama_orang_tua: "<?php echo $siswa['nama_orang_tua']; ?>"
-    // };
-
-    // Konversi data ke format JSON
-    // const dataString = JSON.stringify(dataSiswa);
-
-    // Generate QR Code
-    // const qrcode = new QRCode(document.getElementById("qrcode"), {
-    //     text: dataString,
-    //     width: 160,
-    //     height: 160
-    // });
 
     // Data dalam format string biasa, bukan JSON
     const dataSiswa = 
@@ -164,12 +141,16 @@ $siswa = $stmt->fetch();
         "Kelas             : <?php echo $siswa['kelas']; ?>\n" +
         "Nama Orang Tua : <?php echo $siswa['nama_orang_tua']; ?>";
 
+    // Konversi data ke format JSON
+    // const dataString = JSON.stringify(dataSiswa);
+
     // Generate QR Code dengan format teks biasa
     const qrcode = new QRCode(document.getElementById("qrcode"), {
         text: dataSiswa,
-        width: 160,
+        width: 160, // Ubah ukuran agar lebih besar
         height: 160
     });
+
 
     // document.getElementById("printQR").addEventListener("click", function() {
     // const { jsPDF } = window.jspdf;
@@ -209,39 +190,6 @@ $siswa = $stmt->fetch();
     //         doc.save("QRCode-Profile.pdf");
     //     });
     // });
-
-    document.getElementById("printQR").addEventListener("click", function() {
-    const { jsPDF } = window.jspdf;
-    let doc = new jsPDF({
-        orientation: "portrait", // Mode potrait
-        unit: "mm", 
-        format: "A4" // Ukuran kertas A4
-    });
-
-    html2canvas(document.querySelector("#qrcode")).then(canvas => {
-        let imgData = canvas.toDataURL("image/png");
-
-        // Ukuran halaman
-        let pageWidth = doc.internal.pageSize.getWidth();
-        let pageHeight = doc.internal.pageSize.getHeight();
-
-        // Tentukan ukuran gambar
-        let imgWidth = 100; // Ukuran QR Code lebih kecil agar tidak terlalu besar
-        let imgHeight = 100;
-        let centerX = (pageWidth - imgWidth) / 2; // Tengah secara horizontal
-        let centerY = (pageHeight - imgHeight) / 2; // Tengah secara vertikal
-
-        // Tambahkan teks judul
-        doc.setFontSize(16);
-        doc.text("QR Code Profil", pageWidth / 2, 30, { align: "center" });
-
-        // Tambahkan gambar QR Code di tengah
-        doc.addImage(imgData, 'PNG', centerX, centerY, imgWidth, imgHeight);
-
-        // Simpan sebagai PDF
-        doc.save("QRCode-Profile.pdf");
-        });
-    });
 
     </script>
 </body>

@@ -47,10 +47,18 @@ canvas {
     color:rgb(37, 84, 12); /* Warna biru saat hover */
 }
 
-#qrcode {
+/* #qrcode {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100vh; /* Tengah halaman penuh */
+/* } */ 
+
+#qrcode canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 200px; /* Sesuaikan dengan kebutuhan */
+    margin: auto;
+    display: block;
 }
