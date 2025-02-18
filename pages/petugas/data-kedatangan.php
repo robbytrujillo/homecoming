@@ -19,7 +19,7 @@ if (isset($_POST['edit'])) {
 
     $stmt = $pdo->prepare("UPDATE kedatangan SET nomor_induk= ?, nama_siswa = ?, kelas = ?, keperluan = ?, tanggal_datang = ?, petugas = ?, keterangan = ? WHERE id = ?");
     $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
-    header('Location: data_perijinan.php');
+    header('Location: data-kedatangan.php');
     exit;
 }
 
@@ -28,7 +28,7 @@ if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
     $stmt = $pdo->prepare("DELETE FROM kedatangan WHERE id = ?");
     $stmt->execute([$id]);
-    header('Location: data_kedatangan.php');
+    header('Location: data-kedatangan.php');
     exit;
 }
 
@@ -60,8 +60,8 @@ $kedatangan = $stmt->fetchAll();
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 0.5%; margin-top: 1%">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -71,10 +71,10 @@ $kedatangan = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="form_kedatangan.php">Form Kedatangan</a>
+                    <a class="nav-link" href="form-kedatangan.php">Form Kedatangan</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: blue;"  class="nav-link" href="data_kedatangan.php"><b>Data Kedatangan</b></a>
+                    <a style="color: blue;"  class="nav-link" href="data-kedatangan.php"><b>Data Kedatangan</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
@@ -86,7 +86,7 @@ $kedatangan = $stmt->fetchAll();
     <div class="container mt-4 mb-5">
         <h2>Data Kedatangan</h2>
         <div class="mt-3">
-            <a href="form_kedatangan.php" class="btn btn-success btn-md text-white">Isi Kedatangan</a>
+            <a href="form-kedatangan.php" class="btn btn-success btn-md text-white rounded-pill">Isi Kedatangan</a>
         </div>
        
         <!-- Input Pencarian -->
@@ -99,11 +99,11 @@ $kedatangan = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nomor Induk</th>
-                    <th>Nama Siswa</th>
-                    <th>Kelas</th>
-                    <th>Keperluan</th>
                     <th>Tanggal Datang</th>
+                    <th>Nama Siswa</th>
+                    <th>Nomor Induk</th>
+                    <th>Kelas</th>
+                    <th>Keperluan</th>                    
                     <th>Petugas</th>
                     <th>Keterangan</th>
                     <!-- <th>Aksi</th> -->
@@ -120,11 +120,11 @@ $kedatangan = $stmt->fetchAll();
                     <!-- <td><?php echo $key + 1; ?></td> -->
                     <td><?= $nomor++; ?></td>
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
-                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
-                    <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
-                    <td><?= htmlspecialchars($row['kelas']); ?></td>
-                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
                     <td><?= htmlspecialchars($row['tanggal_datang']); ?></td>
+                    <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
+                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
+                    <td><?= htmlspecialchars($row['kelas']); ?></td>
+                    <td><?= htmlspecialchars($row['keperluan']); ?></td>                    
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
                     <td><?= htmlspecialchars($row['keterangan']); ?></td>
                 </tr>

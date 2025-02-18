@@ -39,7 +39,7 @@ $siswa = $stmt->fetch();
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="dashboard.php"><b>Dashboard</b></a>
+                    <a class="nav-link" style="color: #28A745;" href="dashboard.php"><b>Dashboard</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>

@@ -8,7 +8,7 @@ require '../../includes/db.php';
 
 // Ambil data kedatangan siswa yang login
 $siswa_id = $_SESSION['user_id'];
-$stmt = $pdo->prepare("SELECT * FROM kedatangan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?)");
+$stmt = $pdo->prepare("SELECT * FROM kedatangan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_datang DESC");
 $stmt->execute([$siswa_id]);
 $kedatangan = $stmt->fetchAll();
 ?>
@@ -23,7 +23,7 @@ $kedatangan = $stmt->fetchAll();
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

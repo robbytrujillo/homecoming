@@ -5,7 +5,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'petugas') {
     exit;
 }
 require '../../includes/db.php';
-require '../../includes/connect.php';
 
 // Edit Data Perijinan
 if (isset($_POST['edit'])) {
@@ -34,21 +33,21 @@ if (isset($_GET['hapus'])) {
 }
 
 // pagination
-// $batas = 5;
-// $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
-// $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+$batas = 8;
+$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+$halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
 // Hitung total data
-// $stmt = $pdo->prepare("SELECT COUNT(*) FROM perijinan");
-// $jumlah_data = $stmt->fetchColumn();
-// $total_halaman = ceil($jumlah_data / $batas);
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM perijinan");
+$jumlah_data = $stmt->fetchColumn();
+$total_halaman = ceil($jumlah_data / $batas);
 
 // Ambil Data Perijinan Dengan Pagination
-// $stmt = $pdo->prepare("SELECT * FROM perijinan LIMIT :offset, :batas");
-// $stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
-// $stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
-// $stmt->execute();
-// $perijinan = $stmt->fetchAll();
+$stmt = $pdo->prepare("SELECT * FROM perijinan LIMIT :offset, :batas");
+$stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
+$stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
+$stmt->execute();
+$perijinan = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -61,8 +60,8 @@ if (isset($_GET['hapus'])) {
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 1%; margin-top: 1%">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -75,7 +74,7 @@ if (isset($_GET['hapus'])) {
                     <a class="nav-link" href="form_perijinan.php">Form Perijinan</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: blue;"  class="nav-link" href="data_perijinan.php"><b>Data Perijinan</b></a>
+                    <a style="color: #28A745;"  class="nav-link" href="data_perijinan.php"><b>Data Perijinan</b></a>
                 </li>
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
@@ -93,7 +92,7 @@ if (isset($_GET['hapus'])) {
     <div class="container mt-4 mb-5">
         <h2>Data Perijinan</h2>
         <div class="mt-3">
-            <a href="form_perijinan.php" class="btn btn-success btn-md text-white">Isi Perijinan</a>
+            <a href="form_perijinan.php" class="btn btn-success btn-md text-white rounded-pill">Isi Perijinan</a>
             <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a> -->
         </div>
@@ -132,7 +131,7 @@ if (isset($_GET['hapus'])) {
 
         <!-- Tabel Data Petugas -->
         <table class="table table-bordered" id="dataTable">
-            <thead>
+            <thead >
                 <tr>
                     <th>No</th>
                     <th>Nomor Induk</th>
@@ -148,44 +147,26 @@ if (isset($_GET['hapus'])) {
             </thead>
             <tbody>
                 <?php 
-                    $batas = 10;
-                    $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
-                    $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;	
-    
-                    $previous = $halaman - 1;
-                    $next = $halaman + 1;
-                    
-                    $data = mysqli_query($connect,"select * from perijinan");
-                    $jumlah_data = mysqli_num_rows($data);
-                    $total_halaman = ceil($jumlah_data / $batas);
-    
-                    $data_perijinan = mysqli_query($connect,"select * from perijinan limit $halaman_awal, $batas");
-                    $nomor = $halaman_awal + 1;
-                    while($d = mysqli_fetch_array($data_perijinan)){
-				?>
+                $nomor = $halaman_awal + 1;
+                
+                // foreach ($perijinan as $key => $row): 
+                foreach ($perijinan as $row): 
+                ?>
                 <tr>
                     <!-- <td><?php echo $key + 1; ?></td> -->
-                    <!-- <td><?= $nomor++; ?></td> -->
+                    <td><?= $nomor++; ?></td>
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
-                    <!-- <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
+                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
-                    <td><?= htmlspecialchars($row['kelas']); ?></td> -->
+                    <td><?= htmlspecialchars($row['kelas']); ?></td>
                     <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
-                    <!-- <td><?= htmlspecialchars($row['keperluan']); ?></td>
+                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
                     <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
-                    <td><?= htmlspecialchars($row['keterangan']); ?></td> -->
+                    <td><?= htmlspecialchars($row['keterangan']); ?></td>
                     <!-- <td>
                         <a href="form_perijinan.php?id<?= $row['id']; ?>" class="btn btn-primary btn-sm">Isi Perijinan</a>
                     </td> -->
-                    <td><?= $nomor++; ?></td>
-                    <td><?= $d['nomor_induk']; ?></td>
-                    <td><?= $d['nama_siswa']; ?></td>
-                    <td><?= $d['kelas']; ?></td>
-                    <td><?= $d['keperluan']; ?></td>
-                    <td><?= $d['tanggal_pulang']; ?></td>
-                    <td><?= $d['petugas']; ?></td>
-                    <td><?= $d['keterangan']; ?></td>
                 </tr>
 
                 
@@ -241,27 +222,26 @@ if (isset($_GET['hapus'])) {
                         </div>
                     </div>
                 </div>
-                <?php } ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
 
         <!-- Pagination -->
         <nav>
-            <ul class="pagination justify-content-center">
-				<li class="page-item">
-					<a class="page-link" <?php if($halaman > 1){ echo "href='?halaman=$previous'"; } ?>>Previous</a>
-				</li>
-				<?php 
-				for($x=1;$x<=$total_halaman;$x++){
-					?> 
-					<li class="page-item"><a class="page-link" href="?halaman=<?php echo $x ?>"><?php echo $x; ?></a></li>
-					<?php
-				}
-				?>				
-				<li class="page-item">
-					<a  class="page-link" <?php if($halaman < $total_halaman) { echo "href='?halaman=$next'"; } ?>>Next</a>
-				</li>
-			</ul>
+            <ul class="pagination">
+                <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
+                </li>
+                <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
+                    <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
+                        <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
+                </li>
+            </ul>
+
             <!-- <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="?halaman=1">1</a></li>
                 <li class="page-item"><a class="page-link" href="?halaman=2">2</a></li>
@@ -269,6 +249,7 @@ if (isset($_GET['hapus'])) {
 
         </nav>
     </div>
+    <br><br>
 
     <!-- Modal Tambah Petugas -->
     <!-- <div class="modal fade" id="tambahPetugasModal" tabindex="-1" aria-labelledby="tambahPetugasModalLabel" aria-hidden="true">

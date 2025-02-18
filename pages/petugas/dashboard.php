@@ -24,7 +24,7 @@ $petugas = $stmtp->fetch();
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
     <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">    
     <!-- <a class="navbar-brand" href="#">Aplikasi Pudamah</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,13 +42,13 @@ $petugas = $stmtp->fetch();
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="data_siswa.php">Data Siswa</a>
+                    <a class="nav-link" href="data-siswa.php">Data Siswa</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="form_perijinan.php">Input Perijinan</a>
+                    <a class="nav-link" href="form-perijinan.php">Input Perijinan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="form_kedatangan.php">Input Kedatangan</a>
+                    <a class="nav-link" href="form-kedatangan.php">Input Kedatangan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>

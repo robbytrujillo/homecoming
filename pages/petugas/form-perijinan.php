@@ -53,10 +53,10 @@ if (isset($_POST['tambah'])) {
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: blue;" class="nav-link" href="form_perijinan.php"><b>Form Perijinan</b></a>
+                    <a style="color: #28A745;" class="nav-link" href="form-perijinan.php"><b>Form Perijinan</b></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
+                    <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="data_kedatangan.php">Data kedatangan</a>
@@ -132,7 +132,7 @@ if (isset($_POST['tambah'])) {
                                 <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
                             </div>
                             <button type="submit" name="tambah" class="btn btn-success">Submit</button>
-                            <a href="data_perijinan.php" class="btn btn-warning btn-md">Data Perijinan</a>
+                            <a href="data-perijinan.php" class="btn btn-warning btn-md">Data Perijinan</a>
                         </form>
                     </div>
                 </div>
