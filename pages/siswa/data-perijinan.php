@@ -6,11 +6,34 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'siswa') {
 }
 require '../../includes/db.php';
 
-// Ambil data perijinan siswa yang login
+// Ambil ID siswa dari sesi
 $siswa_id = $_SESSION['user_id'];
-$stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_pulang DESC");
-$stmt->execute([$siswa_id]);
+
+// Konfigurasi pagination
+$limit = 5; // Jumlah data per halaman
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Halaman aktif
+$offset = ($page - 1) * $limit; // Hitung offset
+
+// Hitung total data
+$stmtTotal = $pdo->prepare("SELECT COUNT(*) FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?)");
+$stmtTotal->execute([$siswa_id]);
+$totalData = $stmtTotal->fetchColumn();
+$totalPages = ceil($totalData / $limit); // Total halaman
+
+// Ambil data perijinan dengan batasan pagination
+$stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) 
+                        ORDER BY tanggal_pulang DESC LIMIT ? OFFSET ?");
+$stmt->bindValue(1, $siswa_id, PDO::PARAM_INT);
+$stmt->bindValue(2, $limit, PDO::PARAM_INT);
+$stmt->bindValue(3, $offset, PDO::PARAM_INT);
+$stmt->execute();
 $perijinan = $stmt->fetchAll();
+
+// Ambil data perijinan siswa yang login
+// $siswa_id = $_SESSION['user_id'];
+// $stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_pulang DESC");
+// $stmt->execute([$siswa_id]);
+// $perijinan = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -94,6 +117,24 @@ $perijinan = $stmt->fetchAll();
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a>
+                </li>
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a>
+                </li>
+            </ul>
+        </nav>
+
     </div>
 
     <!-- Footer -->
