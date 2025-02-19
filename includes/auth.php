@@ -25,6 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             case 'petugas':
                 header('Location: ../pages/petugas/dashboard.php');
                 break;
+            case 'pimpinan':
+                header('Location: ../pages/pimpinan/dashboard.php');
+                break;
             case 'siswa':
                 header('Location: ../pages/siswa/form_perijinan.php');
                 break;

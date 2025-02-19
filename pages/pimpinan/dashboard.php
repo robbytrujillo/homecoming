@@ -37,9 +37,9 @@ $pimpinan = $stmt->fetch();
                         Data Master
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="data_siswa.php">Data Siswa</a>
+                        <a class="dropdown-item" href="data-siswa.php">Data Siswa</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="data_petugas.php">Data Petugas</a>
+                        <a class="dropdown-item" href="data-petugas.php">Data Petugas</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">

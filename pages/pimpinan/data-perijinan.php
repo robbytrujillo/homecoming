@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'petugas') {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'pimpinan') {
     header('Location: ../../login.php');
     exit;
 }
@@ -15,13 +15,13 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Halaman aktif
 $offset = ($page - 1) * $limit; // Hitung offset
 
 // Hitung total data
-$stmtTotal = $pdo->prepare("SELECT COUNT(*) FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?)");
+$stmtTotal = $pdo->prepare("SELECT COUNT(*) FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM perijinan WHERE id = ?)");
 $stmtTotal->execute([$siswa_id]);
 $totalData = $stmtTotal->fetchColumn();
 $totalPages = ceil($totalData / $limit); // Total halaman
 
 // Ambil data perijinan dengan batasan pagination
-$stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) 
+$stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM perijinan WHERE id = ?) 
                         ORDER BY tanggal_pulang DESC LIMIT ? OFFSET ?");
 $stmt->bindValue(1, $siswa_id, PDO::PARAM_INT);
 $stmt->bindValue(2, $limit, PDO::PARAM_INT);

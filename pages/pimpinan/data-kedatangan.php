@@ -1,10 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'petugas') {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'pimpinan') {
     header('Location: ../../login.php');
     exit;
 }
 require '../../includes/db.php';
+
 
 // Ambil ID siswa dari sesi
 $siswa_id = $_SESSION['user_id'];
@@ -15,25 +16,25 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Halaman aktif
 $offset = ($page - 1) * $limit; // Hitung offset
 
 // Hitung total data
-$stmtTotal = $pdo->prepare("SELECT COUNT(*) FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?)");
+$stmtTotal = $pdo->prepare("SELECT COUNT(*) FROM kedatangan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?)");
 $stmtTotal->execute([$siswa_id]);
 $totalData = $stmtTotal->fetchColumn();
 $totalPages = ceil($totalData / $limit); // Total halaman
 
-// Ambil data perijinan dengan batasan pagination
-$stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) 
-                        ORDER BY tanggal_pulang DESC LIMIT ? OFFSET ?");
+// Ambil data kedatangan dengan batasan pagination
+$stmt = $pdo->prepare("SELECT * FROM kedatangan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) 
+                        ORDER BY tanggal_datang DESC LIMIT ? OFFSET ?");
 $stmt->bindValue(1, $siswa_id, PDO::PARAM_INT);
 $stmt->bindValue(2, $limit, PDO::PARAM_INT);
 $stmt->bindValue(3, $offset, PDO::PARAM_INT);
 $stmt->execute();
-$perijinan = $stmt->fetchAll();
+$kedatangan = $stmt->fetchAll();
 
-// Ambil data perijinan siswa yang login
+// Ambil data kedatangan siswa yang login
 // $siswa_id = $_SESSION['user_id'];
-// $stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_pulang DESC");
+// $stmt = $pdo->prepare("SELECT * FROM kedatangan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_datang DESC");
 // $stmt->execute([$siswa_id]);
-// $perijinan = $stmt->fetchAll();
+// $kedatangan = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -41,12 +42,11 @@ $perijinan = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Perijinan - Siswa</title>
+    <title>Data Kedatangan - Siswa</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    
     <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
@@ -58,10 +58,10 @@ $perijinan = $stmt->fetchAll();
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
                 </li>
                 <li class="nav-item">
@@ -74,39 +74,37 @@ $perijinan = $stmt->fetchAll();
         </div>
     </nav>
 
-    <div class="container mt-4 mb-5">
-        <h2 class="mt-5 mb-3">Data Perijinan Perpulangan</h2>
-
+    <div class="container mt-4">
+        <h2 class="mt-5 mb-3">Data Kedatangan</h2>
         <div class="mt-3">
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
             <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a> -->
         </div>
 
-        <!-- Input Pencarian -->
-        <div class="form-group">
+         <!-- Input Pencarian -->
+         <div class="form-group">
             <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
         </div>
-
+        
         <table class="table table-bordered" id="dataTable">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tanggal Pulang</th>
+                    <th>Tanggal Kedatangan</th>                    
                     <th>Nama Siswa</th>
                     <th>Nomor Induk</th>
                     <th>Kelas</th>
-                    <th>Keperluan</th>
+                    <th>Keperluan</th>                    
                     <th>Petugas</th>
                     <th>Keterangan</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($perijinan as $key => $row): ?>
+                <?php foreach ($kedatangan as $key => $row): ?>
                 <tr>
                     <td><?php echo $key + 1; ?></td>
-                    <!-- <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td> -->
-                    <td><?php echo date('d F Y', strtotime($row['tanggal_pulang'])); ?></td>                   
+                    <td><?php echo date('d F Y', strtotime($row['tanggal_datang'])); ?></td>                    
                     <td><?php echo $row['nama_siswa']; ?></td>
                     <td><?php echo $row['nomor_induk']; ?></td>
                     <td><?php echo $row['kelas']; ?></td>
@@ -134,7 +132,6 @@ $perijinan = $stmt->fetchAll();
                 </li>
             </ul>
         </nav>
-
     </div>
 
     <!-- Footer -->
@@ -142,7 +139,7 @@ $perijinan = $stmt->fetchAll();
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
     <!-- Script Pencarian -->
     <script>
     $(document).ready(function() {
@@ -155,6 +152,5 @@ $perijinan = $stmt->fetchAll();
         });
     });
     </script>
-
 </body>
 </html>
