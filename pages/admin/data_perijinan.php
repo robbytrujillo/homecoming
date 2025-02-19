@@ -43,7 +43,7 @@ $jumlah_data = $stmt->fetchColumn();
 $total_halaman = ceil($jumlah_data / $batas);
 
 // Ambil Data Perijinan Dengan Pagination
-$stmt = $pdo->prepare("SELECT * FROM perijinan LIMIT :offset, :batas");
+$stmt = $pdo->prepare("SELECT * FROM perijinan ORDER BY tanggal_pulang DESC LIMIT :offset, :batas");
 $stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
 $stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
 $stmt->execute();
@@ -98,7 +98,7 @@ $perijinan = $stmt->fetchAll();
         </div>
 
         <!-- Modal Upload CSV -->
-        <!-- <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModalLabel" aria-hidden="true">
+        <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -122,7 +122,7 @@ $perijinan = $stmt->fetchAll();
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <!-- Input Pencarian -->
         <div class="form-group">
@@ -134,12 +134,14 @@ $perijinan = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nomor Induk</th>
+                    <th>Tanggal Pulang</th>
+                    
                     <th>Nama Siswa</th>
+                    <th>Nomor Induk</th>
                     <th>Kelas</th>
                     <!-- <th>Nama Orang Tua</th> -->
                     <th>Keperluan</th>
-                    <th>Tanggal Pulang</th>
+                    
                     <th>Petugas</th>
                     <th>Keterangan</th>
                     <th>Aksi</th>
@@ -157,12 +159,14 @@ $perijinan = $stmt->fetchAll();
                     <!-- <td><?php echo $key + 1; ?></td> -->
                     <td><?= $nomor++; ?></td>
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
-                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
+                    <!-- <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>                     -->
+                    <td><?= date('d F Y', strtotime($row['tanggal_pulang'])); ?></td>                    
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
+                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['kelas']); ?></td>
                     <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
                     <td><?= htmlspecialchars($row['keperluan']); ?></td>
-                    <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>
+                    
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
                     <td><?= htmlspecialchars($row['keterangan']); ?></td>
                     <td>
@@ -253,7 +257,7 @@ $perijinan = $stmt->fetchAll();
     </div>
 
     <!-- Modal Tambah Petugas -->
-    <!-- <div class="modal fade" id="tambahPetugasModal" tabindex="-1" aria-labelledby="tambahPetugasModalLabel" aria-hidden="true">
+    <div class="modal fade" id="tambahPetugasModal" tabindex="-1" aria-labelledby="tambahPetugasModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -285,7 +289,7 @@ $perijinan = $stmt->fetchAll();
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- Footer -->
     <?php include '../../includes/footer.php'; ?>

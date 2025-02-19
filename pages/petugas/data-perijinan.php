@@ -6,34 +6,48 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'petugas') {
 }
 require '../../includes/db.php';
 
-// Ambil ID siswa dari sesi
-$siswa_id = $_SESSION['user_id'];
+// Edit Data Perijinan
+if (isset($_POST['edit'])) {
+    $id = $_POST['id'];
+    $nomor_induk = $_POST['nomor_induk'];
+    $nama_siswa = $_POST['nama_siswa'];
+    $kelas = $_POST['kelas'];
+    $keperluan = $_POST['keperluan'];
+    $tanggal_pulang = $_POST['tanggal_pulang'];
+    $petugas = $_POST['petugas'];
+    $keterangan = $_POST['keterangan'];
 
-// Konfigurasi pagination
-$limit = 5; // Jumlah data per halaman
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Halaman aktif
-$offset = ($page - 1) * $limit; // Hitung offset
+    $stmt = $pdo->prepare("UPDATE perijinan SET nomor_induk= ?, nama_siswa = ?, kelas = ?, keperluan = ?, tanggal_pulang = ?, petugas = ?, keterangan = ? WHERE id = ?");
+    $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
+    header('Location: data_perijinan.php');
+    exit;
+}
+
+// Hapus Data Perijinan
+if (isset($_GET['hapus'])) {
+    $id = $_GET['hapus'];
+    $stmt = $pdo->prepare("DELETE FROM perijinan WHERE id = ?");
+    $stmt->execute([$id]);
+    header('Location: data_perijinan.php');
+    exit;
+}
+
+// pagination
+$batas = 8;
+$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+$halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
 // Hitung total data
-$stmtTotal = $pdo->prepare("SELECT COUNT(*) FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?)");
-$stmtTotal->execute([$siswa_id]);
-$totalData = $stmtTotal->fetchColumn();
-$totalPages = ceil($totalData / $limit); // Total halaman
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM perijinan");
+$jumlah_data = $stmt->fetchColumn();
+$total_halaman = ceil($jumlah_data / $batas);
 
-// Ambil data perijinan dengan batasan pagination
-$stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) 
-                        ORDER BY tanggal_pulang DESC LIMIT ? OFFSET ?");
-$stmt->bindValue(1, $siswa_id, PDO::PARAM_INT);
-$stmt->bindValue(2, $limit, PDO::PARAM_INT);
-$stmt->bindValue(3, $offset, PDO::PARAM_INT);
+// Ambil Data Perijinan Dengan Pagination
+$stmt = $pdo->prepare("SELECT * FROM perijinan ORDER BY tanggal_pulang DESC LIMIT :offset, :batas");
+$stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
+$stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
 $stmt->execute();
 $perijinan = $stmt->fetchAll();
-
-// Ambil data perijinan siswa yang login
-// $siswa_id = $_SESSION['user_id'];
-// $stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_pulang DESC");
-// $stmt->execute([$siswa_id]);
-// $perijinan = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -41,15 +55,13 @@ $perijinan = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Perijinan - Siswa</title>
+    <title>Data Perijinan - Petugas</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
-        <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
-        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -59,14 +71,17 @@ $perijinan = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
+                    <a style="color: blue;"  class="nav-link" href="data_perijinan.php"><b>Data Perijinan</b></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
+                    <a  class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
-                </li>
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
+                </li> -->                
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="form_kedatangan.php">Input Kedatangan</a>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
                 </li>
@@ -74,75 +89,214 @@ $perijinan = $stmt->fetchAll();
         </div>
     </nav>
 
-    <div class="container mt-4 mb-5">
-        <h2 class="mt-5 mb-3">Data Perijinan Perpulangan</h2>
-
-        <div class="mt-3">
-            <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
-            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-            <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a> -->
+    <div class="container mt-3 mb-3">
+        <h2 class="mt-3 mb-3">Data Perijinan</h2>
+        <div>
+            <a href="form_perijinan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Perijinan</a>
+            <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
+            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a>
         </div>
+
+        <!-- Modal Upload CSV -->
+        <!-- <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadCSVModalLabel">Upload Data Petugas dari CSV</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="upload_csv_petugas.php" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="csv_file">Pilih File CSV</label>
+                                <input type="file" class="form-control-file" id="csv_file" name="csv_file" accept=".csv" required>
+                            </div>
+                            <button type="submit" name="upload_csv" class="btn btn-primary">Upload</button>
+                           <div class="form-group">
+                                <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan NIP, Nama Petugas, Jabatan, atau Mapel...">
+                            </div> 
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
         <!-- Input Pencarian -->
         <div class="form-group">
             <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
         </div>
 
+        <!-- Tabel Data Petugas -->
         <table class="table table-bordered" id="dataTable">
             <thead>
                 <tr>
                     <th>No</th>
                     <th>Tanggal Pulang</th>
+                    
                     <th>Nama Siswa</th>
                     <th>Nomor Induk</th>
                     <th>Kelas</th>
+                    <!-- <th>Nama Orang Tua</th> -->
                     <th>Keperluan</th>
+                    
                     <th>Petugas</th>
                     <th>Keterangan</th>
+                    <th>Aksi</th>
+                    <!-- <th>Aksi</th> -->
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($perijinan as $key => $row): ?>
+                <?php 
+                $nomor = $halaman_awal + 1;
+                
+                // foreach ($perijinan as $key => $row): 
+                foreach ($perijinan as $row): 
+                ?>
                 <tr>
-                    <td><?php echo $key + 1; ?></td>
-                    <!-- <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td> -->
-                    <td><?php echo date('d F Y', strtotime($row['tanggal_pulang'])); ?></td>                   
-                    <td><?php echo $row['nama_siswa']; ?></td>
-                    <td><?php echo $row['nomor_induk']; ?></td>
-                    <td><?php echo $row['kelas']; ?></td>
-                    <td><?php echo $row['keperluan']; ?></td>                    
-                    <td><?php echo $row['petugas']; ?></td>
-                    <td><?php echo $row['keterangan']; ?></td>
+                    <!-- <td><?php echo $key + 1; ?></td> -->
+                    <td><?= $nomor++; ?></td>
+                    <!-- <td><?= $row['nomor_induk']; ?></td> -->
+                    <!-- <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>                     -->
+                    <td><?= date('d F Y', strtotime($row['tanggal_pulang'])); ?></td>                    
+                    <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
+                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
+                    <td><?= htmlspecialchars($row['kelas']); ?></td>
+                    <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
+                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
+                    
+                    <td><?= htmlspecialchars($row['petugas']); ?></td>
+                    <td><?= htmlspecialchars($row['keterangan']); ?></td>
+                    <td>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
+                        <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                    </td>
                 </tr>
+
+                
+
+                <!-- Modal Edit Petugas -->
+                <div class="modal fade" id="editPerijinanModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editPerijinanModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editPerijinanModalLabel">Edit Perijinan</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="POST">
+                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                    <div class="form-group">
+                                        <label for="nomor_induk">Nomor Induk</label>
+                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $row['nomor_induk']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nama_siswa">Nama Siswa</label>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="kelas">Kelas</label>
+                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nama_orang_tua">Nama Orang Tua</label>
+                                        <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" value="<?php echo $row['nama_orang_tua']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="keperluan">Keperluan</label>
+                                        <input type="text" class="form-control" id="keperluan" name="keperluan" value="<?php echo $row['keperluan']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tanggal_pulang">Tanggal Pulang</label>
+                                        <input type="text" class="form-control" id="tanggal_pulang" name="tanggal_pulang" value="<?php echo $row['tanggal_pulang']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petugas">Petugas</label>
+                                        <input type="text" class="form-control" id="petugas" name="petugas" value="<?php echo $row['petugas']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="keterangan">Keterangan</label>
+                                        <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?php echo $row['keterangan']; ?>" required>
+                                    </div>
+                                    <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <?php endforeach; ?>
             </tbody>
         </table>
 
         <!-- Pagination -->
-        <nav>
-            <ul class="pagination justify-content-center">
-                <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
-                    <a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a>
+        <nav class="mb-5">
+            <ul class="pagination">
+                <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
                 </li>
-                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
+                    <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
+                        <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
                     </li>
                 <?php endfor; ?>
-                <li class="page-item <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">
-                    <a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a>
+                <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
                 </li>
             </ul>
-        </nav>
 
+            <!-- <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?halaman=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?halaman=2">2</a></li>
+            </ul> -->
+
+        </nav>
     </div>
+
+    <!-- Modal Tambah Petugas -->
+    <!-- <div class="modal fade" id="tambahPetugasModal" tabindex="-1" aria-labelledby="tambahPetugasModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tambahPetugasModalLabel">Tambah Petugas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST">
+                        <div class="form-group">
+                            <label for="nip">NIP</label>
+                            <input type="text" class="form-control" id="nip" name="nip" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama_petugas">Nama Petugas</label>
+                            <input type="text" class="form-control" id="nama_petugas" name="nama_petugas" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jabatan">Jabatan</label>
+                            <input type="text" class="form-control" id="jabatan" name="jabatan" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mapel">Mata Pelajaran</label>
+                            <input type="text" class="form-control" id="mapel" name="mapel" required>
+                        </div>
+                        <button type="submit" name="tambah" class="btn btn-primary">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
 
     <!-- Footer -->
     <?php include '../../includes/footer.php'; ?>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
     <!-- Script Pencarian -->
     <script>
     $(document).ready(function() {
@@ -155,6 +309,5 @@ $perijinan = $stmt->fetchAll();
         });
     });
     </script>
-
 </body>
 </html>
