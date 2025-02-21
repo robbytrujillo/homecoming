@@ -93,12 +93,13 @@ $perijinan = $stmt->fetchAll();
         <h2 class="mt-3 mb-3">Data Perijinan</h2>
         <div>
             <a href="form_perijinan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Perijinan</a>
-            <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a>
+            <!-- <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button> -->
+            <!-- <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
         </div>
 
         <!-- Modal Upload CSV -->
-        <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModalLabel" aria-hidden="true">
+        
+<!-- <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -122,8 +123,7 @@ $perijinan = $stmt->fetchAll();
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div> -->
         <!-- Input Pencarian -->
         <div class="form-group">
             <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
@@ -170,7 +170,7 @@ $perijinan = $stmt->fetchAll();
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
                     <td><?= htmlspecialchars($row['keterangan']); ?></td>
                     <td>
-                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPerijinanModal<?php echo $row['id']; ?>">Edit</button>
                         <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td>
                 </tr>
@@ -191,29 +191,30 @@ $perijinan = $stmt->fetchAll();
                                 <form action="" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                     <div class="form-group">
-                                        <label for="nomor_induk">Nomor Induk</label>
-                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $row['nomor_induk']; ?>" required>
+                                        <label for="tanggal_pulang">Tanggal Pulang</label>
+                                        <input type="text" class="form-control" id="tanggal_pulang" name="tanggal_pulang" value="<?php echo $row['tanggal_pulang']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
                                         <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" required>
                                     </div>
                                     <div class="form-group">
+                                        <label for="nama_siswa">Nama Siswa</label>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nomor_induk']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="kelas">Kelas</label>
                                         <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" required>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="nama_orang_tua">Nama Orang Tua</label>
                                         <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" value="<?php echo $row['nama_orang_tua']; ?>" required>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label for="keperluan">Keperluan</label>
                                         <input type="text" class="form-control" id="keperluan" name="keperluan" value="<?php echo $row['keperluan']; ?>" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="tanggal_pulang">Tanggal Pulang</label>
-                                        <input type="text" class="form-control" id="tanggal_pulang" name="tanggal_pulang" value="<?php echo $row['tanggal_pulang']; ?>" required>
-                                    </div>
+                                   
                                     <div class="form-group">
                                         <label for="petugas">Petugas</label>
                                         <input type="text" class="form-control" id="petugas" name="petugas" value="<?php echo $row['petugas']; ?>" required>
@@ -257,11 +258,11 @@ $perijinan = $stmt->fetchAll();
     </div>
 
     <!-- Modal Tambah Petugas -->
-    <div class="modal fade" id="tambahPetugasModal" tabindex="-1" aria-labelledby="tambahPetugasModalLabel" aria-hidden="true">
+    <div class="modal fade" id="tambahPerijinanModal" tabindex="-1" aria-labelledby="tambahPerijinanModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tambahPetugasModalLabel">Tambah Petugas</h5>
+                    <h5 class="modal-title" id="tambahPerijinanModalLabel">Tambah Petugas</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -269,12 +270,20 @@ $perijinan = $stmt->fetchAll();
                 <div class="modal-body">
                     <form action="" method="POST">
                         <div class="form-group">
+                            <label for="tanggal_pulang">Tanggal Pulang</label>
+                            <input type="text" class="form-control" id="tanggal_pulang" name="tanggal_pulang" required>
+                        </div>
+                        <div class="form-group">
                             <label for="nip">NIP</label>
                             <input type="text" class="form-control" id="nip" name="nip" required>
                         </div>
                         <div class="form-group">
-                            <label for="nama_petugas">Nama Petugas</label>
-                            <input type="text" class="form-control" id="nama_petugas" name="nama_petugas" required>
+                            <label for="nama_siswa">Nama Siswa</label>
+                            <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nomor_induk">Nomor Induk</label>
+                            <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" required>
                         </div>
                         <div class="form-group">
                             <label for="jabatan">Jabatan</label>
