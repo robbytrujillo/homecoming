@@ -92,9 +92,9 @@ $perijinan = $stmt->fetchAll();
     <div class="container mt-3 mb-3">
         <h2 class="mt-3 mb-3">Data Perijinan</h2>
         <div>
-            <a href="form_perijinan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Perijinan</a>
-            <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a>
+            <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
+            <!-- <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
+            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
         </div>
 
         <!-- Modal Upload CSV -->
@@ -144,7 +144,7 @@ $perijinan = $stmt->fetchAll();
                     
                     <th>Petugas</th>
                     <th>Keterangan</th>
-                    <th>Aksi</th>
+                    <!-- <th>Aksi</th> -->
                     <!-- <th>Aksi</th> -->
                 </tr>
             </thead>
@@ -165,14 +165,13 @@ $perijinan = $stmt->fetchAll();
                     <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['kelas']); ?></td>
                     <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
-                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
-                    
+                    <td><?= htmlspecialchars($row['keperluan']); ?></td>                    
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
                     <td><?= htmlspecialchars($row['keterangan']); ?></td>
-                    <td>
+                    <!-- <td>
                         <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
                         <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                    </td>
+                    </td> -->
                 </tr>
 
                 

@@ -113,15 +113,16 @@ if (isset($_POST['tambah'])) {
                             </div>
                             <div class="form-group">
                                 <label for="perijinan">Petugas</label>
-                                <select class="form-control" id="petugas" name="petugas" required>
+                                <input type="text" class="form-control" id="petugas" name="petugas" value="<?= $petugas['nama_petugas']; ?>" disabled>
+                                <!-- <select class="form-control" id="petugas" name="petugas" required> -->
                                     <?php
                                     // Ambil data pimpinan dari database
-                                    $stmtp = $pdo->query("SELECT * FROM petugas");
-                                    while ($row = $stmtp->fetch()) {
-                                        echo "<option value='{$row['nama_petugas']}'>{$row['nama_petugas']}</option>";
-                                    }
+                                    // $stmtp = $pdo->query("SELECT * FROM petugas");
+                                    // while ($row = $stmtp->fetch()) {
+                                    //     echo "<option value='{$row['nama_petugas']}'>{$row['nama_petugas']}</option>";
+                                    // }
                                     ?>
-                                </select>
+                                <!-- </select> -->
                             </div>
                             <div class="form-group">
                                 <label for="keterangan">Keterangan</label>
