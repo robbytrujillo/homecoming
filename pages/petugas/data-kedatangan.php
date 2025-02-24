@@ -71,7 +71,7 @@ $kedatangan = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: blue;"  class="nav-link" href="data-kedatangan.php"><b>Data Kedatangan</b></a>
+                    <a style="color: #28A745;"  class="nav-link" href="data-kedatangan.php"><b>Data Kedatangan</b></a>
                 </li>
                 <li class="nav-item">
                     <a  class="nav-link" href="form-kedatangan.php">Input Kedatangan</a>
@@ -93,7 +93,7 @@ $kedatangan = $stmt->fetchAll();
         <h2 class="mt-3 mb-3">Data Kedatangan</h2>
         <div>
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
-            <a href="form-kedatangan.php" class="btn btn-warning btn-md text-white rounded-pill">Input Kedatangan</a>
+            <a href="form-kedatangan.php" class="btn btn-warning btn-md rounded-pill">Input Kedatangan</a>
             <!-- <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
         </div>
