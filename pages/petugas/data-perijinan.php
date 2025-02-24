@@ -33,7 +33,7 @@ if (isset($_GET['hapus'])) {
 }
 
 // pagination
-$batas = 8;
+$batas = 5;
 $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
@@ -60,7 +60,7 @@ $perijinan = $stmt->fetchAll();
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -71,10 +71,10 @@ $perijinan = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: blue;"  class="nav-link" href="data_perijinan.php"><b>Data Perijinan</b></a>
+                    <a style="color: #28A745;"  class="nav-link" href="data-perijinan.php"><b>Data Perijinan</b></a>
                 </li>
                 <li class="nav-item">
-                    <a  class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
+                    <a  class="nav-link" href="form-perijinan.php">Input perijinan</a>
                 </li>
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
@@ -93,6 +93,7 @@ $perijinan = $stmt->fetchAll();
         <h2 class="mt-3 mb-3">Data Perijinan</h2>
         <div>
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
+            <a href="form-perijinan.php" class="btn btn-warning btn-md rounded-pill">Input Perijinan</a>
             <!-- <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
         </div>

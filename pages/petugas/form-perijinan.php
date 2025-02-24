@@ -42,7 +42,7 @@ if (isset($_POST['tambah'])) {
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 2%; margin-top: 1%">    
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">    
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -52,11 +52,11 @@ if (isset($_POST['tambah'])) {
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
-                <li class="nav-item active">
-                    <a style="color: #28A745;" class="nav-link" href="form-perijinan.php"><b>Form Perijinan</b></a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
+                </li>
+                <li class="nav-item active">
+                    <a style="color: #28A745;" class="nav-link" href="form-perijinan.php"><b>Form Perijinan</b></a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="data_kedatangan.php">Data kedatangan</a>
@@ -131,8 +131,8 @@ if (isset($_POST['tambah'])) {
                                 <label for="keterangan">Keterangan</label>
                                 <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
                             </div>
-                            <button type="submit" name="tambah" class="btn btn-success">Submit</button>
-                            <a href="data-perijinan.php" class="btn btn-warning btn-md">Data Perijinan</a>
+                            <button type="submit" name="tambah" class="btn btn-success rounded-pill">Submit</button>
+                            <a href="data-perijinan.php" class="btn btn-warning btn-md rounded-pill">Data Perijinan</a>
                         </form>
                     </div>
                 </div>

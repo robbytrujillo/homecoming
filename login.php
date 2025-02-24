@@ -15,7 +15,7 @@
                 <div class="card shadow-lg rounded-2 border-0 rounded-1 ">
                     <div class="card-header">
                         <!-- <h3 class="text-center">Login</h3> -->
-                        <img src="./assets/homecoming-logo.png" style="width: 200px; margin-left: 15%; margin-top: 5%; bg-color: white" >
+                        <img src="./assets/homecoming-logo.png" style="width: 200px; margin-left: 15%; margin-top: 5%; bg-color: white" class="align-self-center">
                         <!-- <marquee><h6 style="text-align: center; color: rgb(54, 50, 50)">Selamat Datang di Sistem Informasi Homecoming - Perpulangan Siswa Ma'had, Silahkan login terlebih dahulu..</h6></marquee> -->
                     </div>
                     <div class="card-body">

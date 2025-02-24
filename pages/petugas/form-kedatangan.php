@@ -27,7 +27,7 @@ if (isset($_POST['tambah'])) {
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $keperluan, $tanggal_datang, $petugas['nama_petugas'], $keterangan]);
 
-    echo "<script>alert('Data kedatangan berhasil ditambahkan!'); window.location='form_kedatangan.php';</script>";
+    echo "<script>alert('Data kedatangan berhasil ditambahkan!'); window.location='form-kedatangan.php';</script>";
 }
 ?>
 
@@ -42,7 +42,7 @@ if (isset($_POST['tambah'])) {
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 100px; margin-left: 2%; margin-top: 1%">    
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">    
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
