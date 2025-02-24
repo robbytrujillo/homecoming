@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'pimpinan') {
     header('Location: ../../login.php');
     exit;
 }
@@ -75,7 +75,7 @@ $petugas = $stmt->fetchAll();
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%"> 
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%"> 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -100,9 +100,10 @@ $petugas = $stmt->fetchAll();
     <div class="container mt-3 mb-3">
         <h2 class="mb-3 mt-3">Data Petugas</h2>
         <div>
-            <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahPetugasModal">Tambah Petugas</button>
+            <!-- <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahPetugasModal">Tambah Petugas</button>
             <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Template CSV</a>
+            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Template CSV</a> -->
+            <a href="dashboard.php" class="btn btn-success rounded-pill">Kembali</a>
             <a href="export-petugas.php" class="btn btn-info rounded-pill">Print</a>
         </div>
 
@@ -148,7 +149,7 @@ $petugas = $stmt->fetchAll();
                     <th>Nama Petugas</th>
                     <th>Jabatan</th>
                     <th>Mata Pelajaran</th>
-                    <th>Aksi</th>
+                    <!-- <th>Aksi</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -171,10 +172,10 @@ $petugas = $stmt->fetchAll();
                     <td><?= htmlspecialchars($row['jabatan']); ?></td>
                     <td><?= htmlspecialchars($row['mapel']); ?></td>
                    
-                    <td>
+                    <!-- <td>
                         <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
                         <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                    </td>
+                    </td> -->
                 </tr>
 
                 <!-- Modal Edit Petugas -->

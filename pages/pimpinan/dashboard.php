@@ -30,7 +30,7 @@ $pimpinan = $stmt->fetch();
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Dashboard</a>
+                    <a style="color: #28A745;" class="nav-link" href="#"><b>Dashboard</b></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
@@ -47,7 +47,7 @@ $pimpinan = $stmt->fetch();
                         Perpulangan
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="data-perijinan.php">Perijinan</a>
+                        <a class="dropdown-item" href="data-perijinan.php">Perijinan Pulang</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="data-kedatangan.php">Kedatangan</a>
                         <div class="dropdown-divider"></div>

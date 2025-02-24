@@ -33,7 +33,7 @@ if (isset($_GET['hapus'])) {
 }
 
 // pagination
-$batas = 8;
+$batas = 5;
 $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
@@ -60,8 +60,8 @@ $perijinan = $stmt->fetchAll();
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container stiky-top">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -71,10 +71,10 @@ $perijinan = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: blue;"  class="nav-link" href="data_perijinan.php"><b>Data Perijinan</b></a>
+                    <a style="color: #28A745"  class="nav-link" href="data-perijinan.php"><b>Data Perijinan</b></a>
                 </li>
                 <li class="nav-item">
-                    <a  class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
+                    <a  class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
                 </li>
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
@@ -92,9 +92,10 @@ $perijinan = $stmt->fetchAll();
     <div class="container mt-3 mb-3">
         <h2 class="mt-3 mb-3">Data Perijinan</h2>
         <div>
-            <a href="form_perijinan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Perijinan</a>
+            <!-- <a href="form_perijinan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Perijinan</a>
             <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a>
+            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
+            <a href="dashboard.php" class="btn btn-success rounded-pill">Kembali</a>
         </div>
 
         <!-- Modal Upload CSV -->
@@ -144,7 +145,7 @@ $perijinan = $stmt->fetchAll();
                     
                     <th>Petugas</th>
                     <th>Keterangan</th>
-                    <th>Aksi</th>
+                    <!-- <th>Aksi</th> -->
                     <!-- <th>Aksi</th> -->
                 </tr>
             </thead>
@@ -169,10 +170,10 @@ $perijinan = $stmt->fetchAll();
                     
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
                     <td><?= htmlspecialchars($row['keterangan']); ?></td>
-                    <td>
+                    <!-- <td>
                         <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
                         <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                    </td>
+                    </td> -->
                 </tr>
 
                 
