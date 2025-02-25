@@ -90,7 +90,7 @@ $perijinan = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-3 mb-3">
-        <h2 class="mt-3 mb-3">Data Perijinan</h2>
+        <h2 class="mt-3 mb-3 text-center">Data Perijinan</h2>
         <div>
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
             <a href="form-perijinan.php" class="btn btn-warning btn-md rounded-pill">Input Perijinan</a>
@@ -141,12 +141,9 @@ $perijinan = $stmt->fetchAll();
                     <th>Nomor Induk</th>
                     <th>Kelas</th>
                     <!-- <th>Nama Orang Tua</th> -->
-                    <th>Keperluan</th>
-                    
+                    <th>Keperluan</th>                    
                     <th>Petugas</th>
                     <th>Keterangan</th>
-                    <!-- <th>Aksi</th> -->
-                    <!-- <th>Aksi</th> -->
                 </tr>
             </thead>
             <tbody>

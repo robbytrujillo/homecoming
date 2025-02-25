@@ -15,10 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['csv_file'])) {
 
     while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
         $nama_petugas = $data[0];
+        $nip = $data[1];
+        $jabatan = $data[2];
+        $mapel = $data[3];
 
         // Insert data ke database
-        $stmt = $pdo->prepare("INSERT INTO petugas (nama_petugas) VALUES (?)");
-        $stmt->execute([$nama_petugas]);
+        $stmt = $pdo->prepare("INSERT INTO petugas (nama_petugas, nip, jabatan, mapel) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$nama_petugas, $nip, $jabatan, $mapel]);
     }
 
     fclose($handle);

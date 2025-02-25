@@ -94,8 +94,8 @@ $siswa = $stmt->fetchAll();
         </div>
     </nav>
     
-    <div class="container mt-4 mb-5">
-        <h2>Data Siswa</h2>
+    <div class="container mt-3 mb-3">
+        <h2 class="mt-3 mb-3 text-center">Data Siswa</h2>
         <div class="mt-3">
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
         </div>

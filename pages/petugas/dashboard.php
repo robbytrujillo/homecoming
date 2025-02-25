@@ -61,42 +61,42 @@ $petugas = $stmtp->fetch();
 
     <div class="container mt-4 mb-4">
         <div>
-            <h4>Selamat datang <strong><?= $petugas['nama_petugas'] ?></strong> di halaman dashboard petugas</h4>
+            <h4>Selamat datang <strong><?= $petugas['nama_petugas'] ?></strong> di halaman utama Aplikasi Perpulangan Siswa</h4>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">
                 <div class="card text-white bg-primary mb-3 border-0 shadow-lg">
-                    <div class="card-header">Perijinan</div>
+                <div class="card-header"><a href="form-perijinan.php" class="btn btn-primary btn-sm rounded-pill"><b>Input Perijinan Pulang</b></a></div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Perijinan</h5>
+                        <h5 class="card-title">Total Perijinan :</h5>
                         <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan")->fetchColumn(); ?></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card text-white bg-success mb-3 border-0 shadow-lg">
-                    <div class="card-header">Kedatangan</div>
+                <div class="card-header"><a href="form-kedatangan.php" class="btn btn-success btn-sm rounded-pill"><b>Input Kedatangan Siswa</b></a></div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Kedatangan</h5>
+                        <h5 class="card-title">Total Kedatangan :</h5>
                         <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM kedatangan")->fetchColumn(); ?></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card text-white bg-warning mb-3 border-0 shadow-lg">
-                    <div class="card-header">Petugas</div>
+                <div class="card-header"><a href="form-pengembalian-laptop.php" class="btn btn-warning btn-sm rounded-pill text-white"><b>Input Pengembalian Laptop</b></a></div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Petugas</h5>
-                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM petugas")->fetchColumn(); ?></p>
+                        <h5 class="card-title">Total Laptop Kembali :</h5>
+                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM pengembalian_laptop")->fetchColumn(); ?></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card text-white bg-danger mb-3 border-0 shadow-lg">
-                    <div class="card-header">Siswa</div>
+                <div class="card text-white bg-info mb-3 border-0 shadow-lg">
+                <div class="card-header"><a href="data-perijinan-laptop.php" class="btn btn-info btn-sm rounded-pill"><b>Data Perijinan Laptop</b></a></div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Siswa</h5>
-                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM siswa")->fetchColumn(); ?></p>
+                        <h5 class="card-title">Total Perijinan Laptop :</h5>
+                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan_laptop")->fetchColumn(); ?></p>
                     </div>
                 </div>
             </div>
@@ -170,5 +170,8 @@ $petugas = $stmtp->fetch();
 
     <!-- Footer -->
     <?php include '../../includes/footer.php'; ?>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

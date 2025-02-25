@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'pimpinan') {
         header('Location: ../../login.php');
         exit;
     }
@@ -25,11 +25,11 @@
 </head>
 
 <body>
-<div class="container mt-2">
-            <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%;" href="index.php">
+<div class="container">
+            <img src="../../assets/homecoming-logo.png" style="width: 120px; margin-left: 0%; margin-top: 0%; margin-right: 5%" href="index.php">
 			<h4 class="mt-3 mb-3 text-center">Data Petugas</h4>
             <br>
-            <a href="data_petugas.php" class="btn btn-success rounded-pill">Kembali</a>
+            <a href="data-petugas.php" class="btn btn-success rounded-pill">Kembali</a>
             <br>
             <br>
 				<div class="data-tables datatable-dark">
@@ -39,8 +39,8 @@
                         <thead>
                             <tr>
                             <th>No</th>
-                            <th>Nama Petugas</th>
                             <th>NIP</th>
+                            <th>Nama Petugas</th>
                             <th>Jabatan</th>
                             <th>Mata Pelajaran</th>
                             </tr>
@@ -52,15 +52,15 @@
                             $i = 1;
 
                             foreach($ambilsemuadatapetugas as $data) {                                          
-                                $nama_petugas = $data['nama_petugas'];
                                 $nip = $data['nip'];
+                                $nama_petugas = $data['nama_petugas'];
                                 $jabatan = $data['jabatan'];
                                 $mapel = $data['mapel'];
                             ?>
                             <tr>
                                 <td><?= $i++; ?></td>
-                                <td><?php echo $nama_petugas; ?></td>
                                 <td><?php echo $nip; ?></td>
+                                <td><?php echo $nama_petugas; ?></td>
                                 <td><?php echo $jabatan; ?></td>
                                 <td><?php echo $mapel; ?></td>
                             </tr>   

@@ -63,10 +63,10 @@ $pimpinan = $stmt->fetch();
 
     <div class="container mt-5 mb-3">
         <div>
-            <h4>Selamat datang <strong><?= $pimpinan['nama_pimpinan'] ?></strong> di halaman utama pimpinan</h4>
+            <h4>Selamat datang <strong><?= $pimpinan['nama_pimpinan'] ?></strong> di halaman utama Aplikasi Perpulangan Siswa</h4>
         </div>
         <div class="row mt-3">
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
                 <div class="card text-white bg-primary mb-3 rounded-3 border-0 shadow-lg">
                     <div class="card-header"><a href="data-siswa.php" class="btn btn-primary btn-sm rounded-pill"><b>Lihat Data Siswa</b></a></div>
                     <div class="card-body">
@@ -74,11 +74,11 @@ $pimpinan = $stmt->fetch();
                         <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM siswa")->fetchColumn(); ?></p>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-3 ">
-                <div class="card text-white bg-secondary mb-3 rounded-3 border-0 shadow-lg">
+                <div class="card text-white bg-primary mb-3 rounded-3 border-0 shadow-lg">
                     <div class="card-header">
-                    <a href="data-perijinan.php" class="btn btn-secondary btn-sm rounded-pill"><b>Lihat Perijinan Pulang</b></a>
+                    <a href="data-perijinan.php" class="btn btn-primary btn-sm rounded-pill"><b>Lihat Perijinan Pulang</b></a>
                     <!-- <img src="../../assets/permissions.svg" style="height: 320px" class="cover img-fluid"> -->
                     </div>
                     
@@ -108,6 +108,17 @@ $pimpinan = $stmt->fetch();
                     <div class="card-body">
                         <h5 class="card-title">Total :</h5>
                         <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan_laptop")->fetchColumn(); ?></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-warning mb-3 rounded-3 border-0 shadow-lg">
+                    <div class="card-header">
+                        <a href="data-pengembalian-laptop.php" class="btn btn-warning btn-sm rounded-pill text-white"><b>Lihat Pengembalian Laptop</b></a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Total :</h5>
+                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM pengembalian_laptop")->fetchColumn(); ?></p>
                     </div>
                 </div>
             </div>

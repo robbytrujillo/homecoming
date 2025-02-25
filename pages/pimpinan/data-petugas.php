@@ -84,11 +84,8 @@ $petugas = $stmt->fetchAll();
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="data_siswa.php">Data Siswa</a>
-                </li>
                 <li class="nav-item active">
-                    <a style="color: #28A745;" class="nav-link" href="data_petugas.php"><b>Data Petugas</b></a>
+                    <a style="color: #28A745;" class="nav-link" href="data-petugas.php"><b>Data Petugas</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>

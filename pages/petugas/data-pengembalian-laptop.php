@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'pimpinan') {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'petugas') {
     header('Location: ../../login.php');
     exit;
 }
@@ -12,23 +12,22 @@ if (isset($_POST['edit'])) {
     $nomor_induk = $_POST['nomor_induk'];
     $nama_siswa = $_POST['nama_siswa'];
     $kelas = $_POST['kelas'];
-    $keperluan = $_POST['keperluan'];
-    $tanggal_pulang = $_POST['tanggal_pulang'];
+    $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
     $petugas = $_POST['petugas'];
     $keterangan = $_POST['keterangan'];
 
-    $stmt = $pdo->prepare("UPDATE perijinan SET nomor_induk= ?, nama_siswa = ?, kelas = ?, keperluan = ?, tanggal_pulang = ?, petugas = ?, keterangan = ? WHERE id = ?");
+    $stmt = $pdo->prepare("UPDATE pengembalian_laptop SET nomor_induk= ?, nama_siswa = ?, kelas = ?, tanggal_pengembalian = ?, petugas = ?, keterangan = ? WHERE id = ?");
     $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
-    header('Location: data_perijinan.php');
+    header('Location: data-pengembalian-laptop.php');
     exit;
 }
 
 // Hapus Data Perijinan
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
-    $stmt = $pdo->prepare("DELETE FROM perijinan WHERE id = ?");
+    $stmt = $pdo->prepare("DELETE FROM pengembalian_laptop WHERE id = ?");
     $stmt->execute([$id]);
-    header('Location: data_perijinan.php');
+    header('Location: data-pengembalian-laptop.php');
     exit;
 }
 
@@ -38,12 +37,12 @@ $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
 // Hitung total data
-$stmt = $pdo->prepare("SELECT COUNT(*) FROM perijinan");
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM pengembalian_laptop");
 $jumlah_data = $stmt->fetchColumn();
 $total_halaman = ceil($jumlah_data / $batas);
 
 // Ambil Data Perijinan Dengan Pagination
-$stmt = $pdo->prepare("SELECT * FROM perijinan ORDER BY tanggal_pulang DESC LIMIT :offset, :batas");
+$stmt = $pdo->prepare("SELECT * FROM pengembalian_laptop ORDER BY tanggal_pengembalian DESC LIMIT :offset, :batas");
 $stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
 $stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
 $stmt->execute();
@@ -60,8 +59,8 @@ $perijinan = $stmt->fetchAll();
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container stiky-top">
-        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -71,10 +70,10 @@ $perijinan = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: #28A745"  class="nav-link" href="data-perijinan.php"><b>Data Perijinan</b></a>
+                    <a style="color: #28A745;"  class="nav-link" href="data-pengembalian-laptop.php"><b>Data Pengembalian Laptop</b></a>
                 </li>
                 <li class="nav-item">
-                    <a  class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
+                    <a  class="nav-link" href="form-pengembalian-laptop.php">Input Pengembalian Laptop</a>
                 </li>
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
@@ -90,12 +89,12 @@ $perijinan = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-3 mb-3">
-        <h2 class="mt-3 mb-3 text-center">Data Perijinan</h2>
+        <h2 class="mt-3 mb-3 text-center">Data Pengembalian Laptop</h2>
         <div>
-            <!-- <a href="form_perijinan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Perijinan</a>
-            <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
+            <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
+            <a href="form-pengembalian-laptop.php" class="btn btn-warning btn-md rounded-pill">Input Pengembalian Laptop</a>
+            <!-- <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
-            <a href="dashboard.php" class="btn btn-success rounded-pill">Kembali</a>
         </div>
 
         <!-- Modal Upload CSV -->
@@ -135,14 +134,10 @@ $perijinan = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tanggal Pulang</th>
-                    
+                    <th>Tanggal Pengembalian</th>
                     <th>Nama Siswa</th>
                     <th>Nomor Induk</th>
                     <th>Kelas</th>
-                    <!-- <th>Nama Orang Tua</th> -->
-                    <th>Keperluan</th>
-                    
                     <th>Petugas</th>
                     <th>Keterangan</th>
                     <!-- <th>Aksi</th> -->
@@ -161,13 +156,12 @@ $perijinan = $stmt->fetchAll();
                     <td><?= $nomor++; ?></td>
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
                     <!-- <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>                     -->
-                    <td><?= date('d F Y', strtotime($row['tanggal_pulang'])); ?></td>                    
+                    <td><?= date('d F Y', strtotime($row['tanggal_pengembalian'])); ?></td>                    
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
                     <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['kelas']); ?></td>
                     <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
-                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
-                    
+                    <!-- <td><?= htmlspecialchars($row['keperluan']); ?></td>                     -->
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
                     <td><?= htmlspecialchars($row['keterangan']); ?></td>
                     <!-- <td>
@@ -203,17 +197,10 @@ $perijinan = $stmt->fetchAll();
                                         <label for="kelas">Kelas</label>
                                         <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="nama_orang_tua">Nama Orang Tua</label>
-                                        <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" value="<?php echo $row['nama_orang_tua']; ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="keperluan">Keperluan</label>
-                                        <input type="text" class="form-control" id="keperluan" name="keperluan" value="<?php echo $row['keperluan']; ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tanggal_pulang">Tanggal Pulang</label>
-                                        <input type="text" class="form-control" id="tanggal_pulang" name="tanggal_pulang" value="<?php echo $row['tanggal_pulang']; ?>" required>
+                                        <label for="tanggal_pengembalian">Tanggal Pengembalian</label>
+                                        <input type="text" class="form-control" id="tanggal_pengembalian" name="tanggal_pengembalian" value="<?php echo $row['tanggal_pengembalian']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="petugas">Petugas</label>

@@ -1,19 +1,19 @@
 <?php 
     session_start();
-    if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'pimpinan') {
         header('Location: ../../login.php');
         exit;
     }
     require '../../includes/db.php';
 
     // Ambil Data Petugas
-    $stmt = $pdo->query("SELECT * FROM petugas");
-    $petugas = $stmt->fetchAll();
+    $stmt = $pdo->query("SELECT * FROM data_kedatangan");
+    $data_kedatangan = $stmt->fetchAll();
 ?>
 
 <html>
 <head>
-  <title>Data Petugas</title>
+  <title>Data Kedatangan</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -25,11 +25,11 @@
 </head>
 
 <body>
-<div class="container mt-2">
-            <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%;" href="index.php">
+<div class="container">
+            <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%; margin-right: 5%" href="index.php">
 			<h4 class="mt-3 mb-3 text-center">Data Petugas</h4>
             <br>
-            <a href="data_petugas.php" class="btn btn-success rounded-pill">Kembali</a>
+            <a href="data-kedatangan.php" class="btn btn-success rounded-pill">Kembali</a>
             <br>
             <br>
 				<div class="data-tables datatable-dark">
@@ -39,28 +39,31 @@
                         <thead>
                             <tr>
                             <th>No</th>
-                            <th>Nama Petugas</th>
-                            <th>NIP</th>
-                            <th>Jabatan</th>
-                            <th>Mata Pelajaran</th>
+                            <th>Tanggal Datang</th>
+                            <th>Nama Siswa</th>
+                            <th>Nomor Induk</th>
+                            <th>Kelas</th>
+                            <th>Keperluan</th>
+                            <th>Petugas</th>
+                            <th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
                             
-                            $ambilsemuadatapetugas = $pdo->query( "SELECT * FROM petugas")->fetchAll();
+                            $ambilsemuadatakedatangan = $pdo->query( "SELECT * FROM data_kedatangan")->fetchAll();
                             $i = 1;
 
-                            foreach($ambilsemuadatapetugas as $data) {                                          
+                            foreach($ambilsemuadatakedatangan as $data) {                                          
+                                $tanggal_datang = $data['tanggal_datang'];
                                 $nama_petugas = $data['nama_petugas'];
-                                $nip = $data['nip'];
                                 $jabatan = $data['jabatan'];
                                 $mapel = $data['mapel'];
                             ?>
                             <tr>
                                 <td><?= $i++; ?></td>
-                                <td><?php echo $nama_petugas; ?></td>
                                 <td><?php echo $nip; ?></td>
+                                <td><?php echo $nama_petugas; ?></td>
                                 <td><?php echo $jabatan; ?></td>
                                 <td><?php echo $mapel; ?></td>
                             </tr>   
