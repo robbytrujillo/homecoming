@@ -6,34 +6,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'siswa') {
 }
 require '../../includes/db.php';
 
-// Ambil ID siswa dari sesi
-$siswa_id = $_SESSION['user_id'];
-
-// Konfigurasi pagination
-$limit = 5; // Jumlah data per halaman
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Halaman aktif
-$offset = ($page - 1) * $limit; // Hitung offset
-
-// Hitung total data
-$stmtTotal = $pdo->prepare("SELECT COUNT(*) FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?)");
-$stmtTotal->execute([$siswa_id]);
-$totalData = $stmtTotal->fetchColumn();
-$totalPages = ceil($totalData / $limit); // Total halaman
-
-// Ambil data perijinan dengan batasan pagination
-$stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) 
-                        ORDER BY tanggal_pulang DESC LIMIT ? OFFSET ?");
-$stmt->bindValue(1, $siswa_id, PDO::PARAM_INT);
-$stmt->bindValue(2, $limit, PDO::PARAM_INT);
-$stmt->bindValue(3, $offset, PDO::PARAM_INT);
-$stmt->execute();
-$perijinan = $stmt->fetchAll();
-
 // Ambil data perijinan siswa yang login
-// $siswa_id = $_SESSION['user_id'];
-// $stmt = $pdo->prepare("SELECT * FROM perijinan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_pulang DESC");
-// $stmt->execute([$siswa_id]);
-// $perijinan = $stmt->fetchAll();
+$siswa_id = $_SESSION['user_id'];
+$stmt = $pdo->prepare("SELECT * FROM pengembalian_laptop WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_pengembalian DESC");
+$stmt->execute([$siswa_id]);
+$perijinan_laptop = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -58,14 +35,17 @@ $perijinan = $stmt->fetchAll();
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
-                <li class="nav-item active">
-                    <a style="color: #28A745" class="nav-link" href="data-perijinan.php"><b>Data Perijinan</b></a>
+                <li class="nav-item ">
+                    <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
+                </li>
+                <li class="nav-item active">
+                    <a style="color: #28A745" class="nav-link" href="form-pengembalian-laptop.php"><b>Perijinan Laptop</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
@@ -75,8 +55,7 @@ $perijinan = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-4 mb-5">
-        <h2 class="mt-5 mb-3">Data Perijinan Perpulangan</h2>
-
+        <h2 class="mt-5 mb-3">Data Perijinan Laptop</h2>
         <div class="mt-3">
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
             <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
@@ -92,49 +71,32 @@ $perijinan = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tanggal Pulang</th>
+                    <th>Tanggal Pengambilan</th>
                     <th>Nama Siswa</th>
-                    <th>Nomor Induk</th>
+                    <th>Nomor Induk Siswa</th>
                     <th>Kelas</th>
-                    <th>Keperluan</th>
-                    <th>Petugas</th>
-                    <th>Keterangan</th>
+                    <th>Perijinan</th>
+                    <th>Alasan Membawa Laptop</th>
+                    <!-- <th>Persetujuan</th> -->
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($perijinan as $key => $row): ?>
+                <?php foreach ($perijinan_laptop as $key => $row): ?>
                 <tr>
+
                     <td><?php echo $key + 1; ?></td>
                     <!-- <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td> -->
-                    <td><?php echo date('d F Y', strtotime($row['tanggal_pulang'])); ?></td>                   
+                    <td><?php echo date('d F Y', strtotime($row['tanggal_pengambilan'])); ?></td>                   
                     <td><?php echo $row['nama_siswa']; ?></td>
                     <td><?php echo $row['nomor_induk']; ?></td>
                     <td><?php echo $row['kelas']; ?></td>
-                    <td><?php echo $row['keperluan']; ?></td>                    
-                    <td><?php echo $row['petugas']; ?></td>
-                    <td><?php echo $row['keterangan']; ?></td>
+                    <td><?php echo $row['perijinan']; ?></td>                    
+                    <td><?php echo $row['alasan_membawa_laptop']; ?></td>
+                    <!-- <td><?php echo $row['persetujuan']; ?></td> -->
                 </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
-
-        <!-- Pagination -->
-        <nav>
-            <ul class="pagination justify-content-center">
-                <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
-                    <a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a>
-                </li>
-                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                    </li>
-                <?php endfor; ?>
-                <li class="page-item <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">
-                    <a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a>
-                </li>
-            </ul>
-        </nav>
-
     </div>
 
     <!-- Footer -->

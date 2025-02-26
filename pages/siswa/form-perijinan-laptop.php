@@ -58,7 +58,7 @@ if (isset($_POST['tambah'])) {
                     <a class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
+                    <a style="color: #28A745" class="nav-link" href="form-perijinan-laptop.php"><b>Perijinan Laptop</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>

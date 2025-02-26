@@ -35,14 +35,14 @@ $perijinan_laptop = $stmt->fetchAll();
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
+                <li class="nav-item active">
+                    <a style="color: #28A745" class="nav-link" href="form-perijinan-laptop.php"><b>Perijinan Laptop</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
@@ -74,7 +74,7 @@ $perijinan_laptop = $stmt->fetchAll();
                     <th>Kelas</th>
                     <th>Perijinan</th>
                     <th>Alasan Membawa Laptop</th>
-                    <th>Persetujuan</th>
+                    <!-- <th>Persetujuan</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -89,7 +89,7 @@ $perijinan_laptop = $stmt->fetchAll();
                     <td><?php echo $row['kelas']; ?></td>
                     <td><?php echo $row['perijinan']; ?></td>                    
                     <td><?php echo $row['alasan_membawa_laptop']; ?></td>
-                    <td><?php echo $row['persetujuan']; ?></td>
+                    <!-- <td><?php echo $row['persetujuan']; ?></td> -->
                 </tr>
                 <?php endforeach; ?>
             </tbody>

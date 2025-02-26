@@ -96,6 +96,7 @@ $perijinan_laptop = $stmt->fetchAll();
             <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
             <a href="dashboard.php" class="btn btn-success rounded-pill">Kembali</a>
+            <a href="export-data-perijinan-laptop.php" class="btn btn-info rounded-pill">Cetak</a>
         </div>
 
         <!-- Modal Upload CSV -->

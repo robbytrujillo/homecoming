@@ -92,6 +92,7 @@ $perijinan = $stmt->fetchAll();
         <h2 class="mt-3 mb-3 text-center">Data Pengembalian Laptop</h2>
         <div>
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
+            <a href="export-data-pengembalian-laptop.php" class="btn btn-info btn-md text-white rounded-pill">Cetak</a>
             <!-- <a href="form-pengembalian-laptop.php" class="btn btn-warning btn-md rounded-pill">Input Pengembalian Laptop</a> -->
             <!-- <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->

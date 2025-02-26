@@ -51,6 +51,9 @@ $siswa = $stmt->fetch();
                     <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="form-pengembalian-laptop.php">Pengembalian Laptop</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
                 </li>
             </ul>

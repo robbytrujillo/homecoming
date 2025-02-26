@@ -62,7 +62,7 @@ $kedatangan = $stmt->fetchAll();
                     <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
+                    <a style="color: #28A745" class="nav-link" href="data-kedatangan.php"><b>Data Kedatangan</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
