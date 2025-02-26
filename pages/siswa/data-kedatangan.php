@@ -58,15 +58,15 @@ $kedatangan = $stmt->fetchAll();
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
-                </li>
+                </li> -->
                 <li class="nav-item active">
                     <a style="color: #28A745" class="nav-link" href="data-kedatangan.php"><b>Data Kedatangan</b></a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
                 </li>
@@ -78,6 +78,7 @@ $kedatangan = $stmt->fetchAll();
         <h2 class="mt-5 mb-3">Data Kedatangan</h2>
         <div class="mt-3">
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
+            <a href="export-data-kedatangan.php" class="btn btn-info btn-md text-white rounded-pill">Cetak</a>
             <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a> -->
         </div>

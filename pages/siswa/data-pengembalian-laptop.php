@@ -35,7 +35,7 @@ $perijinan_laptop = $stmt->fetchAll();
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
-                <li class="nav-item ">
+                <!-- <li class="nav-item ">
                     <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
                 </li>
                 <li class="nav-item">
@@ -43,9 +43,9 @@ $perijinan_laptop = $stmt->fetchAll();
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
-                </li>
+                </li> -->
                 <li class="nav-item active">
-                    <a style="color: #28A745" class="nav-link" href="form-pengembalian-laptop.php"><b>Perijinan Laptop</b></a>
+                    <a style="color: #28A745" class="nav-link" href="data-pengembalian-laptop.php"><b>Pengembalian Laptop</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
@@ -55,9 +55,10 @@ $perijinan_laptop = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-4 mb-5">
-        <h2 class="mt-5 mb-3">Data Perijinan Laptop</h2>
+        <h2 class="mt-5 mb-3">Data Pengembalian Laptop</h2>
         <div class="mt-3">
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
+            <a href="export-data-pengembalian-laptop.php" class="btn btn-info btn-md text-white rounded-pill">Cetak</a>
             <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a> -->
         </div>
@@ -71,12 +72,12 @@ $perijinan_laptop = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tanggal Pengambilan</th>
+                    <th>Tanggal Pengembalian</th>
                     <th>Nama Siswa</th>
                     <th>Nomor Induk Siswa</th>
                     <th>Kelas</th>
-                    <th>Perijinan</th>
-                    <th>Alasan Membawa Laptop</th>
+                    <th>Petugas</th>
+                    <th>Keterangan</th>
                     <!-- <th>Persetujuan</th> -->
                 </tr>
             </thead>
@@ -86,12 +87,12 @@ $perijinan_laptop = $stmt->fetchAll();
 
                     <td><?php echo $key + 1; ?></td>
                     <!-- <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td> -->
-                    <td><?php echo date('d F Y', strtotime($row['tanggal_pengambilan'])); ?></td>                   
+                    <td><?php echo date('d F Y', strtotime($row['tanggal_pengembalian'])); ?></td>                   
                     <td><?php echo $row['nama_siswa']; ?></td>
                     <td><?php echo $row['nomor_induk']; ?></td>
                     <td><?php echo $row['kelas']; ?></td>
-                    <td><?php echo $row['perijinan']; ?></td>                    
-                    <td><?php echo $row['alasan_membawa_laptop']; ?></td>
+                    <td><?php echo $row['petugas']; ?></td>                    
+                    <td><?php echo $row['keterangan']; ?></td>
                     <!-- <td><?php echo $row['persetujuan']; ?></td> -->
                 </tr>
                 <?php endforeach; ?>

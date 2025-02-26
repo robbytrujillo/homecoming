@@ -51,14 +51,14 @@ if (isset($_POST['tambah'])) {
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
-                </li>
+                </li> -->
                 <li class="nav-item active">
-                    <a style="color: #28A745" class="nav-link" href="form-perijinan-laptop.php"><b>Perijinan Laptop</b></a>
+                    <a style="color: #28A745" class="nav-link" href="form-perijinan-laptop.php"><b>Input Perijinan Laptop</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>

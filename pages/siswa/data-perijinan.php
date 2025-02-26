@@ -61,12 +61,12 @@ $perijinan = $stmt->fetchAll();
                 <li class="nav-item active">
                     <a style="color: #28A745" class="nav-link" href="data-perijinan.php"><b>Data Perijinan</b></a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
                 </li>
@@ -79,6 +79,7 @@ $perijinan = $stmt->fetchAll();
 
         <div class="mt-3">
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
+            <a href="export-data-perijinan.php" class="btn btn-info btn-md text-white rounded-pill">Kembali</a>
             <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a> -->
         </div>

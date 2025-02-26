@@ -41,7 +41,28 @@ $siswa = $stmt->fetch();
                 <li class="nav-item active">
                     <a class="nav-link" style="color: #28A745;" href="dashboard.php"><b>Dashboard</b></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                        Data Perpulangan
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="data-perijinan.php">Data Perijinan Pulang</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="data-kedatangan.php">Data Kedatangan Siswa</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                        Data Perijinan Laptop
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="data-perijinan-laptop.php">Data Perijinan Laptop</a>
+                        <a class="dropdown-item" href="form-perijinan-laptop.php">Input Perijinan Laptop</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="data-pengembalian-laptop.php">Data Pengembalian Laptop</a>
+                    </div>
+                </li>
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
                 </li>
                 <li class="nav-item">
@@ -51,8 +72,8 @@ $siswa = $stmt->fetch();
                     <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="form-pengembalian-laptop.php">Pengembalian Laptop</a>
-                </li>
+                    <a class="nav-link" href="data-pengembalian-laptop.php">Pengembalian Laptop</a>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
                 </li>
