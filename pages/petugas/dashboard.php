@@ -64,7 +64,7 @@ $petugas = $stmtp->fetch();
             <h4>Selamat datang <strong><?= $petugas['nama_petugas'] ?></strong> di halaman utama Aplikasi Perpulangan Siswa</h4>
         </div>
         <div class="row mt-3">
-            <div class="col-md-3">
+            <div class="col-md-3 text-center">
                 <div class="card text-white bg-primary mb-3 border-0 shadow-lg">
                 <div class="card-header"><a href="form-perijinan.php" class="btn btn-primary btn-sm rounded-pill"><b>Input Perijinan Pulang</b></a></div>
                     <div class="card-body">
@@ -73,7 +73,7 @@ $petugas = $stmtp->fetch();
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 text-center">
                 <div class="card text-white bg-success mb-3 border-0 shadow-lg">
                 <div class="card-header"><a href="form-kedatangan.php" class="btn btn-success btn-sm rounded-pill"><b>Input Kedatangan Siswa</b></a></div>
                     <div class="card-body">
@@ -82,7 +82,7 @@ $petugas = $stmtp->fetch();
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 text-center">
                 <div class="card text-white bg-warning mb-3 border-0 shadow-lg">
                 <div class="card-header"><a href="form-pengembalian-laptop.php" class="btn btn-warning btn-sm rounded-pill text-white"><b>Input Pengembalian Laptop</b></a></div>
                     <div class="card-body">
@@ -91,7 +91,7 @@ $petugas = $stmtp->fetch();
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 text-center">
                 <div class="card text-white bg-info mb-3 border-0 shadow-lg">
                 <div class="card-header"><a href="data-perijinan-laptop.php" class="btn btn-info btn-sm rounded-pill"><b>Data Perijinan Laptop</b></a></div>
                     <div class="card-body">

@@ -27,7 +27,7 @@ if (isset($_POST['tambah'])) {
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $keperluan, $tanggal_datang, $petugas['nama_petugas'], $keterangan]);
 
-    echo "<script>alert('Data kedatangan berhasil ditambahkan!'); window.location='form-kedatangan.php';</script>";
+    echo "<script>alert('Data kedatangan berhasil ditambahkan!'); window.location='data-kedatangan.php';</script>";
 }
 ?>
 
@@ -96,7 +96,7 @@ if (isset($_POST['tambah'])) {
                                 </div>    
                             </div>
                             <div class="form-group">
-                                <label for="nama_orang_tua">Nama Orang Tua</label>
+                                <label for="nama_orang_tua">Diantar Oleh</label>
                                 <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" required>
                             </div>
                             <div class="form-group">

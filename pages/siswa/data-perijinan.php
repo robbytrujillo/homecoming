@@ -79,7 +79,7 @@ $perijinan = $stmt->fetchAll();
 
         <div class="mt-3">
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
-            <a href="export-data-perijinan.php" class="btn btn-info btn-md text-white rounded-pill">Kembali</a>
+            <a href="export-data-perijinan.php" class="btn btn-info btn-md text-white rounded-pill">Cetak</a>
             <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
             <a href="template_petugas.csv" class="btn btn-secondary" download>Download Template CSV</a> -->
         </div>

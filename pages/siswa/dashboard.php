@@ -82,7 +82,7 @@ $siswa = $stmt->fetch();
     </nav>
 
     <div class="container mt-5">
-        <h4 class="mt-5 mb-3">Selamat datang <strong><?= $siswa['nama_siswa'] ?></strong> di halaman utama siswa</h4>
+        <h4 class="mt-5 mb-3">Selamat datang <strong><?= $siswa['nama_siswa'] ?></strong> di halaman utama homecoming</h4>
         <div class="row">
             <div class="col-md-4 bg-white">
                 <div class="card bg-light mb-3 shadow-sm rounded-lg border-0">
@@ -141,7 +141,7 @@ $siswa = $stmt->fetch();
                         <p>Nomor Induk Siswa &nbsp; &nbsp;: <strong><?php echo $siswa['nomor_induk']; ?></strong></p>
                         <p>Nama Siswa  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <strong><?php echo $siswa['nama_siswa']; ?></strong></p>
                         <p>Kelas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <strong><?php echo $siswa['kelas']; ?></strong></p>
-                        <p>Nama Orang Tua &nbsp; &nbsp; &nbsp; &nbsp;: <strong><?php echo $siswa['nama_orang_tua']; ?></strong></p>
+                        <p>Alamat &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <strong><?php echo $siswa['alamat']; ?></strong></p>
                     </div>
                 </div>
             </div>
@@ -160,10 +160,10 @@ $siswa = $stmt->fetch();
 
     // Data dalam format string biasa, bukan JSON
     const dataSiswa = 
-        "Nomor Induk    : <?php echo $siswa['nomor_induk']; ?>\n" +
+        "Nomor Induk     : <?php echo $siswa['nomor_induk']; ?>\n" +
         "Nama Siswa      : <?php echo $siswa['nama_siswa']; ?>\n" +
-        "Kelas             : <?php echo $siswa['kelas']; ?>\n" +
-        "Nama Orang Tua : <?php echo $siswa['nama_orang_tua']; ?>";
+        "Kelas           : <?php echo $siswa['kelas']; ?>\n" +
+        "Alamat          : <?php echo $siswa['alamat']; ?>";
 
     // Konversi data ke format JSON
     // const dataString = JSON.stringify(dataSiswa);

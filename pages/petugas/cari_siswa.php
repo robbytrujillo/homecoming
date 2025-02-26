@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 
 if (isset($_GET['nama_siswa'])) {
     $nama_siswa = $_GET['nama_siswa'];
-    $query = "SELECT nama_siswa, nomor_induk, kelas FROM siswa WHERE nama_siswa LIKE '%$nama_siswa%' LIMIT 5";
+    $query = "SELECT nama_siswa, nomor_induk, kelas, alamat, nama_orang_tua FROM siswa WHERE nama_siswa LIKE '%$nama_siswa%' LIMIT 5";
     $result = $conn->query($query);
 
     $data = [];

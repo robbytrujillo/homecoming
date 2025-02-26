@@ -6,48 +6,60 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
 }
 require '../../includes/db.php';
 
-// Edit Data Perijinan
+// Tambah Data Petugas
+if (isset($_POST['tambah'])) {
+    $nip = $_POST['nip'];
+    $nama_pimpinan = $_POST['nama_pimpinan'];
+    $jabatan = $_POST['jabatan'];
+
+    $stmt = $pdo->prepare("INSERT INTO pimpinan (nip, nama_pimpinan, jabatan) VALUES (?, ?, ?)");
+    $stmt->execute([$nip, $nama_pimpinan, $jabatan]);
+    header('Location: data-pimpinan.php');
+    exit;
+}
+
+// Edit Data Petugas
 if (isset($_POST['edit'])) {
     $id = $_POST['id'];
-    $nomor_induk = $_POST['nomor_induk'];
-    $nama_siswa = $_POST['nama_siswa'];
-    $kelas = $_POST['kelas'];
-    $keperluan = $_POST['keperluan'];
-    $tanggal_datang = $_POST['tanggal_datang'];
-    $petugas = $_POST['petugas'];
-    $keterangan = $_POST['keterangan'];
+    $nip = $_POST['nip'];
+    $nama_pimpinan = $_POST['nama_pimpinan'];
+    $jabatan = $_POST['jabatan'];
 
-    $stmt = $pdo->prepare("UPDATE kedatangan SET nomor_induk= ?, nama_siswa = ?, kelas = ?, keperluan = ?, tanggal_datang = ?, petugas = ?, keterangan = ? WHERE id = ?");
-    $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
-    header('Location: data_perijinan.php');
+    $stmt = $pdo->prepare("UPDATE pimpinan SET nip= ?, nama_pimpinan = ?, jabatan = ?= ? WHERE id = ?");
+    $stmt->execute([$nip, $nama_pimpinan, $jabatan, $id]);
+    header('Location: data-pimpinan.php');
     exit;
 }
 
-// Hapus Data Perijinan
+// Hapus Data pimpinan
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
-    $stmt = $pdo->prepare("DELETE FROM kedatangan WHERE id = ?");
+    $stmt = $pdo->prepare("DELETE FROM pimpinan WHERE id = ?");
     $stmt->execute([$id]);
-    header('Location: data_perijinan.php');
+    header('Location: data-pimpinan.php');
     exit;
 }
 
+// Ambil Data pimpinan
+$stmt = $pdo->query("SELECT * FROM pimpinan");
+$pimpinan = $stmt->fetchAll();
+
 // pagination
-$batas = 10;
+$batas = 5;
 $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
 // Hitung total data
-$stmt = $pdo->prepare("SELECT COUNT(*) FROM kedatangan");
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM pimpinan");
 $jumlah_data = $stmt->fetchColumn();
 $total_halaman = ceil($jumlah_data / $batas);
 
-// Ambil Data Kedatangan Dengan Pagination
-$stmt = $pdo->prepare("SELECT * FROM kedatangan LIMIT :offset, :batas");
+// Ambil Data Perijinan Dengan Pagination
+$stmt = $pdo->prepare("SELECT * FROM pimpinan LIMIT :offset, :batas");
 $stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
 $stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
 $stmt->execute();
-$kedatangan = $stmt->fetchAll();
+$pimpinan = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -55,13 +67,13 @@ $kedatangan = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data kedatangan - Petugas</title>
+    <title>Data Petugas - Admin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%"> 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -70,18 +82,9 @@ $kedatangan = $stmt->fetchAll();
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
-                </li> -->
                 <li class="nav-item active">
-                    <a style="color: #28A745;"  class="nav-link" href="data_kedatangan.php"><b>Data Kedatangan</b></a>
+                    <a style="color: #28A745;" class="nav-link" href="data-pimpinan.php"><b>Data Pimpinan</b></a>
                 </li>
-                <!-- <li class="nav-item active">
-                    <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
-                </li> -->                
-                <!-- <li class="nav-item active">
-                    <a class="nav-link" href="form_kedatangan.php">Input Kedatangan</a>
-                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
                 </li>
@@ -90,97 +93,89 @@ $kedatangan = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-3 mb-3">
-        <h2 class="mt-3 mb-3 text-center">Data Kedatangan Siswa</h2>
+        <h2 class="mb-3 mt-3 text-center">Data Pimpinan</h2>
         <div>
-            <!-- <a href="form_kedatangan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Kedatangan</a> -->
-            <!-- <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button> -->
-            <!-- <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
-            <a href="dashboard.php" class="btn btn-success rounded-pill">Kembali</a>
-            <a href="export-data-kedatangan.php" class="btn btn-info rounded-pill">Cetak</a>
+            <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahPimpinanModal">Tambah Pimpinan</button>
+            <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
+            <a href="template-pimpinan.csv" class="btn btn-secondary rounded-pill" download>Template CSV</a>
+            <a href="export-pimpinan.php" class="btn btn-info rounded-pill">Cetak</a>
         </div>
 
         <!-- Modal Upload CSV -->
-        <!-- <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModalLabel" aria-hidden="true">
+        <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="uploadCSVModalLabel">Upload Data Petugas dari CSV</h5>
+                        <h5 class="modal-title" id="uploadCSVModalLabel">Upload Data Pimpinan dari CSV</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="upload_csv_petugas.php" method="POST" enctype="multipart/form-data">
+                        <form action="upload-csv-pimpinan.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="csv_file">Pilih File CSV</label>
                                 <input type="file" class="form-control-file" id="csv_file" name="csv_file" accept=".csv" required>
                             </div>
                             <button type="submit" name="upload_csv" class="btn btn-primary">Upload</button>
-                           <div class="form-group">
+                           
+                            <!-- <div class="form-group">
                                 <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan NIP, Nama Petugas, Jabatan, atau Mapel...">
-                            </div> 
+                            </div> -->
                         </form>
                         
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <!-- Input Pencarian -->
         <div class="form-group">
             <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
         </div>
 
-        <!-- Tabel Data Petugas -->
+        <!-- Tabel Data Pimpinan -->
         <table class="table table-bordered" id="dataTable">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nomor Induk</th>
-                    <th>Nama Siswa</th>
-                    <th>Kelas</th>
-                    <!-- <th>Nama Orang Tua</th> -->
-                    <th>Keperluan</th>
-                    <th>Tanggal Datang</th>
-                    <th>Petugas</th>
-                    <!-- <th>Keterangan</th> -->
-                    <th>Keterangan</th>
+                    <th>NIP</th>
+                    <th>Nama Pimpinan</th>
+                    <th>Jabatan</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php 
                 $nomor = $halaman_awal + 1;
-                
-                // foreach ($perijinan as $key => $row): 
-                foreach ($kedatangan as $row): 
+                // foreach ($petugas as $key => $row): 
+                foreach ($pimpinan as $row):
+
                 ?>
                 <tr>
                     <!-- <td><?php echo $key + 1; ?></td> -->
+                    <!-- <td><?php echo $row['nip']; ?></td>
+                    <td><?php echo $row['nama_petugas']; ?></td>
+                    <td><?php echo $row['jabatan']; ?></td>
+                    <td><?php echo $row['mapel']; ?></td> -->
+
                     <td><?= $nomor++; ?></td>
-                    <!-- <td><?= $row['nomor_induk']; ?></td> -->
-                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
-                    <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
-                    <td><?= htmlspecialchars($row['kelas']); ?></td>
-                    <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
-                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
-                    <td><?= htmlspecialchars($row['tanggal_datang']); ?></td>
-                    <td><?= htmlspecialchars($row['petugas']); ?></td>
-                    <td><?= htmlspecialchars($row['keterangan']); ?></td>
+                    <td><?= htmlspecialchars($row['nip']); ?></td>
+                    <td><?= htmlspecialchars($row['nama_pimpinan']); ?></td>
+                    <td><?= htmlspecialchars($row['jabatan']); ?></td>
+                   
                     <td>
-                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editKedatanganModal<?php echo $row['id']; ?>">Edit</button>
-                        <a href="data_kedatangan.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPimpinanModal<?php echo $row['id']; ?>">Edit</button>
+                        <a href="data-pimpinan.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td>
                 </tr>
 
-                
-
-                <!-- Modal Edit Petugas -->
-                <div class="modal fade" id="editKedatanganModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editKedatanganModalLabel" aria-hidden="true">
+                <!-- Modal Edit Pimpinan -->
+                <div class="modal fade" id="editPimpinanModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editPimpinanModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="editKedatanganModalLabel">Edit Kedatangan</h5>
+                                <h5 class="modal-title" id="editPimpinanModalLabel">Edit Pimpinan</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -189,36 +184,16 @@ $kedatangan = $stmt->fetchAll();
                                 <form action="" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                     <div class="form-group">
-                                        <label for="nomor_induk">Nomor Induk</label>
-                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $row['nomor_induk']; ?>" readonly>
+                                        <label for="nip">NIP</label>
+                                        <input type="text" class="form-control" id="nip" name="nip" value="<?php echo $row['nip']; ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" readonly>
+                                        <label for="nama_pimpinan">Nama Pimpinan</label>
+                                        <input type="text" class="form-control" id="nama_pimpinan" name="nama_pimpinan" value="<?php echo $row['nama_pimpinan']; ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="kelas">Kelas</label>
-                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" readonly>
-                                    </div>
-                                    <!-- <div class="form-group">
-                                        <label for="nama_orang_tua">Nama Orang Tua</label>
-                                        <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" value="<?php echo $row['nama_orang_tua']; ?>" required>
-                                    </div> -->
-                                    <div class="form-group">
-                                        <label for="keperluan">Keperluan</label>
-                                        <input type="text" class="form-control" id="keperluan" name="keperluan" value="<?php echo $row['keperluan']; ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tanggal_datang">Tanggal Datang</label>
-                                        <input type="text" class="form-control" id="tanggal_datang" name="tanggal_datang" value="<?php echo $row['tanggal_datang']; ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="petugas">Petugas</label>
-                                        <input type="text" class="form-control" id="petugas" name="petugas" value="<?php echo $row['petugas']; ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="keterangan">Keterangan</label>
-                                        <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?php echo $row['keterangan']; ?>" required>
+                                        <label for="jabatan">Jabatan</label>
+                                        <input type="text" class="form-control" id="jabatan" name="jabatan" value="<?php echo $row['jabatan']; ?>" required>
                                     </div>
                                     <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
                                 </form>
@@ -253,14 +228,13 @@ $kedatangan = $stmt->fetchAll();
 
         </nav>
     </div>
-    <br><br>
 
-    <!-- Modal Tambah Petugas -->
-    <!-- <div class="modal fade" id="tambahPetugasModal" tabindex="-1" aria-labelledby="tambahPetugasModalLabel" aria-hidden="true">
+    <!-- Modal Tambah Pimpinan -->
+    <div class="modal fade" id="tambahPimpinanModal" tabindex="-1" aria-labelledby="tambahPimpinanModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tambahPetugasModalLabel">Tambah Petugas</h5>
+                    <h5 class="modal-title" id="tambahPimpinanModalLabel">Tambah Pimpinan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -272,23 +246,19 @@ $kedatangan = $stmt->fetchAll();
                             <input type="text" class="form-control" id="nip" name="nip" required>
                         </div>
                         <div class="form-group">
-                            <label for="nama_petugas">Nama Petugas</label>
-                            <input type="text" class="form-control" id="nama_petugas" name="nama_petugas" required>
+                            <label for="nama_pimpinan">Nama Pimpinan</label>
+                            <input type="text" class="form-control" id="nama_pimpinan" name="nama_pimpinan" required>
                         </div>
                         <div class="form-group">
                             <label for="jabatan">Jabatan</label>
                             <input type="text" class="form-control" id="jabatan" name="jabatan" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mapel">Mata Pelajaran</label>
-                            <input type="text" class="form-control" id="mapel" name="mapel" required>
                         </div>
                         <button type="submit" name="tambah" class="btn btn-primary">Simpan</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- Footer -->
     <?php include '../../includes/footer.php'; ?>

@@ -50,7 +50,7 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </nav>
 
 <div class="container mt-3 mb-3">
-    <h4 class="mt-3 mb-3 text-center">Data Perijinan Pulang</h4>
+    <h4 class="mt-3 mb-3 text-center">Data Perijinan Membawa Laptop</h4>
     <br>
     <a href="data-perijinan-laptop.php" class="btn btn-success rounded-pill">Kembali</a>
     <br><br>

@@ -15,10 +15,10 @@ if (isset($_POST['edit'])) {
     $kelas = $_POST['kelas'];
     $perijinan = $_POST['perijinan'];
     $alasan_membawa_laptop = $_POST['alasan_membawa_laptop'];
-    $persetujuan = $_POST['persetujuan'];
+    // $persetujuan = $_POST['persetujuan'];
 
-    $stmt = $pdo->prepare("UPDATE perijinan_laptop SET tanggal_pengambilan = ?, nomor_induk= ?, nama_siswa = ?, kelas = ?, perijinan = ?, alasan_membawa_laptop = ?, persetujuan = ? WHERE id = ?");
-    // $stmt->execute([$nip, $nama_pimpinan, $jabatan, $id]);
+    $stmt = $pdo->prepare("UPDATE perijinan_laptop SET tanggal_pengambilan = ?, nomor_induk= ?, nama_siswa = ?, kelas = ?, perijinan = ?, alasan_membawa_laptop = ? WHERE id = ?");
+    $stmt->execute([$tanggal_pengambilan, $nomor_induk, $nama_siswa, $kelas, $perijinan, $alasan_membawa_laptop, $id]);
     header('Location: data-perijinan-laptop.php');
     exit;
 }
@@ -92,9 +92,9 @@ $perijinan_laptop = $stmt->fetchAll();
     <div class="container mt-3 mb-3">
         <h2 class="mt-3 mb-3 text-center">Data Perijinan Laptop</h2>
         <div>
-            <!-- <a href="form_perijinan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Perijinan</a>
-            <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
+            <!-- <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahIjinLaptopModal">Tambah Perijinan Laptop</button> -->
+            <!-- <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button> -->
+            <!-- <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
             <a href="dashboard.php" class="btn btn-success rounded-pill">Kembali</a>
             <a href="export-data-perijinan-laptop.php" class="btn btn-info rounded-pill">Cetak</a>
         </div>
@@ -143,7 +143,7 @@ $perijinan_laptop = $stmt->fetchAll();
                     <th>Perijinan</th>                    
                     <th>Alasan Membawa Laptop</th>
                     <!-- <th>Persetujuan</th> -->
-                    <!-- <th>Aksi</th> -->
+                    <th>Aksi</th>
                     <!-- <th>Aksi</th> -->
                 </tr>
             </thead>
@@ -168,15 +168,15 @@ $perijinan_laptop = $stmt->fetchAll();
                     
                     <td><?= htmlspecialchars($row['alasan_membawa_laptop']); ?></td>
                     <!-- <td><?= htmlspecialchars($row['persetujuan']); ?></td> -->
-                    <!-- <td> -->
-                        <!-- <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editIjinLaptopModal<?php echo $row['id']; ?>">Edit</button> -->
-                        <!-- <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a> -->
-                    <!-- </td> -->
+                    <td>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editIjinLaptopModal<?php echo $row['id']; ?>">Edit</button>
+                        <a href="data-perijinan-laptop.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a> 
+                    </td>
                 </tr>
 
                 
 
-                <!-- Modal Edit Petugas -->
+                <!-- Modal Edit Ijin Laptop -->
                 <div class="modal fade" id="editIjinLaptopModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editIjinLaptopModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -195,15 +195,15 @@ $perijinan_laptop = $stmt->fetchAll();
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" required>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="nomor_induk">Nomor Induk</label>
-                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $row['nomor_induk']; ?>" required>
+                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $row['nomor_induk']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="kelas">Kelas</label>
-                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" required>
+                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="perijinan">Perijinan</label>
@@ -213,13 +213,13 @@ $perijinan_laptop = $stmt->fetchAll();
                                         <label for="alasan_membawa_laptop">Alasan Membawa Laptop</label>
                                         <input type="text" class="form-control" id="alasan_membawa_laptop" name="alasan_membawa_laptop" value="<?php echo $row['alasan_membawa_laptop']; ?>" required>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="persetujuan">Persetujuan</label>
                                         <select class="form-control" id="persetujuan" name="persetujuan" required>
                                             <option value="belum">Belum</option>
                                             <option value="sudah">Sudah</option>
                                         </select> 
-                                    </div>
+                                    </div> -->
                                     <button type="submit" name="edit" class="btn btn-primary">Ubah</button>
                                 </form>
                             </div>
@@ -254,12 +254,12 @@ $perijinan_laptop = $stmt->fetchAll();
         </nav>
     </div>
 
-    <!-- Modal Tambah Petugas -->
-    <!-- <div class="modal fade" id="tambahPetugasModal" tabindex="-1" aria-labelledby="tambahPetugasModalLabel" aria-hidden="true">
+    <!-- Modal Tambah Ijin -->
+    <div class="modal fade" id="tambahIjinLaptopModal" tabindex="-1" aria-labelledby="tambahIjinLaptopModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tambahPetugasModalLabel">Tambah Petugas</h5>
+                    <h5 class="modal-title" id="tambahIjinLaptopModalLabel">Tambah Ijin Laptop</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -267,27 +267,35 @@ $perijinan_laptop = $stmt->fetchAll();
                 <div class="modal-body">
                     <form action="" method="POST">
                         <div class="form-group">
-                            <label for="nip">NIP</label>
-                            <input type="text" class="form-control" id="nip" name="nip" required>
+                            <label for="tanggal_pengambilan">Tanggal Pengambilan</label>
+                            <input type="date" class="form-control" id="tanggal_pengambilan" name="tanggal_pengambilan" required>
                         </div>
                         <div class="form-group">
-                            <label for="nama_petugas">Nama Petugas</label>
-                            <input type="text" class="form-control" id="nama_petugas" name="nama_petugas" required>
+                            <label for="nama_siswa">Nama Siswa</label>
+                            <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" required>
                         </div>
                         <div class="form-group">
-                            <label for="jabatan">Jabatan</label>
-                            <input type="text" class="form-control" id="jabatan" name="jabatan" required>
+                            <label for="nomor_induk">Nomor Induk</label>
+                            <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" required>
                         </div>
                         <div class="form-group">
-                            <label for="mapel">Mata Pelajaran</label>
-                            <input type="text" class="form-control" id="mapel" name="mapel" required>
+                            <label for="kelas">Kelas</label>
+                            <input type="text" class="form-control" id="kelas" name="kelas" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="perijinan">Perijinan</label>
+                            <input type="text" class="form-control" id="perijinan" name="perijinan" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="alasan_membawa_laptop">Alasan Membawa Laptop</label>
+                            <input type="text" class="form-control" id="alasan_membawa_laptop" name="alasan_membawa_laptop" required>
                         </div>
                         <button type="submit" name="tambah" class="btn btn-primary">Simpan</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- Footer -->
     <?php include '../../includes/footer.php'; ?>

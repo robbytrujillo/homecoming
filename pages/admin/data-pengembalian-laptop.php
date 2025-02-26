@@ -17,7 +17,7 @@ if (isset($_POST['edit'])) {
     $keterangan = $_POST['keterangan'];
 
     $stmt = $pdo->prepare("UPDATE pengembalian_laptop SET nomor_induk= ?, nama_siswa = ?, kelas = ?, tanggal_pengembalian = ?, petugas = ?, keterangan = ? WHERE id = ?");
-    $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
+    $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $tanggal_pengembalian, $petugas, $keterangan, $id]);
     header('Location: data-pengembalian-laptop.php');
     exit;
 }
@@ -46,7 +46,7 @@ $stmt = $pdo->prepare("SELECT * FROM pengembalian_laptop ORDER BY tanggal_pengem
 $stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
 $stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
 $stmt->execute();
-$perijinan = $stmt->fetchAll();
+$pengembalian = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -72,9 +72,9 @@ $perijinan = $stmt->fetchAll();
                 <li class="nav-item active">
                     <a style="color: #28A745;"  class="nav-link" href="data-pengembalian-laptop.php"><b>Data Pengembalian Laptop</b></a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a  class="nav-link" href="form-pengembalian-laptop.php">Input Pengembalian Laptop</a>
-                </li>
+                </li> -->
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
                 </li> -->                
@@ -130,7 +130,7 @@ $perijinan = $stmt->fetchAll();
             <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
         </div>
 
-        <!-- Tabel Data Petugas -->
+        <!-- Tabel Data Pengembalian Laptop -->
         <table class="table table-bordered" id="dataTable">
             <thead>
                 <tr>
@@ -141,8 +141,7 @@ $perijinan = $stmt->fetchAll();
                     <th>Kelas</th>
                     <th>Petugas</th>
                     <th>Keterangan</th>
-                    <!-- <th>Aksi</th> -->
-                    <!-- <th>Aksi</th> -->
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -150,7 +149,7 @@ $perijinan = $stmt->fetchAll();
                 $nomor = $halaman_awal + 1;
                 
                 // foreach ($perijinan as $key => $row): 
-                foreach ($perijinan as $row): 
+                foreach ($pengembalian as $row): 
                 ?>
                 <tr>
                     <!-- <td><?php echo $key + 1; ?></td> -->
@@ -165,20 +164,20 @@ $perijinan = $stmt->fetchAll();
                     <!-- <td><?= htmlspecialchars($row['keperluan']); ?></td>                     -->
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
                     <td><?= htmlspecialchars($row['keterangan']); ?></td>
-                    <!-- <td>
-                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
-                        <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                    </td> -->
+                    <td>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPengembalianLaptopModal<?php echo $row['id']; ?>">Edit</button>
+                        <a href="data-pengembalian-laptop.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                    </td>
                 </tr>
 
                 
 
                 <!-- Modal Edit Petugas -->
-                <div class="modal fade" id="editPerijinanModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editPerijinanModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editPengembalianLaptopModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editPengembalianLaptopModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="editPerijinanModalLabel">Edit Perijinan</h5>
+                                <h5 class="modal-title" id="editPengembalianLaptopModalLabel">Edit Pengembalian Laptop</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -187,21 +186,20 @@ $perijinan = $stmt->fetchAll();
                                 <form action="" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                     <div class="form-group">
-                                        <label for="nomor_induk">Nomor Induk</label>
-                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $row['nomor_induk']; ?>" required>
+                                        <label for="tanggal_pengembalian">Tanggal Pengembalian</label>
+                                        <input type="text" class="form-control" id="tanggal_pengembalian" name="tanggal_pengembalian" value="<?php echo $row['tanggal_pengembalian']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" required>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nomor_induk">Nomor Induk</label>
+                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $row['nomor_induk']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="kelas">Kelas</label>
-                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" required>
-                                    </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tanggal_pengembalian">Tanggal Pengembalian</label>
-                                        <input type="text" class="form-control" id="tanggal_pengembalian" name="tanggal_pengembalian" value="<?php echo $row['tanggal_pengembalian']; ?>" required>
+                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="petugas">Petugas</label>
@@ -211,7 +209,7 @@ $perijinan = $stmt->fetchAll();
                                         <label for="keterangan">Keterangan</label>
                                         <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?php echo $row['keterangan']; ?>" required>
                                     </div>
-                                    <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
+                                    <button type="submit" name="edit" class="btn btn-primary">Update</button>
                                 </form>
                             </div>
                         </div>

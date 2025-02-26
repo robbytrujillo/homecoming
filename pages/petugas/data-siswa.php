@@ -11,9 +11,10 @@ if (isset($_POST['tambah'])) {
     $nomor_induk = $_POST['nomor_induk'];
     $nama_siswa = $_POST['nama_siswa'];
     $kelas = $_POST['kelas'];
+    $alamat = $_POST['alamat'];
     $nama_orang_tua = $_POST['nama_orang_tua'];
 
-    $stmt = $pdo->prepare("INSERT INTO siswa (nomor_induk, nama_siswa, kelas, nama_orang_tua) VALUES (?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO siswa (nomor_induk, nama_siswa, kelas, alamat, nama_orang_tua) VALUES (?, ?, ?, ?, ?)");
     $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua]);
     header('Location: data_siswa.php');
     exit;
@@ -25,9 +26,10 @@ if (isset($_POST['edit'])) {
     $nomor_induk = $_POST['nomor_induk'];
     $nama_siswa = $_POST['nama_siswa'];
     $kelas = $_POST['kelas'];
+    $alamat = $_POST['alamat'];
     $nama_orang_tua = $_POST['nama_orang_tua'];
 
-    $stmt = $pdo->prepare("UPDATE siswa SET nomor_induk = ?, nama_siswa = ?, kelas = ?, nama_orang_tua = ? WHERE id = ?");
+    $stmt = $pdo->prepare("UPDATE siswa SET nomor_induk = ?, nama_siswa = ?, kelas = ?, alamat = ?, nama_orang_tua = ? WHERE id = ?");
     $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $id]);
     header('Location: data_siswa.php');
     exit;
@@ -115,6 +117,7 @@ $siswa = $stmt->fetchAll();
                     <th>Nomor Induk</th>
                     <th>Nama Siswa</th>
                     <th>Kelas</th>
+                    <th>Alamat</th>
                     <th>Nama Orang Tua</th>
                     <!-- <th>Aksi</th> -->
                 </tr>
@@ -157,6 +160,10 @@ $siswa = $stmt->fetchAll();
                                     <div class="form-group">
                                         <label for="kelas">Kelas</label>
                                         <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alamat">Alamat</label>
+                                        <input type="text" class="form-control" id="alamat" name="alamat" value="<?php echo $row['alamat']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_orang_tua">Nama Orang Tua</label>

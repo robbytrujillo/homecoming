@@ -8,60 +8,58 @@ require '../../includes/db.php';
 
 // Tambah Data Petugas
 if (isset($_POST['tambah'])) {
-    $nip = $_POST['nip'];
-    $nama_petugas = $_POST['nama_petugas'];
-    $jabatan = $_POST['jabatan'];
-    $mapel = $_POST['mapel'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $role = $_POST['role'];
 
-    $stmt = $pdo->prepare("INSERT INTO petugas (nip, nama_petugas, jabatan, mapel) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel]);
-    header('Location: data_petugas.php');
+    $stmt = $pdo->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
+    $stmt->execute([$username, $password, $role]);
+    header('Location: data-users.php');
     exit;
 }
 
 // Edit Data Petugas
 if (isset($_POST['edit'])) {
     $id = $_POST['id'];
-    $nip = $_POST['nip'];
-    $nama_petugas = $_POST['nama_petugas'];
-    $jabatan = $_POST['jabatan'];
-    $mapel = $_POST['mapel'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $role = $_POST['role'];
 
-    $stmt = $pdo->prepare("UPDATE petugas SET nip= ?, nama_petugas = ?, jabatan = ?, mapel = ? WHERE id = ?");
-    $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
-    header('Location: data_petugas.php');
+    $stmt = $pdo->prepare("UPDATE users SET username= ?, password = ?, role = ? WHERE id = ?");
+    $stmt->execute([$username, $password, $role, $id]);
+    header('Location: data-users.php');
     exit;
 }
 
 // Hapus Data Petugas
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
-    $stmt = $pdo->prepare("DELETE FROM petugas WHERE id = ?");
+    $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
     $stmt->execute([$id]);
-    header('Location: data_petugas.php');
+    header('Location: data-users.php');
     exit;
 }
 
 // Ambil Data Petugas
-$stmt = $pdo->query("SELECT * FROM petugas");
-$petugas = $stmt->fetchAll();
+$stmt = $pdo->query("SELECT * FROM users");
+$users = $stmt->fetchAll();
 
 // pagination
-$batas = 10;
+$batas = 5;
 $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
 // Hitung total data
-$stmt = $pdo->prepare("SELECT COUNT(*) FROM petugas");
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM users");
 $jumlah_data = $stmt->fetchColumn();
 $total_halaman = ceil($jumlah_data / $batas);
 
 // Ambil Data Perijinan Dengan Pagination
-$stmt = $pdo->prepare("SELECT * FROM petugas LIMIT :offset, :batas");
+$stmt = $pdo->prepare("SELECT * FROM users LIMIT :offset, :batas");
 $stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
 $stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
 $stmt->execute();
-$petugas = $stmt->fetchAll();
+$users = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +67,7 @@ $petugas = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Petugas - Admin</title>
+    <title>Data Users - Admin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -85,7 +83,7 @@ $petugas = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: #28A745;" class="nav-link" href="data_petugas.php"><b>Data Petugas</b></a>
+                    <a style="color: #28A745;" class="nav-link" href="data-users.php"><b>Data Users</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
@@ -94,13 +92,13 @@ $petugas = $stmt->fetchAll();
         </div>
     </nav>
 
-    <div class="container mt-3 mb-6">
-        <h2 class="mb-3 mt-3 text-center">Data Petugas</h2>
+    <div class="container mt-3 mb-3">
+        <h2 class="mb-3 mt-3 text-center">Data Users</h2>
         <div>
-            <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahPetugasModal">Tambah Petugas</button>
+            <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahUsersModal">Tambah Users</button>
             <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
-            <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Template CSV</a>
-            <a href="export-petugas.php" class="btn btn-info rounded-pill">Print</a>
+            <a href="template-users.csv" class="btn btn-secondary rounded-pill" download>Template CSV</a>
+            <a href="export-users.php" class="btn btn-info rounded-pill">Cetak</a>
         </div>
 
         <!-- Modal Upload CSV -->
@@ -108,13 +106,13 @@ $petugas = $stmt->fetchAll();
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="uploadCSVModalLabel">Upload Data Petugas dari CSV</h5>
+                        <h5 class="modal-title" id="uploadCSVModalLabel">Upload Data Users dari CSV</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="upload_csv_petugas.php" method="POST" enctype="multipart/form-data">
+                        <form action="upload-csv-uses.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="csv_file">Pilih File CSV</label>
                                 <input type="file" class="form-control-file" id="csv_file" name="csv_file" accept=".csv" required>
@@ -122,7 +120,7 @@ $petugas = $stmt->fetchAll();
                             <button type="submit" name="upload_csv" class="btn btn-primary">Upload</button>
                            
                             <!-- <div class="form-group">
-                                <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan NIP, Nama Petugas, Jabatan, atau Mapel...">
+                                <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan username, Nama Petugas, Jabatan, atau Mapel...">
                             </div> -->
                         </form>
                         
@@ -141,10 +139,9 @@ $petugas = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>NIP</th>
-                    <th>Nama Petugas</th>
-                    <th>Jabatan</th>
-                    <th>Mata Pelajaran</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Role</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -152,34 +149,32 @@ $petugas = $stmt->fetchAll();
                 <?php 
                 $nomor = $halaman_awal + 1;
                 // foreach ($petugas as $key => $row): 
-                foreach ($petugas as $row):
+                foreach ($users as $row):
 
                 ?>
                 <tr>
                     <!-- <td><?php echo $key + 1; ?></td> -->
-                    <!-- <td><?php echo $row['nip']; ?></td>
-                    <td><?php echo $row['nama_petugas']; ?></td>
-                    <td><?php echo $row['jabatan']; ?></td>
+                    <!-- <td><?php echo $row['username']; ?></td>
+                    <td><?php echo $row['password']; ?></td>
+                    <td><?php echo $row['role']; ?></td>
                     <td><?php echo $row['mapel']; ?></td> -->
 
                     <td><?= $nomor++; ?></td>
-                    <td><?= htmlspecialchars($row['nip']); ?></td>
-                    <td><?= htmlspecialchars($row['nama_petugas']); ?></td>
-                    <td><?= htmlspecialchars($row['jabatan']); ?></td>
-                    <td><?= htmlspecialchars($row['mapel']); ?></td>
-                   
+                    <td><?= htmlspecialchars($row['username']); ?></td>
+                    <td><?= htmlspecialchars($row['password']); ?></td>
+                    <td><?= htmlspecialchars($row['role']); ?></td>                  
                     <td>
-                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
-                        <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editUsersModal<?php echo $row['id']; ?>">Edit</button>
+                        <a href="data-users.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td>
                 </tr>
 
-                <!-- Modal Edit Petugas -->
-                <div class="modal fade" id="editPetugasModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editPetugasModalLabel" aria-hidden="true">
+                <!-- Modal Edit Users -->
+                <div class="modal fade" id="editUsersModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editUsersModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="editPetugasModalLabel">Edit Petugas</h5>
+                                <h5 class="modal-title" id="editUsersModalLabel">Edit Users</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -188,20 +183,16 @@ $petugas = $stmt->fetchAll();
                                 <form action="" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                     <div class="form-group">
-                                        <label for="nip">NIP</label>
-                                        <input type="text" class="form-control" id="nip" name="nip" value="<?php echo $row['nip']; ?>" required>
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username" value="<?php echo $row['username']; ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="nama_petugas">Nama Petugas</label>
-                                        <input type="text" class="form-control" id="nama_petugas" name="nama_petugas" value="<?php echo $row['nama_petugas']; ?>" required>
+                                        <label for="password">Password</label>
+                                        <input type="text" class="form-control" id="password" name="password" value="<?php echo $row['password']; ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="jabatan">Jabatan</label>
-                                        <input type="text" class="form-control" id="jabatan" name="jabatan" value="<?php echo $row['jabatan']; ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="mapel">Mata Pelajaran</label>
-                                        <input type="text" class="form-control" id="mapel" name="mapel" value="<?php echo $row['mapel']; ?>" required>
+                                        <label for="role">Role</label>
+                                        <input type="text" class="form-control" id="role" name="role" value="<?php echo $row['role']; ?>" required>
                                     </div>
                                     <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
                                 </form>
@@ -236,14 +227,13 @@ $petugas = $stmt->fetchAll();
 
         </nav>
     </div>
-    <br><br>
 
     <!-- Modal Tambah Petugas -->
-    <div class="modal fade" id="tambahPetugasModal" tabindex="-1" aria-labelledby="tambahPetugasModalLabel" aria-hidden="true">
+    <div class="modal fade" id="tambahUsersModal" tabindex="-1" aria-labelledby="tambahUsersModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tambahPetugasModalLabel">Tambah Petugas</h5>
+                    <h5 class="modal-title" id="tambahUsersModalLabel">Tambah Users</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -251,20 +241,16 @@ $petugas = $stmt->fetchAll();
                 <div class="modal-body">
                     <form action="" method="POST">
                         <div class="form-group">
-                            <label for="nip">NIP</label>
-                            <input type="text" class="form-control" id="nip" name="nip" required>
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
                         </div>
                         <div class="form-group">
-                            <label for="nama_petugas">Nama Petugas</label>
-                            <input type="text" class="form-control" id="nama_petugas" name="nama_petugas" required>
+                            <label for="password">Password</label>
+                            <input type="text" class="form-control" id="password" name="password" required>
                         </div>
                         <div class="form-group">
-                            <label for="jabatan">Jabatan</label>
-                            <input type="text" class="form-control" id="jabatan" name="jabatan" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mapel">Mata Pelajaran</label>
-                            <input type="text" class="form-control" id="mapel" name="mapel" required>
+                            <label for="role">Role</label>
+                            <input type="text" class="form-control" id="role" name="role" required>
                         </div>
                         <button type="submit" name="tambah" class="btn btn-primary">Simpan</button>
                     </form>

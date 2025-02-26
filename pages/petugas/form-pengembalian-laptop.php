@@ -26,7 +26,7 @@ if (isset($_POST['tambah'])) {
                            VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $tanggal_pengembalian, $petugas['nama_petugas'], $keterangan]);
 
-    echo "<script>alert('Data perijinan berhasil ditambahkan!'); window.location='data-pengembalian-laptop.php';</script>";
+    echo "<script>alert('Data pengembalian laptop berhasil ditambahkan!'); window.location='data-pengembalian-laptop.php';</script>";
 }
 ?>
 
@@ -52,7 +52,7 @@ if (isset($_POST['tambah'])) {
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="data-perijinan.php">Data Perijinan</a>
+                    <a class="nav-link" href="data-pengembalian-laptop.php">Data Pengembalian Laptop</a>
                 </li>
                 <li class="nav-item active">
                     <a style="color: #28A745;" class="nav-link" href="form-perijinan.php"><b>Form Pengembalian Laptop</b></a>

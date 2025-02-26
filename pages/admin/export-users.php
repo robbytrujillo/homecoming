@@ -7,13 +7,13 @@
     require '../../includes/db.php';
 
     // Ambil Data Siswa
-    $stmt = $pdo->query("SELECT * FROM siswa");
+    $stmt = $pdo->query("SELECT * FROM users");
     $siswa = $stmt->fetchAll();
 ?>
 
 <html>
 <head>
-  <title class="text-center">Data Siswa</title>
+  <title class="text-center">Data Users</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -26,10 +26,10 @@
 
 <body>
 <div class="container">
-            <img src="../../assets/homecoming-logo.png" style="width: 120px; margin-left: 0%; margin-top: 0%; margin-right: 5%" href="index.php">
-			<h4 class="mt-3 mb-3 text-center">Data Siswa</h4>
+            <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%;" href="index.php">
+			<h4 class="mt-3 mb-3 text-center">Data Users</h4>
             <br>
-            <a href="data_siswa.php" class="btn btn-success rounded-pill">Kembali</a>
+            <a href="data-users.php" class="btn btn-success rounded-pill">Kembali</a>
             <br>
             <br>
 				<div class="data-tables datatable-dark">
@@ -39,33 +39,27 @@
                         <thead>
                             <tr>
                             <th>No</th>
-                            <th>Nomor Induk</th>
-                            <th>Nama Siswa</th>
-                            <th>Kelas</th>
-                            <th>Alamat</th>
-                            <th>Nama Orang Tua</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Role</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
                             
-                            $ambilsemuadatasiswa = $pdo->query( "SELECT * FROM siswa")->fetchAll();
+                            $ambilsemuadatausers = $pdo->query( "SELECT * FROM users")->fetchAll();
                             $i = 1;
 
-                            foreach($ambilsemuadatasiswa as $data) {                                          
-                                $nomor_induk = $data['nomor_induk'];
-                                $nama_siswa = $data['nama_siswa'];
-                                $kelas = $data['kelas'];
-                                $alamat = $data['alamat'];
-                                $nama_ortu = $data['nama_orang_tua'];
+                            foreach($ambilsemuadatausers as $data) {                                          
+                                $username = $data['username'];
+                                $password = $data['password'];
+                                $role = $data['role'];
                             ?>
                             <tr>
                                 <td><?= $i++; ?></td>
-                                <td><?php echo $nomor_induk; ?></td>
-                                <td><?php echo $nama_siswa; ?></td>
-                                <td><?php echo $kelas; ?></td>
-                                <td><?php echo $alamat; ?></td>
-                                <td><?php echo $nama_ortu; ?></td>
+                                <td><?php echo $username; ?></td>
+                                <td><?php echo $password; ?></td>
+                                <td><?php echo $role; ?></td>
                             </tr>   
                             <?php 
                             };

@@ -52,7 +52,7 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="container mt-3 mb-3">
     <h4 class="mt-3 mb-3 text-center">Data Kedatangan Siswa</h4>
     <br>
-    <a href="data-perijinan.php" class="btn btn-success rounded-pill">Kembali</a>
+    <a href="data-kedatangan.php" class="btn btn-success rounded-pill">Kembali</a>
     <br><br>
 
     <div class="data-tables datatable-dark">

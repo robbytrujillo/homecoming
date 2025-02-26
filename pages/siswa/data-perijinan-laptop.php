@@ -52,7 +52,7 @@ $perijinan_laptop = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-4 mb-5">
-        <h2 class="mt-5 mb-3">Data Perijinan Laptop</h2>
+        <h2 class="mt-5 mb-3 text-center">Data Perijinan Laptop</h2>
         <div class="mt-3">
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
             <a href="export-data-perijinan-laptop.php" class="btn btn-info btn-md text-white rounded-pill">Cetak</a>

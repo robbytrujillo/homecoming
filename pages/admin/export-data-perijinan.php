@@ -34,7 +34,7 @@
     <!-- <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%; margin-right: 5%" href="index.php"> -->
     <h4 class="mt-3 mb-3 text-center">Data Perijinan Pulang</h4>
     <br>
-    <a href="data-perijinan.php" class="btn btn-success rounded-pill">Kembali</a>
+    <a href="data_perijinan.php" class="btn btn-success rounded-pill">Kembali</a>
     <br>
     <br>
         <div class="data-tables datatable-dark">

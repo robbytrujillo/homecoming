@@ -33,7 +33,7 @@ if (isset($_GET['hapus'])) {
 }
 
 // pagination
-$batas = 8;
+$batas = 10;
 $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
@@ -55,7 +55,7 @@ $perijinan = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Perijinan - Petugas</title>
+    <title>Data Perijinan - Admin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -71,11 +71,11 @@ $perijinan = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: blue;"  class="nav-link" href="data_perijinan.php"><b>Data Perijinan</b></a>
+                    <a style="color: #28A745;"  class="nav-link" href="data_perijinan.php"><b>Data Perijinan</b></a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a  class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
-                </li>
+                </li> -->
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
                 </li> -->                
@@ -90,9 +90,11 @@ $perijinan = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-3 mb-3">
-        <h2 class="mt-3 mb-3">Data Perijinan</h2>
+        <h2 class="mt-3 mb-3 text-center">Data Perijinan</h2>
         <div>
-            <a href="form_perijinan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Perijinan</a>
+            <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
+            <a href="export-data-perijinan.php" class="btn btn-info btn-md text-white rounded-pill">Cetak</a>
+            <!-- <a href="form_perijinan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Perijinan</a> -->
             <!-- <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button> -->
             <!-- <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
         </div>
@@ -196,15 +198,15 @@ $perijinan = $stmt->fetchAll();
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" required>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nomor_induk']; ?>" required>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nomor_induk']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="kelas">Kelas</label>
-                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" required>
+                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" readonly>
                                     </div>
                                     <!-- <div class="form-group">
                                         <label for="nama_orang_tua">Nama Orang Tua</label>

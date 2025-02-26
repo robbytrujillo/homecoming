@@ -33,7 +33,7 @@
             <!-- <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%; margin-right: 5%" href="index.php"> -->
 			<h4 class="mt-3 mb-3 text-center">Data Kedatangan Siswa</h4>
             <br>
-            <a href="data-kedatangan.php" class="btn btn-success rounded-pill">Kembali</a>
+            <a href="data_kedatangan.php" class="btn btn-success rounded-pill">Kembali</a>
             <br>
             <br>
 				<div class="data-tables datatable-dark">
@@ -87,8 +87,12 @@
 				</div>
 </div>
 
+<!-- Footer -->
+<?php include '../../includes/footer.php'; ?>
 
-	
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
 $(document).ready(function() {
     $('#mauexport').DataTable( {
@@ -111,11 +115,7 @@ $(document).ready(function() {
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 
-<!-- Footer -->
-<?php include '../../includes/footer.php'; ?>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 

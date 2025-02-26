@@ -30,7 +30,7 @@ $users = $stmt->fetch();
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Dashboard</a>
+                    <a style="color: #28A745;" class="nav-link" href="#"><b>Dashboard</b></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
@@ -40,6 +40,10 @@ $users = $stmt->fetch();
                         <a class="dropdown-item" href="data_siswa.php">Data Siswa</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="data_petugas.php">Data Petugas</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="data-pimpinan.php">Data Pimpinan</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="data-users.php">Data Users</a>
                     </div>
                 </li>
                 <!-- <li class="nav-item">
@@ -58,6 +62,16 @@ $users = $stmt->fetch();
                         <a class="dropdown-item" href="data_kedatangan.php">Kedatangan</a>
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                        Ijin Laptop
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="data-perijinan-laptop.php">Perijinan Laptop</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="data-pengembalian-laptop.php">Pengembalian Laptop</a>
+                    </div>
+                </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
                 </li>
@@ -71,44 +85,52 @@ $users = $stmt->fetch();
         </div>
     </nav>
 
-    <div class="container mt-4 mb-4 rounded">
+    <div class="container mt-4 mb-4">
         <div>
-            <h4>Selamat datang <strong><?= $users['username'] ?></strong> di halaman utama administrator</h4>
+            <h4 class="mt-4 mb-4">Selamat datang <strong><?= $users['username'] ?></strong> di halaman utama homecoming</h4>
         </div>
         <div class="row mt-3">
-            <div class="col-md-3">
+            <div class="col-md-3 text-center">
                 <div class="card text-white bg-primary mb-3 border-0 shadow-lg">
-                    <div class="card-header">User</div>
+                    <div class="card-header">
+                        <a href="data-users.php" class="btn btn-primary btn-sm rounded-pill"><b>Data Users</b></a>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Total User</h5>
-                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn(); ?></p>
+                        <h5 class="card-title">Total : <?php echo $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn(); ?></h5>
+                        <p class="card-text">Melihat Data Users</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 rounded">
+            <div class="col-md-3 text-center">
                 <div class="card text-white bg-success mb-3 border-0 shadow-lg">
-                    <div class="card-header">Siswa</div>
+                    <div class="card-header">
+                        <a href="data_siswa.php" class="btn btn-success btn-sm rounded-pill"><b>Data Siswa</b></a>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Siswa</h5>
-                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM siswa")->fetchColumn(); ?></p>
+                        <h5 class="card-title">Total : <?php echo $pdo->query("SELECT COUNT(*) FROM siswa")->fetchColumn(); ?></h5>
+                        <p class="card-text">Melihat Data Siswa</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 rounded">
+            <div class="col-md-3 text-center">
                 <div class="card text-white bg-warning mb-3 border-0 shadow-lg">
-                    <div class="card-header">Petugas</div>
+                    <div class="card-header">
+                        <a href="data_petugas.php" class="btn btn-warning btn-sm rounded-pill text-white"><b>Data Petugas</b></a>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Petugas</h5>
-                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM petugas")->fetchColumn(); ?></p>
+                        <h5 class="card-title">Total : <?php echo $pdo->query("SELECT COUNT(*) FROM petugas")->fetchColumn(); ?></h5>
+                        <p class="card-text">Melihat Data Petugas</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 text-center">
                 <div class="card text-white bg-info mb-3 border-0 shadow-lg">
-                    <div class="card-header">Perijinan</div>
+                    <div class="card-header">
+                        <a href="data-pimpinan.php" class="btn btn-info btn-sm rounded-pill"><b>Data Pimpinan</b></a>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Perijinan</h5>
-                        <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan")->fetchColumn(); ?></p>
+                        <h5 class="card-title">Total : <?php echo $pdo->query("SELECT COUNT(*) FROM pimpinan")->fetchColumn(); ?></h5>
+                        <p class="card-text">Melihat Data Pimpinan</p>
                     </div>
                 </div>
             </div>

@@ -17,15 +17,15 @@ if (isset($_POST['tambah'])) {
     $nomor_induk = $_POST['nomor_induk'] ?? null;
     $nama_siswa = $_POST['nama_siswa'] ;
     $kelas = $_POST['kelas'] ?? null;
-    $nama_orang_tua = $_POST['nama_orang_tua'];
+    $alamat = $_POST['alamat'];
     $keperluan = $_POST['keperluan'];
     $tanggal_pulang = $_POST['tanggal_pulang'];
     $keterangan = $_POST['keterangan'];
 
     // Simpan data perijinan
-    $stmt = $pdo->prepare("INSERT INTO perijinan (nomor_induk, nama_siswa, kelas, nama_orang_tua, keperluan, tanggal_pulang, petugas, keterangan) 
+    $stmt = $pdo->prepare("INSERT INTO perijinan (nomor_induk, nama_siswa, kelas, alamat, keperluan, tanggal_pulang, petugas, keterangan) 
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $keperluan, $tanggal_pulang, $petugas['nama_petugas'], $keterangan]);
+    $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $alamat, $keperluan, $tanggal_pulang, $petugas['nama_petugas'], $keterangan]);
 
     echo "<script>alert('Data perijinan berhasil ditambahkan!'); window.location='data-perijinan.php';</script>";
 }
@@ -89,18 +89,18 @@ if (isset($_POST['tambah'])) {
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col">
-                                        <input type="text" class="form-control bg-light" id="nomor_induk" name="nomor_induk" placeholder="Nomor induk">
+                                        <input type="text" class="form-control bg-light" id="nomor_induk" name="nomor_induk" placeholder="Nomor induk" readonly>
                                     </div>
                                     <div class="col">
-                                        <input type="text" class="form-control bg-light" id="kelas" name="kelas" placeholder="Kelas">
+                                        <input type="text" class="form-control bg-light" id="kelas" name="kelas" placeholder="Kelas" readonly>
                                     </div>
                                 </div>    
                             </div>
                             <!-- <input type="hidden" id="hidden_nomor_induk" name="nomor_induk">
                             <input type="hidden" id="hidden_kelas" name="kelas"> -->
                             <div class="form-group">
-                                <label for="nama_orang_tua">Nama Orang Tua</label>
-                                <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" required>
+                                <label for="alamat">Pulang Ke Mana?</label>
+                                <input type="text" class="form-control" id="alamat" name="alamat" required>
                             </div>
                             <div class="form-group">
                                 <label for="keperluan">Keperluan</label>

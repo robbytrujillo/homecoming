@@ -14,19 +14,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['csv_file'])) {
     fgetcsv($handle, 1000, ',');
 
     while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
-        $nomor_induk = $data[0];
-        $nama_siswa = $data[1];
-        $kelas = $data[2];
-        $alamat = $data[3];
-        $nama_orang_tua = $data[4];
+        $username = $data[0];
+        $password = $data[1];
+        $role = $data[2];
 
         // Insert data ke database
-        $stmt = $pdo->prepare("INSERT INTO siswa (nomor_induk, nama_siswa, kelas, alamat, nama_orang_tua) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $alamat, $nama_orang_tua]);
+        $stmt = $pdo->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
+        $stmt->execute([$username, $password, $role, ]);
     }
 
     fclose($handle);
-    header('Location: data_siswa.php');
+    header('Location: data-users.php');
     exit;
 }
 ?>
