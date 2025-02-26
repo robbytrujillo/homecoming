@@ -47,7 +47,7 @@ $stmt = $pdo->query("SELECT * FROM petugas");
 $petugas = $stmt->fetchAll();
 
 // pagination
-$batas = 8;
+$batas = 10;
 $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
@@ -74,8 +74,8 @@ $petugas = $stmt->fetchAll();
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%"> 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%"> 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -95,7 +95,7 @@ $petugas = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-3 mb-3">
-        <h2 class="mb-3 mt-3">Data Petugas</h2>
+        <h2 class="mb-3 mt-3 text-center">Data Petugas</h2>
         <div>
             <!-- <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahPetugasModal">Tambah Petugas</button>
             <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
@@ -237,6 +237,7 @@ $petugas = $stmt->fetchAll();
 
         </nav>
     </div>
+    <br><br>
 
     <!-- Modal Tambah Petugas -->
     <div class="modal fade" id="tambahPetugasModal" tabindex="-1" aria-labelledby="tambahPetugasModalLabel" aria-hidden="true">

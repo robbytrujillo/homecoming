@@ -49,7 +49,7 @@ $stmt = $pdo->query("SELECT * FROM siswa");
 $siswa = $stmt->fetchAll();
 
 // pagination
-$batas = 5;
+$batas = 10;
 $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
@@ -98,12 +98,12 @@ $siswa = $stmt->fetchAll();
     </nav>
     
     <div class="container mt-3 mb-5">
-        <h2 class="mt-3 mb-3">Data Siswa</h2>
+        <h2 class="mt-3 mb-3 text-center">Data Siswa</h2>
         <!-- <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahSiswaModal">Tambah Siswa</button>
         <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
         <a href="template_siswa.csv" class="btn btn-secondary rounded-pill" download>Template CSV</a> -->
         <a href="dashboard.php" class="btn btn-success rounded-pill">Kembali</a>
-        <a href="export-siswa.php" class="btn btn-info rounded-pill">Print</a>
+        <a href="export-siswa.php" class="btn btn-info rounded-pill">Cetak</a>
         
          <!-- Input Pencarian -->
          <div class="form-group">
