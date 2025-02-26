@@ -75,7 +75,7 @@ $perijinan = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-4 mb-5">
-        <h2 class="mt-5 mb-3">Data Perijinan Perpulangan</h2>
+        <h2 class="mt-5 mb-3 text-center">Data Perijinan Perpulangan</h2>
 
         <div class="mt-3">
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
@@ -137,6 +137,7 @@ $perijinan = $stmt->fetchAll();
         </nav>
 
     </div>
+    <br>
 
     <!-- Footer -->
     <?php include '../../includes/footer.php'; ?>

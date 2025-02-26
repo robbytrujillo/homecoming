@@ -127,7 +127,8 @@ if (isset($_POST['tambah'])) {
                                 <!-- </select>
                             </div> -->
                             <button type="submit" name="tambah" class="btn btn-success rounded-pill">Ajukan Perijinan</button>
-                            <a href="data-perijinan-laptop.php" type="button" name="data_perijinan_laptop" class="btn btn-secondary rounded-pill">Lihat Data</a>
+                            <a href="data-perijinan-laptop.php" type="button" name="data_perijinan_laptop" class="btn btn-info rounded-pill">Lihat Data</a>
+                            <a href="dashboard.php" type="button" name="kembali ke dashboard" class="btn btn-danger rounded-pill">Kembali</a>
                         </form>
                     </div>
                 </div>

@@ -74,8 +74,8 @@ $kedatangan = $stmt->fetchAll();
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <h2 class="mt-5 mb-3">Data Kedatangan</h2>
+    <div class="container mt-4 mb-5">
+        <h2 class="mt-5 mb-3 text-center">Data Kedatangan</h2>
         <div class="mt-3">
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
             <a href="export-data-kedatangan.php" class="btn btn-info btn-md text-white rounded-pill">Cetak</a>
@@ -116,6 +116,7 @@ $kedatangan = $stmt->fetchAll();
                 <?php endforeach; ?>
             </tbody>
         </table>
+       
 
         <!-- Pagination -->
         <nav>
@@ -134,6 +135,7 @@ $kedatangan = $stmt->fetchAll();
             </ul>
         </nav>
     </div>
+    <br>
 
     <!-- Footer -->
     <?php include '../../includes/footer.php'; ?>
