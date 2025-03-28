@@ -21,6 +21,7 @@ $siswa = $stmt->fetch();
     <title>Dashboard Siswa</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/style-hoverzoom.css">
 
     <!-- Library untuk QR Code -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>

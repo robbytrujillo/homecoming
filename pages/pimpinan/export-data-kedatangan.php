@@ -93,9 +93,7 @@
 $(document).ready(function() {
     $('#mauexport').DataTable( {
         dom: 'Bfrtip',
-        buttons: [
-            'copy','csv','excel', 'pdf', 'print'
-        ]
+        buttons: ['copy','csv','excel', 'pdf', 'print']
     } );
 } );
 

@@ -1,3 +1,3 @@
 ## Student Homecoming Information System
 
-<h2>Homecoming</h2>
+<h2>Homecoming App</h2>
