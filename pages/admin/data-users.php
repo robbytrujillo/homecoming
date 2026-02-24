@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
 }
 require '../../includes/db.php';
 
-// Tambah Data Petugas
+// Tambah Data Users
 if (isset($_POST['tambah'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -18,7 +18,7 @@ if (isset($_POST['tambah'])) {
     exit;
 }
 
-// Edit Data Petugas
+// Edit Data Users
 if (isset($_POST['edit'])) {
     $id = $_POST['id'];
     $username = $_POST['username'];
@@ -31,7 +31,7 @@ if (isset($_POST['edit'])) {
     exit;
 }
 
-// Hapus Data Petugas
+// Hapus Data Users
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
     $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
@@ -40,7 +40,7 @@ if (isset($_GET['hapus'])) {
     exit;
 }
 
-// Ambil Data Petugas
+// Ambil Data Users
 $stmt = $pdo->query("SELECT * FROM users");
 $users = $stmt->fetchAll();
 

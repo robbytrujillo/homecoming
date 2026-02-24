@@ -19,7 +19,23 @@ if (isset($_POST['tambah'])) {
     $kelas = $_POST['kelas'] ?? null;
     $nama_orang_tua = $_POST['nama_orang_tua'];
     $keperluan = $_POST['keperluan'];
-    $tanggal_datang = $_POST['tanggal_datang'];
+
+    $tanggal = $_POST['tanggal_datang'];
+    $jam     = $_POST['jam_datang'];
+
+    // Jika jam kosong → pakai jam server
+    if (empty($jam)) {
+        $jam = date('H:i');
+    }
+
+    $tanggal_datang = $tanggal . ' ' . $jam . ':00';
+
+    // TARUH VALIDASI DI SINI
+    // if (strtotime($tanggal_datang) > time()) {
+    //     die("Jam tidak boleh melebihi waktu sekarang");
+    // }
+    
+    // $tanggal_datang = $_POST['tanggal_datang'];
     $keterangan = $_POST['keterangan'];
 
     // Simpan data perijinan
@@ -33,6 +49,7 @@ if (isset($_POST['tambah'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,11 +57,13 @@ if (isset($_POST['tambah'])) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light container">
-        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -60,7 +79,7 @@ if (isset($_POST['tambah'])) {
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="data_kedatangan.php">Data kedatangan</a>
-                </li> -->    
+                </li> -->
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="form_kedatangan.php">Form Kedatangan</a>
                 </li> -->
@@ -82,22 +101,26 @@ if (isset($_POST['tambah'])) {
                         <form action="" method="POST">
                             <div class="form-group">
                                 <label for="nama_siswa">Nama Siswa</label>
-                                <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" placeholder="Isi Nama Siswa" autocomplete="off">
+                                <input type="text" class="form-control" id="nama_siswa" name="nama_siswa"
+                                    placeholder="Isi Nama Siswa" autocomplete="off">
                                 <div id="suggestions" class="list-group"></div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col">
-                                        <input type="text" class="form-control bg-light" id="nomor_induk" name="nomor_induk" placeholder="Nomor induk">
+                                        <input type="text" class="form-control bg-light" id="nomor_induk"
+                                            name="nomor_induk" placeholder="Nomor induk">
                                     </div>
                                     <div class="col">
-                                        <input type="text" class="form-control bg-light" id="kelas" name="kelas" placeholder="Kelas">
+                                        <input type="text" class="form-control bg-light" id="kelas" name="kelas"
+                                            placeholder="Kelas">
                                     </div>
-                                </div>    
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="nama_orang_tua">Diantar Oleh</label>
-                                <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" required>
+                                <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="keperluan">Keperluan</label>
@@ -105,17 +128,29 @@ if (isset($_POST['tambah'])) {
                                     <option value="kedatangan">Kedatangan</option>
                                     <option value="ijin">Ijin</option>
                                     <!-- <option value="kedatangan">Kedatangan</option>  -->
-                                </select> 
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="tanggal_datang">Tanggal Kedatangan</label>
-                                <input type="date" class="form-control" id="tanggal_datang" name="tanggal_datang" required>
+                                <label>Waktu Kedatangan</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="date" class="form-control" id="tanggal_datang"
+                                            name="tanggal_datang" value="<?= date('Y-m-d'); ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="time" class="form-control" id="jam_datang" name="jam_datang">
+                                        <small class="text-muted">
+                                            Kosongkan jika ingin menggunakan jam otomatis
+                                        </small>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="perijinan">Petugas</label>
-                                <input type="text" class="form-control" id="petugas" name="petugas" value="<?= $petugas['nama_petugas']; ?>" disabled>
+                                <input type="text" class="form-control" id="petugas" name="petugas"
+                                    value="<?= $petugas['nama_petugas']; ?>" disabled>
                                 <!-- <select class="form-control" id="petugas" name="petugas" required> -->
-                                    <?php
+                                <?php
                                     // Ambil data pimpinan dari database
                                     // $stmtp = $pdo->query("SELECT * FROM petugas");
                                     // while ($row = $stmtp->fetch()) {
@@ -129,12 +164,13 @@ if (isset($_POST['tambah'])) {
                                 <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
                             </div>
                             <button type="submit" name="tambah" class="btn btn-success rounded-pill">Submit</button>
-                            <a href="data-kedatangan.php" class="btn btn-warning btn-md rounded-pill">Data Kedatangan</a>
+                            <a href="data-kedatangan.php" class="btn btn-warning btn-md rounded-pill">Data
+                                Kedatangan</a>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
 
     <!-- Footer -->
@@ -142,44 +178,59 @@ if (isset($_POST['tambah'])) {
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <script>
-        $(document).ready(function() {
-        // Saat user mengetik di input nama_siswa
-            $("#nama_siswa").on("input", function() {
-                var nama = $(this).val();
-                if (nama.length > 2) {  // Minimal 3 karakter untuk pencarian
-                    $.ajax({
-                        url: "cari_siswa.php",
-                        type: "GET",
-                        data: {nama_siswa: nama},
-                        success: function(response) {
-                            let data = JSON.parse(response);
-                            if (data.length > 0) {
-                                $("#suggestions").empty().show();
-                                data.forEach(function(item) {
-                                    $("#suggestions").append(`<a href="#" class="list-group-item list-group-item-action" onclick="pilihSiswa('${item.nama_siswa}', '${item.nomor_induk}', '${item.kelas}')">${item.nama_siswa}</a>`);
-                                });
-                            } else {
-                                $("#suggestions").hide();
-                            }
-                                            }
-                    });
-                } else {
-                    $("#suggestions").hide();
-                }
-            });
-        });
 
-        // Fungsi untuk mengisi input otomatis setelah memilih nama siswa
-        function pilihSiswa(nama, nomor_induk, kelas) {
-            $("#nama_siswa").val(nama);
-            $("#nomor_induk").val(nomor_induk);
-            $("#kelas").val(kelas);
-            $("#suggestions").hide();
-        }
+    <script>
+    $(document).ready(function() {
+        // Saat user mengetik di input nama_siswa
+        $("#nama_siswa").on("input", function() {
+            var nama = $(this).val();
+            if (nama.length > 2) { // Minimal 3 karakter untuk pencarian
+                $.ajax({
+                    url: "cari_siswa.php",
+                    type: "GET",
+                    data: {
+                        nama_siswa: nama
+                    },
+                    success: function(response) {
+                        let data = JSON.parse(response);
+                        if (data.length > 0) {
+                            $("#suggestions").empty().show();
+                            data.forEach(function(item) {
+                                $("#suggestions").append(
+                                    `<a href="#" class="list-group-item list-group-item-action" onclick="pilihSiswa('${item.nama_siswa}', '${item.nomor_induk}', '${item.kelas}')">${item.nama_siswa}</a>`
+                                );
+                            });
+                        } else {
+                            $("#suggestions").hide();
+                        }
+                    }
+                });
+            } else {
+                $("#suggestions").hide();
+            }
+        });
+    });
+
+    // Fungsi untuk mengisi input otomatis setelah memilih nama siswa
+    function pilihSiswa(nama, nomor_induk, kelas) {
+        $("#nama_siswa").val(nama);
+        $("#nomor_induk").val(nomor_induk);
+        $("#kelas").val(kelas);
+        $("#suggestions").hide();
+    }
     </script>
 
-    
+    <!-- Jam Otomatis -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let now = new Date();
+        let hours = String(now.getHours()).padStart(2, '0');
+        let minutes = String(now.getMinutes()).padStart(2, '0');
+
+        document.getElementById("jam_datang").value = hours + ":" + minutes;
+    });
+    </script>
+
 </body>
+
 </html>

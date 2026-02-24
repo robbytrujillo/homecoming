@@ -52,6 +52,7 @@ $perijinan = $stmt->fetchAll();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,10 +60,12 @@ $perijinan = $stmt->fetchAll();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -71,14 +74,14 @@ $perijinan = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: #28A745;"  class="nav-link" href="data_perijinan.php"><b>Data Perijinan</b></a>
+                    <a style="color: #28A745;" class="nav-link" href="data_perijinan.php"><b>Data Perijinan</b></a>
                 </li>
                 <!-- <li class="nav-item">
                     <a  class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
                 </li> -->
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
-                </li> -->                
+                </li> -->
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="form_kedatangan.php">Input Kedatangan</a>
                 </li> -->
@@ -100,8 +103,8 @@ $perijinan = $stmt->fetchAll();
         </div>
 
         <!-- Modal Upload CSV -->
-        
-<!-- <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModalLabel" aria-hidden="true">
+
+        <!-- <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -128,7 +131,9 @@ $perijinan = $stmt->fetchAll();
         </div> -->
         <!-- Input Pencarian -->
         <div class="form-group">
-            <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
+            <input type="text" id="searchInput" class="form-control"
+                style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i
+                class="fas fa-search" style="position: absolute"></i>
         </div>
 
         <!-- Tabel Data Petugas -->
@@ -137,13 +142,14 @@ $perijinan = $stmt->fetchAll();
                 <tr>
                     <th>No</th>
                     <th>Tanggal Pulang</th>
-                    
+                    <th>Waktu</th>
+
                     <th>Nama Siswa</th>
                     <th>Nomor Induk</th>
                     <th>Kelas</th>
                     <!-- <th>Nama Orang Tua</th> -->
                     <th>Keperluan</th>
-                    
+
                     <th>Petugas</th>
                     <th>Keterangan</th>
                     <th>Aksi</th>
@@ -162,25 +168,30 @@ $perijinan = $stmt->fetchAll();
                     <td><?= $nomor++; ?></td>
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
                     <!-- <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>                     -->
-                    <td><?= date('d F Y', strtotime($row['tanggal_pulang'])); ?></td>                    
+                    <td><?= date('d F Y', strtotime($row['tanggal_pulang'])); ?></td>
+                    <td><?= date('H:i', strtotime($row['tanggal_pulang'])); ?></td>
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
                     <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['kelas']); ?></td>
                     <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
                     <td><?= htmlspecialchars($row['keperluan']); ?></td>
-                    
+
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
                     <td><?= htmlspecialchars($row['keterangan']); ?></td>
                     <td>
-                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPerijinanModal<?php echo $row['id']; ?>">Edit</button>
-                        <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal"
+                            data-target="#editPerijinanModal<?php echo $row['id']; ?>">Edit</button>
+                        <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>"
+                            class="btn btn-danger btn-sm rounded-pill"
+                            onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td>
                 </tr>
 
-                
+
 
                 <!-- Modal Edit Petugas -->
-                <div class="modal fade" id="editPerijinanModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editPerijinanModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editPerijinanModal<?php echo $row['id']; ?>" tabindex="-1"
+                    aria-labelledby="editPerijinanModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -194,19 +205,24 @@ $perijinan = $stmt->fetchAll();
                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                     <div class="form-group">
                                         <label for="tanggal_pulang">Tanggal Pulang</label>
-                                        <input type="text" class="form-control" id="tanggal_pulang" name="tanggal_pulang" value="<?php echo $row['tanggal_pulang']; ?>" required>
+                                        <input type="text" class="form-control" id="tanggal_pulang"
+                                            name="tanggal_pulang" value="<?php echo $row['tanggal_pulang']; ?>"
+                                            required>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" readonly>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa"
+                                            value="<?php echo $row['nama_siswa']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nomor_induk']; ?>" readonly>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa"
+                                            value="<?php echo $row['nomor_induk']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="kelas">Kelas</label>
-                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" readonly>
+                                        <input type="text" class="form-control" id="kelas" name="kelas"
+                                            value="<?php echo $row['kelas']; ?>" readonly>
                                     </div>
                                     <!-- <div class="form-group">
                                         <label for="nama_orang_tua">Nama Orang Tua</label>
@@ -214,16 +230,19 @@ $perijinan = $stmt->fetchAll();
                                     </div> -->
                                     <div class="form-group">
                                         <label for="keperluan">Keperluan</label>
-                                        <input type="text" class="form-control" id="keperluan" name="keperluan" value="<?php echo $row['keperluan']; ?>" required>
+                                        <input type="text" class="form-control" id="keperluan" name="keperluan"
+                                            value="<?php echo $row['keperluan']; ?>" required>
                                     </div>
-                                   
+
                                     <div class="form-group">
                                         <label for="petugas">Petugas</label>
-                                        <input type="text" class="form-control" id="petugas" name="petugas" value="<?php echo $row['petugas']; ?>" required>
+                                        <input type="text" class="form-control" id="petugas" name="petugas"
+                                            value="<?php echo $row['petugas']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="keterangan">Keterangan</label>
-                                        <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?php echo $row['keterangan']; ?>" required>
+                                        <input type="text" class="form-control" id="keterangan" name="keterangan"
+                                            value="<?php echo $row['keterangan']; ?>" required>
                                     </div>
                                     <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
                                 </form>
@@ -242,9 +261,9 @@ $perijinan = $stmt->fetchAll();
                     <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
                 </li>
                 <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
-                    <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
-                        <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
-                    </li>
+                <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
+                </li>
                 <?php endfor; ?>
                 <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
                     <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
@@ -260,7 +279,8 @@ $perijinan = $stmt->fetchAll();
     </div>
 
     <!-- Modal Tambah Petugas -->
-    <div class="modal fade" id="tambahPerijinanModal" tabindex="-1" aria-labelledby="tambahPerijinanModalLabel" aria-hidden="true">
+    <div class="modal fade" id="tambahPerijinanModal" tabindex="-1" aria-labelledby="tambahPerijinanModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -315,10 +335,12 @@ $perijinan = $stmt->fetchAll();
         $("#searchInput").on("keyup", function() {
             var value = $(this).val().toLowerCase(); // Ambil nilai input dan ubah ke lowercase
             $("#dataTable tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1); // Tampilkan/sembunyikan baris yang sesuai
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -
+                    1); // Tampilkan/sembunyikan baris yang sesuai
             });
         });
     });
     </script>
 </body>
+
 </html>
