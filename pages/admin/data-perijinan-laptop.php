@@ -19,6 +19,7 @@ if (isset($_POST['edit'])) {
 
     $stmt = $pdo->prepare("UPDATE perijinan_laptop SET tanggal_pengambilan = ?, nomor_induk= ?, nama_siswa = ?, kelas = ?, perijinan = ?, alasan_membawa_laptop = ? WHERE id = ?");
     $stmt->execute([$tanggal_pengambilan, $nomor_induk, $nama_siswa, $kelas, $perijinan, $alasan_membawa_laptop, $id]);
+    
     header('Location: data-perijinan-laptop.php');
     exit;
 }
@@ -137,6 +138,7 @@ $perijinan_laptop = $stmt->fetchAll();
                 <tr>
                     <th>No</th>
                     <th>Tanggal Pengambilan</th>
+                    <th>Waktu</th>
                     <th>Nama Siswa</th>
                     <th>Nomor Induk</th>
                     <th>Kelas</th>
@@ -160,6 +162,7 @@ $perijinan_laptop = $stmt->fetchAll();
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
                     <!-- <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>                     -->
                     <td><?= date('d F Y', strtotime($row['tanggal_pengambilan'])); ?></td>                    
+                    <td><?php echo substr($row['tanggal_pengambilan'], 11, 5) ?></td>
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
                     <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['kelas']); ?></td>
