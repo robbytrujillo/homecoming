@@ -108,7 +108,7 @@ $kedatangan = $stmt->fetchAll();
 
     <div class="container mt-4 mb-5">
 
-        <h3 class="text-center mb-4">📋 Data Kedatangan Santri</h3>
+        <h3 class="text-center mb-4">Data Kedatangan Santri</h3>
 
         <div class="mb-3">
             <a href="dashboard.php" class="btn btn-success rounded-pill">Dashboard</a>

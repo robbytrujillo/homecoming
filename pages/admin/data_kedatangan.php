@@ -17,8 +17,30 @@ if (isset($_POST['edit'])) {
     $petugas = $_POST['petugas'];
     $keterangan = $_POST['keterangan'];
 
-    $stmt = $pdo->prepare("UPDATE kedatangan SET nomor_induk= ?, nama_siswa = ?, kelas = ?, keperluan = ?, tanggal_datang = ?, petugas = ?, keterangan = ? WHERE id = ?");
-    $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
+    // $stmt = $pdo->prepare("UPDATE kedatangan SET nomor_induk= ?, nama_siswa = ?, kelas = ?, keperluan = ?, tanggal_datang = ?, petugas = ?, keterangan = ? WHERE id = ?");
+    // $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
+    
+    $stmt = $pdo->prepare("UPDATE kedatangan 
+        SET nomor_induk=?, 
+            nama_siswa=?, 
+            kelas=?, 
+            keperluan=?, 
+            tanggal_datang=?, 
+            petugas=?, 
+            keterangan=? 
+        WHERE id=?");
+
+    $stmt->execute([
+        $nomor_induk,
+        $nama_siswa,
+        $kelas,
+        $keperluan,
+        $tanggal_datang,
+        $petugas,
+        $keterangan,
+        $id
+    ]);
+    
     header('Location: data_perijinan.php');
     exit;
 }
@@ -43,7 +65,9 @@ $jumlah_data = $stmt->fetchColumn();
 $total_halaman = ceil($jumlah_data / $batas);
 
 // Ambil Data Kedatangan Dengan Pagination
-$stmt = $pdo->prepare("SELECT * FROM kedatangan LIMIT :offset, :batas");
+$stmt = $pdo->prepare("SELECT * FROM kedatangan 
+                       ORDER BY tanggal_datang DESC 
+                       LIMIT :offset, :batas");
 $stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
 $stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
 $stmt->execute();
@@ -52,6 +76,7 @@ $kedatangan = $stmt->fetchAll();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,10 +84,12 @@ $kedatangan = $stmt->fetchAll();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -74,11 +101,11 @@ $kedatangan = $stmt->fetchAll();
                     <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
                 </li> -->
                 <li class="nav-item active">
-                    <a style="color: #28A745;"  class="nav-link" href="data_kedatangan.php"><b>Data Kedatangan</b></a>
+                    <a style="color: #28A745;" class="nav-link" href="data_kedatangan.php"><b>Data Kedatangan</b></a>
                 </li>
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
-                </li> -->                
+                </li> -->
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="form_kedatangan.php">Input Kedatangan</a>
                 </li> -->
@@ -128,7 +155,9 @@ $kedatangan = $stmt->fetchAll();
 
         <!-- Input Pencarian -->
         <div class="form-group">
-            <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
+            <input type="text" id="searchInput" class="form-control"
+                style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i
+                class="fas fa-search" style="position: absolute"></i>
         </div>
 
         <!-- Tabel Data Petugas -->
@@ -136,12 +165,13 @@ $kedatangan = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>Tanggal Datang</th>
+                    <th>Waktu</th>
                     <th>Nomor Induk</th>
                     <th>Nama Siswa</th>
                     <th>Kelas</th>
                     <!-- <th>Nama Orang Tua</th> -->
                     <th>Keperluan</th>
-                    <th>Tanggal Datang</th>
                     <th>Petugas</th>
                     <!-- <th>Keterangan</th> -->
                     <th>Keterangan</th>
@@ -159,24 +189,29 @@ $kedatangan = $stmt->fetchAll();
                     <!-- <td><?php echo $key + 1; ?></td> -->
                     <td><?= $nomor++; ?></td>
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
+                    <td><?php echo date('d F Y', strtotime($row['tanggal_datang'])); ?></td>
+                    <td><?php echo substr($row['tanggal_datang'], 11, 5) ?></td>
                     <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
                     <td><?= htmlspecialchars($row['kelas']); ?></td>
                     <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
                     <td><?= htmlspecialchars($row['keperluan']); ?></td>
-                    <td><?= htmlspecialchars($row['tanggal_datang']); ?></td>
                     <td><?= htmlspecialchars($row['petugas']); ?></td>
                     <td><?= htmlspecialchars($row['keterangan']); ?></td>
                     <td>
-                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editKedatanganModal<?php echo $row['id']; ?>">Edit</button>
-                        <a href="data_kedatangan.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal"
+                            data-target="#editKedatanganModal<?php echo $row['id']; ?>">Edit</button>
+                        <a href="data_kedatangan.php?hapus=<?php echo $row['id']; ?>"
+                            class="btn btn-danger btn-sm rounded-pill"
+                            onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td>
                 </tr>
 
-                
+
 
                 <!-- Modal Edit Petugas -->
-                <div class="modal fade" id="editKedatanganModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editKedatanganModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editKedatanganModal<?php echo $row['id']; ?>" tabindex="-1"
+                    aria-labelledby="editKedatanganModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -190,15 +225,18 @@ $kedatangan = $stmt->fetchAll();
                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                     <div class="form-group">
                                         <label for="nomor_induk">Nomor Induk</label>
-                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $row['nomor_induk']; ?>" readonly>
+                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk"
+                                            value="<?php echo $row['nomor_induk']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" readonly>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa"
+                                            value="<?php echo $row['nama_siswa']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="kelas">Kelas</label>
-                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" readonly>
+                                        <input type="text" class="form-control" id="kelas" name="kelas"
+                                            value="<?php echo $row['kelas']; ?>" readonly>
                                     </div>
                                     <!-- <div class="form-group">
                                         <label for="nama_orang_tua">Nama Orang Tua</label>
@@ -206,19 +244,24 @@ $kedatangan = $stmt->fetchAll();
                                     </div> -->
                                     <div class="form-group">
                                         <label for="keperluan">Keperluan</label>
-                                        <input type="text" class="form-control" id="keperluan" name="keperluan" value="<?php echo $row['keperluan']; ?>" required>
+                                        <input type="text" class="form-control" id="keperluan" name="keperluan"
+                                            value="<?php echo $row['keperluan']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="tanggal_datang">Tanggal Datang</label>
-                                        <input type="text" class="form-control" id="tanggal_datang" name="tanggal_datang" value="<?php echo $row['tanggal_datang']; ?>" required>
+                                        <input type="text" class="form-control" id="tanggal_datang"
+                                            name="tanggal_datang" value="<?php echo $row['tanggal_datang']; ?>"
+                                            required>
                                     </div>
                                     <div class="form-group">
                                         <label for="petugas">Petugas</label>
-                                        <input type="text" class="form-control" id="petugas" name="petugas" value="<?php echo $row['petugas']; ?>" required>
+                                        <input type="text" class="form-control" id="petugas" name="petugas"
+                                            value="<?php echo $row['petugas']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="keterangan">Keterangan</label>
-                                        <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?php echo $row['keterangan']; ?>" required>
+                                        <input type="text" class="form-control" id="keterangan" name="keterangan"
+                                            value="<?php echo $row['keterangan']; ?>" required>
                                     </div>
                                     <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
                                 </form>
@@ -237,9 +280,9 @@ $kedatangan = $stmt->fetchAll();
                     <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
                 </li>
                 <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
-                    <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
-                        <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
-                    </li>
+                <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
+                </li>
                 <?php endfor; ?>
                 <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
                     <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
@@ -303,10 +346,12 @@ $kedatangan = $stmt->fetchAll();
         $("#searchInput").on("keyup", function() {
             var value = $(this).val().toLowerCase(); // Ambil nilai input dan ubah ke lowercase
             $("#dataTable tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1); // Tampilkan/sembunyikan baris yang sesuai
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -
+                    1); // Tampilkan/sembunyikan baris yang sesuai
             });
         });
     });
     </script>
 </body>
+
 </html>
