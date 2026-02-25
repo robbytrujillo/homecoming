@@ -215,7 +215,7 @@ $perijinan = $stmt->fetchAll();
                                             value="<?php echo $row['nama_siswa']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label for="nama_siswa">Nama Siswa</label>
+                                        <label for="nama_siswa">Nomor Induk</label>
                                         <input type="text" class="form-control" id="nama_siswa" name="nama_siswa"
                                             value="<?php echo $row['nomor_induk']; ?>" readonly>
                                     </div>

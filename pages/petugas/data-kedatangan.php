@@ -87,7 +87,8 @@ $kedatangan = $stmt->fetchAll();
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <style>
+    <link rel="stylesheet" href="../../css/style.css">
+    <!-- <style>
     .card-custom {
         border-radius: 15px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -101,182 +102,274 @@ $kedatangan = $stmt->fetchAll();
         background: #ffc107;
         color: #000;
     }
-    </style>
+    </style> -->
 </head>
 
 <body>
 
-    <div class="container mt-4 mb-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.5%">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="data_perijinan.php">Data Perijinan</a>
+                </li> -->
+                <li class="nav-item active">
+                    <a style="color: #28A745;" class="nav-link" href="data_kedatangan.php"><b>Data Kedatangan</b></a>
+                </li>
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
+                </li> -->
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="form_kedatangan.php">Input Kedatangan</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="../../logout.php">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-        <h3 class="text-center mb-4">Data Kedatangan Santri</h3>
-
-        <div class="mb-3">
-            <a href="dashboard.php" class="btn btn-success rounded-pill">Dashboard</a>
-            <a href="form-kedatangan.php" class="btn btn-warning rounded-pill">Input Kedatangan</a>
+    <div class="container mt-3 mb-3">
+        <h2 class="mt-3 mb-3 text-center">Data Kedatangan Siswa</h2>
+        <div>
+            <!-- <a href="form_kedatangan.php" class="btn btn-primary btn-md text-white rounded-pill">Isi Kedatangan</a> -->
+            <!-- <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button> -->
+            <!-- <a href="template_petugas.csv" class="btn btn-secondary rounded-pill" download>Download Template CSV</a> -->
+            <a href="dashboard.php" class="btn btn-success rounded-pill">Kembali</a>
+            <a href="export-data-kedatangan.php" class="btn btn-info rounded-pill">Cetak</a>
         </div>
 
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Cari Data...">
+        <!-- Modal Upload CSV -->
+        <!-- <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadCSVModalLabel">Upload Data Petugas dari CSV</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="upload_csv_petugas.php" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="csv_file">Pilih File CSV</label>
+                                <input type="file" class="form-control-file" id="csv_file" name="csv_file" accept=".csv" required>
+                            </div>
+                            <button type="submit" name="upload_csv" class="btn btn-primary">Upload</button>
+                           <div class="form-group">
+                                <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan NIP, Nama Petugas, Jabatan, atau Mapel...">
+                            </div> 
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
-        <div class="card card-custom">
-            <div class="card-body table-responsive">
+        <!-- Input Pencarian -->
+        <div class="form-group">
+            <input type="text" id="searchInput" class="form-control"
+                style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i
+                class="fas fa-search" style="position: absolute"></i>
+        </div>
 
-                <table class="table table-bordered table-hover table-striped" id="dataTable">
-                    <thead class="thead-dark text-center">
-                        <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>Nama</th>
-                            <th>NIS</th>
-                            <th>Kelas</th>
-                            <th>Keperluan</th>
-                            <th>Petugas</th>
-                            <th>Keterangan</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
+        <!-- Tabel Data Petugas -->
+        <table class="table table-bordered" id="dataTable">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Tanggal Datang</th>
+                    <th>Waktu</th>
+                    <th>Nomor Induk</th>
+                    <th>Nama Siswa</th>
+                    <th>Kelas</th>
+                    <!-- <th>Nama Orang Tua</th> -->
+                    <th>Keperluan</th>
+                    <th>Petugas</th>
+                    <!-- <th>Keterangan</th> -->
+                    <th>Keterangan</th>
+                    <!-- <th>Aksi</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $nomor = $halaman_awal + 1;
+                
+                // foreach ($perijinan as $key => $row): 
+                foreach ($kedatangan as $row): 
+                ?>
+                <tr>
+                    <!-- <td><?php echo $key + 1; ?></td> -->
+                    <td><?= $nomor++; ?></td>
+                    <!-- <td><?= $row['nomor_induk']; ?></td> -->
+                    <td><?php echo date('d F Y', strtotime($row['tanggal_datang'])); ?></td>
+                    <td><?php echo substr($row['tanggal_datang'], 11, 5) ?></td>
+                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
+                    <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
+                    <td><?= htmlspecialchars($row['kelas']); ?></td>
+                    <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
+                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
+                    <td><?= htmlspecialchars($row['petugas']); ?></td>
+                    <td><?= htmlspecialchars($row['keterangan']); ?></td>
+                    <!-- <td>
+                        <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal"
+                            data-target="#editKedatanganModal<?php echo $row['id']; ?>">Edit</button>
+                        <a href="data_kedatangan.php?hapus=<?php echo $row['id']; ?>"
+                            class="btn btn-danger btn-sm rounded-pill"
+                            onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                    </td> -->
+                </tr>
 
-                        <?php 
-$no = $halaman_awal + 1;
-foreach($kedatangan as $row): 
-?>
 
-                        <tr>
-                            <td><?= $no++; ?></td>
-                            <td><?= date('d-m-Y H:i', strtotime($row['tanggal_datang'])); ?></td>
-                            <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
-                            <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
-                            <td><?= htmlspecialchars($row['kelas']); ?></td>
 
-                            <td>
-                                <?php if($row['keperluan']=="kedatangan"): ?>
-                                <span class="badge badge-kedatangan">Kedatangan</span>
-                                <?php else: ?>
-                                <span class="badge badge-ijin">Ijin</span>
-                                <?php endif; ?>
-                            </td>
-
-                            <td><?= htmlspecialchars($row['petugas']); ?></td>
-                            <td><?= htmlspecialchars($row['keterangan']); ?></td>
-
-                            <td>
-                                <button class="btn btn-sm btn-warning rounded-pill" data-toggle="modal"
-                                    data-target="#edit<?= $row['id']; ?>">Edit</button>
-                                <a href="?hapus=<?= $row['id']; ?>" class="btn btn-sm btn-danger rounded-pill"
-                                    onclick="return confirm('Yakin hapus data?')">Hapus</a>
-                            </td>
-                        </tr>
-
-                        <!-- MODAL EDIT -->
-                        <div class="modal fade" id="edit<?= $row['id']; ?>">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                    <div class="modal-header">
-                                        <h5>Edit Data</h5>
-                                        <button class="close" data-dismiss="modal">&times;</button>
+                <!-- Modal Edit Petugas -->
+                <div class="modal fade" id="editKedatanganModal<?php echo $row['id']; ?>" tabindex="-1"
+                    aria-labelledby="editKedatanganModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editKedatanganModalLabel">Edit Kedatangan</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="POST">
+                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                    <div class="form-group">
+                                        <label for="nomor_induk">Nomor Induk</label>
+                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk"
+                                            value="<?php echo $row['nomor_induk']; ?>" readonly>
                                     </div>
-
-                                    <div class="modal-body">
-                                        <form method="POST">
-                                            <input type="hidden" name="id" value="<?= $row['id']; ?>">
-
-                                            <div class="form-group">
-                                                <label>Nomor Induk</label>
-                                                <input type="text" name="nomor_induk" class="form-control"
-                                                    value="<?= $row['nomor_induk']; ?>" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Nama</label>
-                                                <input type="text" name="nama_siswa" class="form-control"
-                                                    value="<?= $row['nama_siswa']; ?>" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Kelas</label>
-                                                <input type="text" name="kelas" class="form-control"
-                                                    value="<?= $row['kelas']; ?>" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Keperluan</label>
-                                                <select name="keperluan" class="form-control">
-                                                    <option value="kedatangan"
-                                                        <?= $row['keperluan']=="kedatangan"?'selected':''; ?>>Kedatangan
-                                                    </option>
-                                                    <option value="ijin"
-                                                        <?= $row['keperluan']=="ijin"?'selected':''; ?>>Ijin</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Tanggal & Jam</label>
-                                                <input type="datetime-local" name="tanggal_datang" class="form-control"
-                                                    value="<?= date('Y-m-d\TH:i', strtotime($row['tanggal_datang'])); ?>"
-                                                    required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Petugas</label>
-                                                <input type="text" name="petugas" class="form-control"
-                                                    value="<?= $row['petugas']; ?>" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Keterangan</label>
-                                                <input type="text" name="keterangan" class="form-control"
-                                                    value="<?= $row['keterangan']; ?>">
-                                            </div>
-
-                                            <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
-
-                                        </form>
+                                    <div class="form-group">
+                                        <label for="nama_siswa">Nama Siswa</label>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa"
+                                            value="<?php echo $row['nama_siswa']; ?>" readonly>
                                     </div>
-
-                                </div>
+                                    <div class="form-group">
+                                        <label for="kelas">Kelas</label>
+                                        <input type="text" class="form-control" id="kelas" name="kelas"
+                                            value="<?php echo $row['kelas']; ?>" readonly>
+                                    </div>
+                                    <!-- <div class="form-group">
+                                        <label for="nama_orang_tua">Nama Orang Tua</label>
+                                        <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" value="<?php echo $row['nama_orang_tua']; ?>" required>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label for="keperluan">Keperluan</label>
+                                        <input type="text" class="form-control" id="keperluan" name="keperluan"
+                                            value="<?php echo $row['keperluan']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tanggal_datang">Tanggal Datang</label>
+                                        <input type="text" class="form-control" id="tanggal_datang"
+                                            name="tanggal_datang" value="<?php echo $row['tanggal_datang']; ?>"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petugas">Petugas</label>
+                                        <input type="text" class="form-control" id="petugas" name="petugas"
+                                            value="<?php echo $row['petugas']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="keterangan">Keterangan</label>
+                                        <input type="text" class="form-control" id="keterangan" name="keterangan"
+                                            value="<?php echo $row['keterangan']; ?>" required>
+                                    </div>
+                                    <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
+                                </form>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
-                        <?php endforeach; ?>
-
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-
-        <!-- PAGINATION -->
-        <nav class="mt-3">
-            <ul class="pagination justify-content-center">
-
-                <li class="page-item <?= ($halaman<=1)?'disabled':''; ?>">
-                    <a class="page-link" href="?halaman=<?= $halaman-1; ?>">Previous</a>
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination">
+                <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
                 </li>
-
-                <?php for($x=1;$x<=$total_halaman;$x++): ?>
-                <li class="page-item <?= ($halaman==$x)?'active':''; ?>">
+                <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
+                <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
                     <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
                 </li>
                 <?php endfor; ?>
-
-                <li class="page-item <?= ($halaman>=$total_halaman)?'disabled':''; ?>">
-                    <a class="page-link" href="?halaman=<?= $halaman+1; ?>">Next</a>
+                <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
                 </li>
-
             </ul>
-        </nav>
 
+            <!-- <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?halaman=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?halaman=2">2</a></li>
+            </ul> -->
+
+        </nav>
     </div>
+    <br><br>
+
+    <!-- Modal Tambah Petugas -->
+    <!-- <div class="modal fade" id="tambahPetugasModal" tabindex="-1" aria-labelledby="tambahPetugasModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tambahPetugasModalLabel">Tambah Petugas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST">
+                        <div class="form-group">
+                            <label for="nip">NIP</label>
+                            <input type="text" class="form-control" id="nip" name="nip" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama_petugas">Nama Petugas</label>
+                            <input type="text" class="form-control" id="nama_petugas" name="nama_petugas" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jabatan">Jabatan</label>
+                            <input type="text" class="form-control" id="jabatan" name="jabatan" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mapel">Mata Pelajaran</label>
+                            <input type="text" class="form-control" id="mapel" name="mapel" required>
+                        </div>
+                        <button type="submit" name="tambah" class="btn btn-primary">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Footer -->
+    <?php include '../../includes/footer.php'; ?>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <!-- Script Pencarian -->
     <script>
-    $("#searchInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#dataTable tbody tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    $(document).ready(function() {
+        // Fungsi pencarian
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase(); // Ambil nilai input dan ubah ke lowercase
+            $("#dataTable tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -
+                    1); // Tampilkan/sembunyikan baris yang sesuai
+            });
         });
     });
     </script>
