@@ -15,10 +15,12 @@ $siswa = $stmt->fetch();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Siswa</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/style-hoverzoom.css">
@@ -30,11 +32,13 @@ $siswa = $stmt->fetch();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -43,7 +47,8 @@ $siswa = $stmt->fetch();
                     <a class="nav-link" style="color: #28A745;" href="dashboard.php"><b>Dashboard</b></a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                        aria-expanded="false">
                         Data Perpulangan
                     </a>
                     <div class="dropdown-menu">
@@ -53,7 +58,8 @@ $siswa = $stmt->fetch();
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                        aria-expanded="false">
                         Data Perijinan Laptop
                     </a>
                     <div class="dropdown-menu">
@@ -83,7 +89,8 @@ $siswa = $stmt->fetch();
     </nav>
 
     <div class="container mt-5">
-        <h4 class="mt-5 mb-3">Selamat datang <strong><?= $siswa['nama_siswa'] ?></strong> di halaman utama homecoming</h4>
+        <h4 class="mt-5 mb-3">Selamat datang <strong><?= $siswa['nama_siswa'] ?></strong> di halaman utama homecoming
+        </h4>
         <div class="row">
             <div class="col-md-4 bg-white">
                 <div class="card bg-light mb-3 shadow-sm rounded-lg border-0">
@@ -92,7 +99,8 @@ $siswa = $stmt->fetch();
                         <img src="../../assets/permissions.svg" style="height: 320px" class="cover img-fluid">
                         <h5 class="card-text text-center mt-3 mb-3">Melihat data perijinan siswa</h5>
                         <div class="d-flex justify-content-center">
-                            <a href="data-perijinan.php" class="btn btn-outline-success btn-block font-weight-bold rounded-pill">Lihat Data</a>
+                            <a href="data-perijinan.php"
+                                class="btn btn-outline-success btn-block font-weight-bold rounded-pill">Lihat Data</a>
                         </div>
                     </div>
                 </div>
@@ -104,7 +112,8 @@ $siswa = $stmt->fetch();
                         <img src="../../assets/holiday.svg" style="height: 320px" class="cover img-fluid">
                         <h5 class="card-text text-center mt-3 mb-3">Melihat data kedatangan siswa</h5>
                         <div class="d-flex justify-content-center">
-                            <a href="data-kedatangan.php" class="btn btn-outline-success btn-block font-weight-bold rounded-pill">Lihat Data</a>
+                            <a href="data-kedatangan.php"
+                                class="btn btn-outline-success btn-block font-weight-bold rounded-pill">Lihat Data</a>
                         </div>
                     </div>
                 </div>
@@ -116,7 +125,9 @@ $siswa = $stmt->fetch();
                         <img src="../../assets/laptops.svg" style="height: 320px" class="cover img-fluid">
                         <h5 class="card-text text-center mt-3 mb-3">Perijinan membawa laptop</h5>
                         <div class="d-flex justify-content-center">
-                            <a href="form-perijinan-laptop.php" class="btn btn-outline-success btn-block font-weight-bold rounded-pill">Ajukan Perijinan</a>
+                            <a href="form-perijinan-laptop.php"
+                                class="btn btn-outline-success btn-block font-weight-bold rounded-pill">Ajukan
+                                Perijinan</a>
                         </div>
                     </div>
                 </div>
@@ -140,16 +151,21 @@ $siswa = $stmt->fetch();
                     </div>
                     <div class="card-body">
                         <p>Nomor Induk Siswa &nbsp; &nbsp;: <strong><?php echo $siswa['nomor_induk']; ?></strong></p>
-                        <p>Nama Siswa  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <strong><?php echo $siswa['nama_siswa']; ?></strong></p>
-                        <p>Kelas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <strong><?php echo $siswa['kelas']; ?></strong></p>
-                        <p>Alamat &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <strong><?php echo $siswa['alamat']; ?></strong></p>
+                        <p>Nama Siswa &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:
+                            <strong><?php echo $siswa['nama_siswa']; ?></strong>
+                        </p>
+                        <p>Kelas &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;: <strong><?php echo $siswa['kelas']; ?></strong></p>
+                        <p>Alamat &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:
+                            <strong><?php echo $siswa['alamat']; ?></strong>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <br>
-    
+
     <!-- Footer -->
     <?php include '../../includes/footer.php'; ?>
 
@@ -158,9 +174,8 @@ $siswa = $stmt->fetch();
 
     <!-- Script untuk Generate QR Code -->
     <script>
-
     // Data dalam format string biasa, bukan JSON
-    const dataSiswa = 
+    const dataSiswa =
         "Nomor Induk     : <?php echo $siswa['nomor_induk']; ?>\n" +
         "Nama Siswa      : <?php echo $siswa['nama_siswa']; ?>\n" +
         "Kelas           : <?php echo $siswa['kelas']; ?>\n" +
@@ -215,7 +230,7 @@ $siswa = $stmt->fetch();
     //         doc.save("QRCode-Profile.pdf");
     //     });
     // });
-
     </script>
 </body>
+
 </html>

@@ -69,17 +69,21 @@ $siswa = $stmt->fetchAll();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Siswa - Admin</title>
+    <title>Data Siswa - Pimpinan</title>
+    <link rel="icon" type="image/x-icon" href="../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container">
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -88,7 +92,8 @@ $siswa = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: #28A745;" class="nav-link font-weight-bold" href="data_siswa.php"><b>Data Siswa</b></a>
+                    <a style="color: #28A745;" class="nav-link font-weight-bold" href="data_siswa.php"><b>Data
+                            Siswa</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
@@ -96,7 +101,7 @@ $siswa = $stmt->fetchAll();
             </ul>
         </div>
     </nav>
-    
+
     <div class="container mt-3 mb-5">
         <h2 class="mt-3 mb-3 text-center">Data Siswa</h2>
         <!-- <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#tambahSiswaModal">Tambah Siswa</button>
@@ -104,12 +109,14 @@ $siswa = $stmt->fetchAll();
         <a href="template_siswa.csv" class="btn btn-secondary rounded-pill" download>Template CSV</a> -->
         <a href="dashboard.php" class="btn btn-success rounded-pill">Kembali</a>
         <a href="export-siswa.php" class="btn btn-info rounded-pill">Cetak</a>
-        
-         <!-- Input Pencarian -->
-         <div class="form-group">
-            <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
+
+        <!-- Input Pencarian -->
+        <div class="form-group">
+            <input type="text" id="searchInput" class="form-control"
+                style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i
+                class="fas fa-search" style="position: absolute"></i>
         </div>
-        
+
         <table class="table table-bordered rounded-pill" id="dataTable">
             <thead>
                 <tr>
@@ -151,7 +158,8 @@ $siswa = $stmt->fetchAll();
                 </tr>
 
                 <!-- Modal Edit Siswa -->
-                <div class="modal fade" id="editSiswaModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editSiswaModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editSiswaModal<?php echo $row['id']; ?>" tabindex="-1"
+                    aria-labelledby="editSiswaModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -165,23 +173,29 @@ $siswa = $stmt->fetchAll();
                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                     <div class="form-group">
                                         <label for="nomor_induk">Nomor Induk</label>
-                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $row['nomor_induk']; ?>" required>
+                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk"
+                                            value="<?php echo $row['nomor_induk']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" required>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa"
+                                            value="<?php echo $row['nama_siswa']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="kelas">Kelas</label>
-                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" required>
+                                        <input type="text" class="form-control" id="kelas" name="kelas"
+                                            value="<?php echo $row['kelas']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="alamat">Alamat</label>
-                                        <input type="text" class="form-control" id="alamat" name="alamat" value="<?php echo $row['alamat']; ?>" required>
+                                        <input type="text" class="form-control" id="alamat" name="alamat"
+                                            value="<?php echo $row['alamat']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_orang_tua">Nama Orang Tua</label>
-                                        <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" value="<?php echo $row['nama_orang_tua']; ?>" required>
+                                        <input type="text" class="form-control" id="nama_orang_tua"
+                                            name="nama_orang_tua" value="<?php echo $row['nama_orang_tua']; ?>"
+                                            required>
                                     </div>
                                     <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
                                 </form>
@@ -193,16 +207,16 @@ $siswa = $stmt->fetchAll();
             </tbody>
         </table>
 
-         <!-- Pagination -->
-         <nav class="mb-5">
+        <!-- Pagination -->
+        <nav class="mb-5">
             <ul class="pagination">
                 <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
                     <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
                 </li>
                 <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
-                    <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
-                        <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
-                    </li>
+                <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
+                </li>
                 <?php endfor; ?>
                 <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
                     <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
@@ -218,7 +232,8 @@ $siswa = $stmt->fetchAll();
     </div>
 
     <!-- Modal Tambah Siswa -->
-    <div class="modal fade" id="tambahSiswaModal" tabindex="-1" aria-labelledby="tambahSiswaModalLabel" aria-hidden="true">
+    <div class="modal fade" id="tambahSiswaModal" tabindex="-1" aria-labelledby="tambahSiswaModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -270,7 +285,8 @@ $siswa = $stmt->fetchAll();
                     <form action="upload_csv.php" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="csv_file">Pilih File CSV</label>
-                            <input type="file" class="form-control-file" id="csv_file" name="csv_file" accept=".csv" required>
+                            <input type="file" class="form-control-file" id="csv_file" name="csv_file" accept=".csv"
+                                required>
                         </div>
                         <button type="submit" name="upload_csv" class="btn btn-primary">Upload</button>
                     </form>
@@ -292,10 +308,12 @@ $siswa = $stmt->fetchAll();
         $("#searchInput").on("keyup", function() {
             var value = $(this).val().toLowerCase(); // Ambil nilai input dan ubah ke lowercase
             $("#dataTable tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1); // Tampilkan/sembunyikan baris yang sesuai
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -
+                    1); // Tampilkan/sembunyikan baris yang sesuai
             });
         });
     });
     </script>
 </body>
+
 </html>

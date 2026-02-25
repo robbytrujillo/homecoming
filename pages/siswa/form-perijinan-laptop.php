@@ -49,7 +49,7 @@ if (isset($_POST['tambah'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perijinan Laptop - Siswa</title>
-    <link rel="icon" type="image/x-icon" href="../assets/img/ihbs-logo.png">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -119,7 +119,7 @@ if (isset($_POST['tambah'])) {
                                         <input type="time" class="form-control" id="jam_pengambilan"
                                             name="jam_pengambilan">
                                         <small class="text-muted">
-                                            Kosongkan jika ingin menggunakan jam otomatis
+                                            (biarkan jika ingin menggunakan jam otomatis)
                                         </small>
                                     </div>
                                 </div>

@@ -15,19 +15,23 @@ $perijinan_laptop = $stmt->fetchAll();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Perijinan - Siswa</title>
+    <link rel="icon" type="image/x-icon" href="../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
+
 <body>
-    
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
         <!-- <a class="navbar-brand" href="#">Aplikasi Pesantren</a> -->
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -45,7 +49,8 @@ $perijinan_laptop = $stmt->fetchAll();
                     <a class="nav-link" href="form-perijinan-laptop.php">Perijinan Laptop</a>
                 </li> -->
                 <li class="nav-item active">
-                    <a style="color: #28A745" class="nav-link" href="data-pengembalian-laptop.php"><b>Pengembalian Laptop</b></a>
+                    <a style="color: #28A745" class="nav-link" href="data-pengembalian-laptop.php"><b>Pengembalian
+                            Laptop</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../logout.php">Logout</a>
@@ -65,7 +70,9 @@ $perijinan_laptop = $stmt->fetchAll();
 
         <!-- Input Pencarian -->
         <div class="form-group">
-            <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
+            <input type="text" id="searchInput" class="form-control"
+                style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i
+                class="fas fa-search" style="position: absolute"></i>
         </div>
 
         <table class="table table-bordered" id="dataTable">
@@ -87,11 +94,11 @@ $perijinan_laptop = $stmt->fetchAll();
 
                     <td><?php echo $key + 1; ?></td>
                     <!-- <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td> -->
-                    <td><?php echo date('d F Y', strtotime($row['tanggal_pengembalian'])); ?></td>                   
+                    <td><?php echo date('d F Y', strtotime($row['tanggal_pengembalian'])); ?></td>
                     <td><?php echo $row['nama_siswa']; ?></td>
                     <td><?php echo $row['nomor_induk']; ?></td>
                     <td><?php echo $row['kelas']; ?></td>
-                    <td><?php echo $row['petugas']; ?></td>                    
+                    <td><?php echo $row['petugas']; ?></td>
                     <td><?php echo $row['keterangan']; ?></td>
                     <!-- <td><?php echo $row['persetujuan']; ?></td> -->
                 </tr>
@@ -105,7 +112,7 @@ $perijinan_laptop = $stmt->fetchAll();
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
     <!-- Script Pencarian -->
     <script>
     $(document).ready(function() {
@@ -113,13 +120,15 @@ $perijinan_laptop = $stmt->fetchAll();
         $("#searchInput").on("keyup", function() {
             var value = $(this).val().toLowerCase(); // Ambil nilai input dan ubah ke lowercase
             $("#dataTable tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1); // Tampilkan/sembunyikan baris yang sesuai
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -
+                1); // Tampilkan/sembunyikan baris yang sesuai
             });
         });
     });
     </script>
 
-    
+
 
 </body>
+
 </html>

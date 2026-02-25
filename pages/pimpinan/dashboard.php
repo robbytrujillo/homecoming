@@ -14,17 +14,21 @@ $pimpinan = $stmt->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Pimpinan</title>
+    <link rel="icon" type="image/x-icon" href="../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container sticky-top">
-    <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.0%">    
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0.0%">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -33,7 +37,8 @@ $pimpinan = $stmt->fetch();
                     <a style="color: #28A745;" class="nav-link" href="#"><b>Dashboard</b></a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                        aria-expanded="false">
                         Data Master
                     </a>
                     <div class="dropdown-menu">
@@ -43,7 +48,8 @@ $pimpinan = $stmt->fetch();
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                        aria-expanded="false">
                         Perpulangan
                     </a>
                     <div class="dropdown-menu">
@@ -53,7 +59,8 @@ $pimpinan = $stmt->fetch();
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                        aria-expanded="false">
                         Ijin Laptop
                     </a>
                     <div class="dropdown-menu">
@@ -71,7 +78,8 @@ $pimpinan = $stmt->fetch();
 
     <div class="container mt-5 mb-3">
         <div>
-            <h4>Selamat datang <strong><?= $pimpinan['nama_pimpinan'] ?></strong> di halaman utama Aplikasi Perpulangan Siswa</h4>
+            <h4>Selamat datang <strong><?= $pimpinan['nama_pimpinan'] ?></strong> di halaman utama Aplikasi Perpulangan
+                Siswa</h4>
         </div>
         <div class="row mt-3">
             <!-- <div class="col-md-3">
@@ -86,12 +94,14 @@ $pimpinan = $stmt->fetch();
             <div class="col-md-3 text-center">
                 <div class="card text-white bg-primary mb-3 rounded-3 border-0 shadow-lg ">
                     <div class="card-header">
-                    <a href="data-perijinan.php" class="btn btn-primary btn-sm rounded-pill"><b>Pilih Perijinan Pulang</b></a>
-                    <!-- <img src="../../assets/permissions.svg" style="height: 320px" class="cover img-fluid"> -->
+                        <a href="data-perijinan.php" class="btn btn-primary btn-sm rounded-pill"><b>Pilih Perijinan
+                                Pulang</b></a>
+                        <!-- <img src="../../assets/permissions.svg" style="height: 320px" class="cover img-fluid"> -->
                     </div>
-                    
+
                     <div class="card-body">
-                        <h5 class="card-title">Total : <b><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan")->fetchColumn(); ?></b></h5>
+                        <h5 class="card-title">Total :
+                            <b><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan")->fetchColumn(); ?></b></h5>
                         <p class="card-text text-italic">Melihat data perijinan pulang</p>
                     </div>
                 </div>
@@ -99,11 +109,13 @@ $pimpinan = $stmt->fetch();
             <div class="col-md-3 text-center">
                 <div class="card text-white bg-success mb-3 rounded-3 border-0 shadow-lg">
                     <div class="card-header">
-                    <a href="data-kedatangan.php" class="btn btn-success btn-sm rounded-pill"><b>Pilih Data Kedatangan</b></a>
+                        <a href="data-kedatangan.php" class="btn btn-success btn-sm rounded-pill"><b>Pilih Data
+                                Kedatangan</b></a>
                         <!-- <img src="../../assets/holiday.svg" style="height: 320px" class="cover img-fluid"> -->
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Total : <b><?php echo $pdo->query("SELECT COUNT(*) FROM kedatangan")->fetchColumn(); ?></b></h5>
+                        <h5 class="card-title">Total :
+                            <b><?php echo $pdo->query("SELECT COUNT(*) FROM kedatangan")->fetchColumn(); ?></b></h5>
                         <p class="card-text">Melihat data kedatangan</p>
                     </div>
                 </div>
@@ -111,10 +123,13 @@ $pimpinan = $stmt->fetch();
             <div class="col-md-3 text-center">
                 <div class="card text-white bg-info mb-3 rounded-3 border-0 shadow-lg">
                     <div class="card-header">
-                        <a href="data-perijinan-laptop.php" class="btn btn-info btn-sm rounded-pill"><b>Pilih Perijinan Laptop</b></a>
+                        <a href="data-perijinan-laptop.php" class="btn btn-info btn-sm rounded-pill"><b>Pilih Perijinan
+                                Laptop</b></a>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Total : <b><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan_laptop")->fetchColumn(); ?></b></h5>
+                        <h5 class="card-title">Total :
+                            <b><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan_laptop")->fetchColumn(); ?></b>
+                        </h5>
                         <p class="card-text">Melihat data perijinan laptop</p>
                     </div>
                 </div>
@@ -122,10 +137,13 @@ $pimpinan = $stmt->fetch();
             <div class="col-md-3 text-center">
                 <div class="card text-white bg-danger mb-3 rounded-3 border-0 shadow-lg">
                     <div class="card-header">
-                        <a href="data-pengembalian-laptop.php" class="btn btn-danger btn-sm rounded-pill text-white"><b>Pilih Pengembalian Laptop</b></a>
+                        <a href="data-pengembalian-laptop.php"
+                            class="btn btn-danger btn-sm rounded-pill text-white"><b>Pilih Pengembalian Laptop</b></a>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Total : <b><?php echo $pdo->query("SELECT COUNT(*) FROM pengembalian_laptop")->fetchColumn(); ?></b></h5>
+                        <h5 class="card-title">Total :
+                            <b><?php echo $pdo->query("SELECT COUNT(*) FROM pengembalian_laptop")->fetchColumn(); ?></b>
+                        </h5>
                         <p class="card-text">Melihat data laptop kembali</p>
                     </div>
                 </div>
@@ -143,55 +161,55 @@ $pimpinan = $stmt->fetch();
     </div>
     <br><br>
 
-    
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        var ctx = document.getElementById('lineChart').getContext('2d');
-        var lineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'],
-                datasets: [{
-                    label: 'Perijinan Pulang',
-                    data: [12, 19, 3, 5],
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    var ctx = document.getElementById('lineChart').getContext('2d');
+    var lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'],
+            datasets: [{
+                label: 'Perijinan Pulang',
+                data: [12, 19, 3, 5],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
+        }
+    });
 
-        var ctx2 = document.getElementById('pieChart').getContext('2d');
-        var pieChart = new Chart(ctx2, {
-            type: 'pie',
-            data: {
-                labels: ['Perpulangan', 'Penjengukan', 'Kedatangan'],
-                datasets: [{
-                    label: 'Jumlah Perijinan',
-                    data: [12, 19, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            }
-        });
+    var ctx2 = document.getElementById('pieChart').getContext('2d');
+    var pieChart = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: ['Perpulangan', 'Penjengukan', 'Kedatangan'],
+            datasets: [{
+                label: 'Jumlah Perijinan',
+                data: [12, 19, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
     </script>
 
     <!-- Footer -->
@@ -200,4 +218,5 @@ $pimpinan = $stmt->fetch();
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
