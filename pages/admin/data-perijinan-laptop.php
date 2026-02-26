@@ -204,10 +204,20 @@ $perijinan_laptop = $stmt->fetchAll();
                                 <form action="" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                     <div class="form-group">
-                                        <label for="tanggal_pengambilan">Tanggal Pengambilan</label>
-                                        <input type="text" class="form-control" id="tanggal_pengambilan"
-                                            name="tanggal_pengambilan"
-                                            value="<?php echo $row['tanggal_pengambilan']; ?>" required>
+                                        <label>Waktu Pengembalian</label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="date" class="form-control" id="tanggal_pengambilan"
+                                                    name="tanggal_pengambilan" value="<?= date('Y-m-d'); ?>" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="time" class="form-control" id="jam_pengambilan"
+                                                    name="jam_pengambilan">
+                                                <small class="text-muted">
+                                                    (Biarkan jika ingin menggunakan jam otomatis)
+                                                </small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
@@ -339,6 +349,17 @@ $perijinan_laptop = $stmt->fetchAll();
                     1); // Tampilkan/sembunyikan baris yang sesuai
             });
         });
+    });
+    </script>
+
+    <!-- Jam Otomatis -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let now = new Date();
+        let hours = String(now.getHours()).padStart(2, '0');
+        let minutes = String(now.getMinutes()).padStart(2, '0');
+
+        document.getElementById("jam_pengembalian").value = hours + ":" + minutes;
     });
     </script>
 </body>

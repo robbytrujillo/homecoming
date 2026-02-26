@@ -12,7 +12,18 @@ if (isset($_POST['edit'])) {
     $nomor_induk = $_POST['nomor_induk'];
     $nama_siswa = $_POST['nama_siswa'];
     $kelas = $_POST['kelas'];
-    $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
+    
+    $tanggal = $_POST['tanggal_pengembalian'];
+    $jam     = $_POST['jam_pengembalian'];
+
+    // Jika jam kosong → pakai jam server
+    if (empty($jam)) {
+        $jam = date('H:i');
+    }
+
+    $tanggal_pengembalian = $tanggal . ' ' . $jam . ':00';
+    
+    // $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
     $petugas = $_POST['petugas'];
     $keterangan = $_POST['keterangan'];
 
@@ -143,6 +154,7 @@ $pengembalian = $stmt->fetchAll();
                 <tr>
                     <th>No</th>
                     <th>Tanggal Pengembalian</th>
+                    <th>Waktu</th>
                     <th>Nama Siswa</th>
                     <th>Nomor Induk</th>
                     <th>Kelas</th>
@@ -164,6 +176,7 @@ $pengembalian = $stmt->fetchAll();
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
                     <!-- <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>                     -->
                     <td><?= date('d F Y', strtotime($row['tanggal_pengembalian'])); ?></td>
+                    <td><?= substr($row['tanggal_pengembalian'], 11, 5) ?></td>
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
                     <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['kelas']); ?></td>
@@ -198,10 +211,20 @@ $pengembalian = $stmt->fetchAll();
                                 <form action="" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                     <div class="form-group">
-                                        <label for="tanggal_pengembalian">Tanggal Pengembalian</label>
-                                        <input type="text" class="form-control" id="tanggal_pengembalian"
-                                            name="tanggal_pengembalian"
-                                            value="<?php echo $row['tanggal_pengembalian']; ?>" required>
+                                        <label>Waktu Pengembalian</label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="date" class="form-control" id="tanggal_pengembalian"
+                                                    name="tanggal_pengembalian" value="<?= date('Y-m-d'); ?>" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="time" class="form-control" id="jam_pengembalian"
+                                                    name="jam_pengembalian">
+                                                <small class="text-muted">
+                                                    (Biarkan jika ingin menggunakan jam otomatis)
+                                                </small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
@@ -316,6 +339,18 @@ $pengembalian = $stmt->fetchAll();
         });
     });
     </script>
+
+    <!-- Jam Otomatis -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let now = new Date();
+        let hours = String(now.getHours()).padStart(2, '0');
+        let minutes = String(now.getMinutes()).padStart(2, '0');
+
+        document.getElementById("jam_pengembalian").value = hours + ":" + minutes;
+    });
+    </script>
+
 </body>
 
 </html>
