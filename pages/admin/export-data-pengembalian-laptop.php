@@ -15,7 +15,7 @@
 
 <head>
     <title>Data Kedatangan</title>
-    <link rel="icon" type="image/x-icon" href="../assets/img/ihbs-logo.png">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -49,6 +49,7 @@
                     <tr>
                         <th>No</th>
                         <th>Tanggal Pengembalian</th>
+                        <th>Waktu</th>
                         <th>Nama Siswa</th>
                         <th>Nomor Induk</th>
                         <th>Kelas</th>
@@ -74,6 +75,7 @@
                     <tr>
                         <td><?= $i++; ?></td>
                         <td><?php echo date('d F Y', strtotime($tanggal_pengembalian)); ?></td>
+                        <td><?php echo date('H:i', strtotime($tanggal_pengembalian)); ?></td>
                         <!-- <td><?php echo $tanggal_datang; ?></td> -->
                         <td><?php echo $nama_siswa; ?></td>
                         <td><?php echo $nomor_induk; ?></td>
