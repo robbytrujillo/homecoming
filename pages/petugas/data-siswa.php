@@ -76,6 +76,35 @@ $siswa = $stmt->fetchAll();
     <link rel="icon" type="image/x-icon" href="../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+    /* poppins */
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Poppins", sans-serif;
+        font-weight: bold;
+    }
+
+    p,
+    a,
+    input,
+    strong,
+    tr,
+    th,
+    td,
+    button,
+    div {
+        font-family: "Poppins", sans-serif;
+    }
+    </style>
 </head>
 
 <body>
@@ -123,8 +152,8 @@ $siswa = $stmt->fetchAll();
                     <th>Nomor Induk</th>
                     <th>Nama Siswa</th>
                     <th>Kelas</th>
-                    <th>Alamat</th>
-                    <th>Nama Orang Tua</th>
+                    <!-- <th>Alamat</th> -->
+                    <!-- <th>Nama Orang Tua</th> -->
                     <!-- <th>Aksi</th> -->
                 </tr>
             </thead>
@@ -135,7 +164,7 @@ $siswa = $stmt->fetchAll();
                     <td><?php echo $row['nomor_induk']; ?></td>
                     <td><?php echo $row['nama_siswa']; ?></td>
                     <td><?php echo $row['kelas']; ?></td>
-                    <td><?php echo $row['nama_orang_tua']; ?></td>
+                    <!-- <td><?php echo $row['nama_orang_tua']; ?></td> -->
                     <!-- <td>
                         <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editSiswaModal<?php echo $row['id']; ?>">Edit</button>
                         <a href="data_siswa.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
@@ -290,7 +319,7 @@ $siswa = $stmt->fetchAll();
             var value = $(this).val().toLowerCase(); // Ambil nilai input dan ubah ke lowercase
             $("#dataTable tbody tr").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -
-                1); // Tampilkan/sembunyikan baris yang sesuai
+                    1); // Tampilkan/sembunyikan baris yang sesuai
             });
         });
     });

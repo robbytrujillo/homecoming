@@ -24,6 +24,35 @@ $petugas = $stmtp->fetch();
     <link rel="icon" type="image/x-icon" href="../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+    /* poppins */
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Poppins", sans-serif;
+        font-weight: bold;
+    }
+
+    p,
+    a,
+    input,
+    strong,
+    tr,
+    th,
+    td,
+    button,
+    div {
+        font-family: "Poppins", sans-serif;
+    }
+    </style>
 </head>
 
 <body>
@@ -72,9 +101,9 @@ $petugas = $stmtp->fetch();
             <div class="col-md-3 text-center">
                 <div class="card text-white bg-primary mb-3 border-0 shadow-lg">
                     <div class="card-header"><a href="form-perijinan.php"
-                            class="btn btn-primary btn-sm rounded-pill"><b>Input Perijinan Pulang</b></a></div>
+                            class="btn btn-primary btn-sm rounded-pill"><b>Input Ijin Pulang</b></a></div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Perijinan :</h5>
+                        <h5 class="card-title">Perijinan :</h5>
                         <p class="card-text"><?php echo $pdo->query("SELECT COUNT(*) FROM perijinan")->fetchColumn(); ?>
                         </p>
                     </div>
@@ -83,9 +112,9 @@ $petugas = $stmtp->fetch();
             <div class="col-md-3 text-center">
                 <div class="card text-white bg-success mb-3 border-0 shadow-lg">
                     <div class="card-header"><a href="form-kedatangan.php"
-                            class="btn btn-success btn-sm rounded-pill"><b>Input Kedatangan Siswa</b></a></div>
+                            class="btn btn-success btn-sm rounded-pill"><b>Input Siswa Datang</b></a></div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Kedatangan :</h5>
+                        <h5 class="card-title">Kedatangan :</h5>
                         <p class="card-text">
                             <?php echo $pdo->query("SELECT COUNT(*) FROM kedatangan")->fetchColumn(); ?></p>
                     </div>
@@ -94,10 +123,10 @@ $petugas = $stmtp->fetch();
             <div class="col-md-3 text-center">
                 <div class="card text-white bg-warning mb-3 border-0 shadow-lg">
                     <div class="card-header"><a href="form-pengembalian-laptop.php"
-                            class="btn btn-warning btn-sm rounded-pill text-white"><b>Input Pengembalian Laptop</b></a>
+                            class="btn btn-warning btn-sm rounded-pill text-white"><b>Input Laptop Kembali</b></a>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Laptop Kembali :</h5>
+                        <h5 class="card-title">Laptop Kembali :</h5>
                         <p class="card-text">
                             <?php echo $pdo->query("SELECT COUNT(*) FROM pengembalian_laptop")->fetchColumn(); ?></p>
                     </div>
@@ -108,7 +137,7 @@ $petugas = $stmtp->fetch();
                     <div class="card-header"><a href="data-perijinan-laptop.php"
                             class="btn btn-info btn-sm rounded-pill"><b>Data Perijinan Laptop</b></a></div>
                     <div class="card-body">
-                        <h5 class="card-title">Total Perijinan Laptop :</h5>
+                        <h5 class="card-title">Perijinan Laptop :</h5>
                         <p class="card-text">
                             <?php echo $pdo->query("SELECT COUNT(*) FROM perijinan_laptop")->fetchColumn(); ?></p>
                     </div>

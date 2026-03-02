@@ -22,8 +22,38 @@ $siswa = $stmt->fetch();
     <title>Dashboard Siswa</title>
     <link rel="icon" type="image/x-icon" href="../../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/style-hoverzoom.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+    /* poppins */
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Poppins", sans-serif;
+        font-weight: bold;
+    }
+
+    p,
+    a,
+    input,
+    strong,
+    tr,
+    th,
+    td,
+    button,
+    div {
+        font-family: "Poppins", sans-serif;
+    }
+    </style>
 
     <!-- Library untuk QR Code -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
@@ -97,7 +127,7 @@ $siswa = $stmt->fetch();
                     <div class="card-body">
                         <!-- <h5 class="card-title">Data Perijinan</h5> -->
                         <img src="../../assets/permissions.svg" style="height: 320px" class="cover img-fluid">
-                        <h5 class="card-text text-center mt-3 mb-3">Melihat data perijinan siswa</h5>
+                        <h5 class="card-text text-center mt-3 mb-3">Data perijinan siswa</h5>
                         <div class="d-flex justify-content-center">
                             <a href="data-perijinan.php"
                                 class="btn btn-outline-success btn-block font-weight-bold rounded-pill">Lihat Data</a>
@@ -110,7 +140,7 @@ $siswa = $stmt->fetch();
                     <div class="card-body">
                         <!-- <h5 class="card-title">Data Kedatangan</h5> -->
                         <img src="../../assets/holiday.svg" style="height: 320px" class="cover img-fluid">
-                        <h5 class="card-text text-center mt-3 mb-3">Melihat data kedatangan siswa</h5>
+                        <h5 class="card-text text-center mt-3 mb-3">Data kedatangan siswa</h5>
                         <div class="d-flex justify-content-center">
                             <a href="data-kedatangan.php"
                                 class="btn btn-outline-success btn-block font-weight-bold rounded-pill">Lihat Data</a>

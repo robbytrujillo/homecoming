@@ -28,6 +28,35 @@ $perijinan_laptop = $stmt->fetchAll();
     <link rel="icon" type="image/x-icon" href="../../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+    /* poppins */
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Poppins", sans-serif;
+        font-weight: bold;
+    }
+
+    p,
+    a,
+    input,
+    strong,
+    tr,
+    th,
+    td,
+    button,
+    div {
+        font-family: "Poppins", sans-serif;
+    }
+    </style>
 </head>
 
 <body>
