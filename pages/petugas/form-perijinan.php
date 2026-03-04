@@ -39,7 +39,7 @@ if (isset($_POST['tambah'])) {
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $alamat, $keperluan, $tanggal_pulang, $petugas['nama_petugas'], $keterangan]);
 
-    echo "<script>alert('Data perijinan berhasil ditambahkan!'); window.location='data-perijinan.php';</script>";
+    echo "<script>alert('Data perijinan berhasil ditambahkan!'); window.location='form-perijinan.php';</script>";
 }
 ?>
 
@@ -50,7 +50,7 @@ if (isset($_POST['tambah'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Perijinan - Petugas</title>
-    <link rel="icon" type="image/x-icon" href="../assets/img/ihbs-logo.png">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 
