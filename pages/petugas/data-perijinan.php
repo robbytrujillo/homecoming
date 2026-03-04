@@ -79,9 +79,12 @@ $perijinan = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Perijinan - Petugas</title>
-    <link rel="icon" type="image/x-icon" href="../assets/img/ihbs-logo.png">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
     /* poppins */
@@ -214,7 +217,7 @@ $perijinan = $stmt->fetchAll();
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
                     <!-- <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>                     -->
                     <td><?= date('d F Y', strtotime($row['tanggal_pulang'])); ?></td>
-                    <td><?php echo substr($row['tanggal_pulang'], 11, 5) ?></td>
+                    <td><?= substr($row['tanggal_pulang'], 11, 5) ?></td>
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
                     <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['kelas']); ?></td>

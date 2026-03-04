@@ -94,7 +94,8 @@ $petugas = $stmtp->fetch();
 
     <div class="container mt-4 mb-4">
         <div>
-            <h4>Selamat datang <strong><?= $petugas['nama_petugas'] ?></strong> di halaman utama Aplikasi Perpulangan
+            <h4>Selamat datang <strong style="color: red;"><?= $petugas['nama_petugas'] ?></strong> di halaman utama
+                Aplikasi Perpulangan
                 Siswa</h4>
         </div>
         <div class="row mt-3">

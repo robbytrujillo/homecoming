@@ -17,32 +17,8 @@ if (isset($_POST['edit'])) {
     $petugas = $_POST['petugas'];
     $keterangan = $_POST['keterangan'];
 
-    
-    // $stmt = $pdo->prepare("UPDATE kedatangan SET nomor_induk= ?, nama_siswa = ?, kelas = ?, keperluan = ?, tanggal_datang = ?, petugas = ?, keterangan = ? WHERE id = ?");
-    // $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
-    // header('Location: data-kedatangan.php');
-
-    $stmt = $pdo->prepare("UPDATE kedatangan 
-        SET nomor_induk=?, 
-            nama_siswa=?, 
-            kelas=?, 
-            keperluan=?, 
-            tanggal_datang=?, 
-            petugas=?, 
-            keterangan=? 
-        WHERE id=?");
-
-    $stmt->execute([
-        $nomor_induk,
-        $nama_siswa,
-        $kelas,
-        $keperluan,
-        $tanggal_datang,
-        $petugas,
-        $keterangan,
-        $id
-    ]);
-
+    $stmt = $pdo->prepare("UPDATE kedatangan SET nomor_induk= ?, nama_siswa = ?, kelas = ?, keperluan = ?, tanggal_datang = ?, petugas = ?, keterangan = ? WHERE id = ?");
+    $stmt->execute([$nip, $nama_petugas, $jabatan, $mapel, $id]);
     header('Location: data-kedatangan.php');
     exit;
 }
@@ -57,13 +33,12 @@ if (isset($_GET['hapus'])) {
 }
 
 // pagination
-$batas = 5;
+$batas = 10;
 $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
 // Hitung total data
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM kedatangan");
-$stmt->execute();
 $jumlah_data = $stmt->fetchColumn();
 $total_halaman = ceil($jumlah_data / $batas);
 
@@ -81,8 +56,8 @@ $kedatangan = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Kedatangan - Petugas</title>
-    <link rel="icon" type="image/x-icon" href="../assets/img/ihbs-logo.png">
+    <title>Data Kedatangan Siswa - Pimpinan</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 
@@ -112,22 +87,6 @@ $kedatangan = $stmt->fetchAll();
     button,
     div {
         font-family: "Poppins", sans-serif;
-    }
-    </style>
-
-    <style>
-    .card-custom {
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .badge-kedatangan {
-        background: #28a745;
-    }
-
-    .badge-ijin {
-        background: #ffc107;
-        color: #000;
     }
     </style>
 </head>
@@ -213,8 +172,9 @@ $kedatangan = $stmt->fetchAll();
                 <tr>
                     <th>No</th>
                     <th>Tanggal Datang</th>
+                    <th>Waktu</th>
                     <th>Nama Siswa</th>
-                    <th>NIS</th>
+                    <th>Nomor Induk</th>
                     <th>Kelas</th>
                     <!-- <th>Nama Orang Tua</th> -->
                     <th>Keperluan</th>
@@ -236,9 +196,8 @@ $kedatangan = $stmt->fetchAll();
                     <td><?= $nomor++; ?></td>
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
                     <!-- <td><?= htmlspecialchars($row['tanggal_datang']); ?></td>                     -->
-                    <!-- <td><?= date('d F Y', strtotime($row['tanggal_datang'])); ?></td> -->
-
-                    <td><?= date('d-m-Y H:i', strtotime($row['tanggal_datang'])); ?></td>
+                    <td><?= date('d F Y', strtotime($row['tanggal_datang'])); ?></td>
+                    <td><?php echo substr($row['tanggal_datang'], 11, 5) ?></td>
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
                     <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['kelas']); ?></td>

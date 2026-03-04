@@ -37,7 +37,7 @@ if (isset($_POST['tambah'])) {
                            VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $tanggal_pengembalian, $petugas['nama_petugas'], $keterangan]);
 
-    echo "<script>alert('Data pengembalian laptop berhasil ditambahkan!'); window.location='data-pengembalian-laptop.php';</script>";
+    echo "<script>alert('Data pengembalian laptop berhasil ditambahkan!'); window.location='form-pengembalian-laptop.php';</script>";
 }
 ?>
 
@@ -48,9 +48,12 @@ if (isset($_POST['tambah'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Perijinan - Petugas</title>
-    <link rel="icon" type="image/x-icon" href="../assets/img/ihbs-logo.png">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
     /* poppins */

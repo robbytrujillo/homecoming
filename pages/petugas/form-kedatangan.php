@@ -43,7 +43,7 @@ if (isset($_POST['tambah'])) {
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$nomor_induk, $nama_siswa, $kelas, $nama_orang_tua, $keperluan, $tanggal_datang, $petugas['nama_petugas'], $keterangan]);
 
-    echo "<script>alert('Data kedatangan berhasil ditambahkan!'); window.location='data-kedatangan.php';</script>";
+    echo "<script>alert('Data kedatangan berhasil ditambahkan!'); window.location='form-kedatangan.php';</script>";
 }
 ?>
 
@@ -58,6 +58,9 @@ if (isset($_POST['tambah'])) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
     /* poppins */
 
@@ -66,19 +69,19 @@ if (isset($_POST['tambah'])) {
     h3,
     h4,
     h5,
-    h6 {
+    h6,
+    a,
+    button {
         font-family: "Poppins", sans-serif;
         font-weight: bold;
     }
 
     p,
-    a,
     input,
     strong,
     tr,
     th,
     td,
-    button,
     div {
         font-family: "Poppins", sans-serif;
     }
