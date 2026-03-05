@@ -166,6 +166,9 @@ if (isset($_POST['tambah'])) {
                                     <div class="col-md-6">
                                         <input type="date" class="form-control" id="tanggal_pulang"
                                             name="tanggal_pulang" value="<?= date('Y-m-d'); ?>" required>
+                                        <small class="text-success">
+                                            Hari: <span id="hari_pulang"></span>
+                                        </small>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="time" class="form-control" id="jam_pulang" name="jam_pulang">
@@ -250,13 +253,133 @@ if (isset($_POST['tambah'])) {
     </script>
 
     <!-- Jam Otomatis -->
-    <script>
+    <!-- <script>
     document.addEventListener("DOMContentLoaded", function() {
         let now = new Date();
         let hours = String(now.getHours()).padStart(2, '0');
         let minutes = String(now.getMinutes()).padStart(2, '0');
 
         document.getElementById("jam_pulang").value = hours + ":" + minutes;
+    });
+    </script> -->
+
+    <!-- hari realtime -->
+    <!-- <script>
+    function tampilkanHari() {
+
+        let tanggal = document.getElementById("tanggal_pulang").value;
+
+        if (tanggal) {
+
+            let hariList = [
+                "Minggu",
+                "Senin",
+                "Selasa",
+                "Rabu",
+                "Kamis",
+                "Jumat",
+                "Sabtu"
+            ];
+
+            let date = new Date(tanggal);
+
+            let hari = hariList[date.getDay()];
+
+            document.getElementById("hari_pulang").innerHTML = hari;
+        }
+
+    } -->
+
+    // saat halaman pertama dibuka
+    <!-- tampilkanHari(); -->
+
+    // saat tanggal diganti
+    <!-- document.getElementById("tanggal_pulang").addEventListener("change", tampilkanHari);
+    </script> -->
+
+    <!-- tanggal realtime -->
+    <!-- <script>
+    function setTanggalSekarang() {
+
+        let now = new Date();
+
+        let year = now.getFullYear();
+        let month = String(now.getMonth() + 1).padStart(2, '0');
+        let day = String(now.getDate()).padStart(2, '0');
+
+        let tanggal = year + "-" + month + "-" + day;
+
+        document.getElementById("tanggal_pulang").value = tanggal;
+
+    }
+
+    setTanggalSekarang();
+    </script> -->
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        // =========================
+        // SET TANGGAL & JAM SEKARANG
+        // =========================
+
+        let now = new Date();
+
+        let year = now.getFullYear();
+        let month = String(now.getMonth() + 1).padStart(2, '0');
+        let day = String(now.getDate()).padStart(2, '0');
+
+        let hours = String(now.getHours()).padStart(2, '0');
+        let minutes = String(now.getMinutes()).padStart(2, '0');
+
+        let tanggalSekarang = year + "-" + month + "-" + day;
+        let jamSekarang = hours + ":" + minutes;
+
+        // isi otomatis jika kosong
+        if (!document.getElementById("tanggal_pulang").value) {
+            document.getElementById("tanggal_pulang").value = tanggalSekarang;
+        }
+
+        if (!document.getElementById("jam_pulang").value) {
+            document.getElementById("jam_pulang").value = jamSekarang;
+        }
+
+        // =========================
+        // TAMPILKAN HARI
+        // =========================
+
+        function tampilkanHari() {
+
+            let tanggal = document.getElementById("tanggal_pulang").value;
+
+            if (tanggal) {
+
+                let hariList = [
+                    "Minggu",
+                    "Senin",
+                    "Selasa",
+                    "Rabu",
+                    "Kamis",
+                    "Jumat",
+                    "Sabtu"
+                ];
+
+                let date = new Date(tanggal);
+
+                let hari = hariList[date.getDay()];
+
+                document.getElementById("hari_pulang").innerHTML = hari;
+
+            }
+
+        }
+
+        // jalankan saat halaman dibuka
+        tampilkanHari();
+
+        // jalankan saat tanggal diubah
+        document.getElementById("tanggal_pulang").addEventListener("change", tampilkanHari);
+
     });
     </script>
 

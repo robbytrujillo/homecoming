@@ -143,6 +143,11 @@ function tanggalIndonesia($tanggal) {
     div {
         font-family: "Poppins", sans-serif;
     }
+
+    .modal-body table th {
+        width: 30%;
+        background: #f8f9fa;
+    }
     </style>
 </head>
 
@@ -221,120 +226,210 @@ function tanggalIndonesia($tanggal) {
         </div>
 
         <!-- Tabel Data Petugas -->
-        <table class="table table-bordered" id="dataTable">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Hari, Tanggal Pulang</th>
-                    <th>Waktu</th>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Waktu Pulang</th>
+                        <!-- <th>Waktu</th> -->
 
-                    <th>Nama Siswa</th>
-                    <th>Nomor Induk</th>
-                    <th>Kelas</th>
-                    <!-- <th>Nama Orang Tua</th> -->
-                    <th>Keperluan</th>
-                    <th>Petugas</th>
-                    <th>Keterangan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
+                        <th>Nama Siswa</th>
+                        <!-- <th>Nomor Induk</th> -->
+                        <!-- <th>Kelas</th> -->
+                        <!-- <th>Nama Orang Tua</th> -->
+                        <th>Keperluan</th>
+                        <!-- <th>Petugas</th> -->
+                        <!-- <th>Keterangan</th> -->
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
                 $nomor = $halaman_awal + 1;
                 
                 // foreach ($perijinan as $key => $row): 
                 foreach ($perijinan as $row): 
                 ?>
-                <tr>
-                    <!-- <td><?php echo $key + 1; ?></td> -->
-                    <td><?= $nomor++; ?></td>
-                    <!-- <td><?= $row['nomor_induk']; ?></td> -->
-                    <!-- <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>                     -->
-                    <!-- <td><?= date('d F Y', strtotime($row['tanggal_pulang'])); ?></td> -->
-                    <td>
-                        <?= hariIndonesia($row['tanggal_pulang']); ?>,
-                        <?= tanggalIndonesia($row['tanggal_pulang']); ?>
-                    </td>
-                    <td><?= substr($row['tanggal_pulang'], 11, 5) ?></td>
-                    <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
-                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
-                    <td><?= htmlspecialchars($row['kelas']); ?></td>
-                    <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
-                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
-                    <td><?= htmlspecialchars($row['petugas']); ?></td>
-                    <td><?= htmlspecialchars($row['keterangan']); ?></td>
-                    <!-- <td>
+                    <tr>
+                        <!-- <td><?php echo $key + 1; ?></td> -->
+                        <td><?= $nomor++; ?></td>
+                        <!-- <td><?= $row['nomor_induk']; ?></td> -->
+                        <!-- <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>                     -->
+                        <!-- <td><?= date('d F Y', strtotime($row['tanggal_pulang'])); ?></td> -->
+                        <td>
+                            <?= hariIndonesia($row['tanggal_pulang']); ?>,
+                            <?= tanggalIndonesia($row['tanggal_pulang']); ?>
+                            <br>
+                            <small style="color: red;">Jam: <?= substr($row['tanggal_pulang'],11,5) ?> WIB</small>
+                        </td>
+                        <!-- <td><?= substr($row['tanggal_pulang'], 11, 5) ?></td> -->
+                        <td><?= htmlspecialchars($row['nama_siswa']); ?>
+                            <br>
+                            <small style="color: red;">Kelas: <?= htmlspecialchars($row['kelas']); ?></small>
+                        </td>
+                        <!-- <td><?= htmlspecialchars($row['nomor_induk']); ?></td> -->
+                        <!-- <td><?= htmlspecialchars($row['kelas']); ?></td> -->
+                        <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
+                        <td><?= htmlspecialchars($row['keperluan']); ?></td>
+                        <!-- <td><?= htmlspecialchars($row['petugas']); ?></td> -->
+                        <!-- <td><?= htmlspecialchars($row['keterangan']); ?></td> -->
+                        <td>
+                            <button class="btn btn-info btn-sm rounded-pill" data-toggle="modal"
+                                data-target="#detailModal<?= $row['id']; ?>">
+                                Detail
+                            </button>
+                        </td>
+                        <!-- <td>
                         <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
                         <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td> -->
-                </tr>
+                    </tr>
 
 
 
-                <!-- Modal Edit Petugas -->
-                <div class="modal fade" id="editPerijinanModal<?php echo $row['id']; ?>" tabindex="-1"
-                    aria-labelledby="editPerijinanModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editPerijinanModalLabel">Edit Perijinan</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="" method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                    <div class="form-group">
-                                        <label for="nomor_induk">Nomor Induk</label>
-                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk"
-                                            value="<?php echo $row['nomor_induk']; ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa"
-                                            value="<?php echo $row['nama_siswa']; ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="kelas">Kelas</label>
-                                        <input type="text" class="form-control" id="kelas" name="kelas"
-                                            value="<?php echo $row['kelas']; ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nama_orang_tua">Nama Orang Tua</label>
-                                        <input type="text" class="form-control" id="nama_orang_tua"
-                                            name="nama_orang_tua" value="<?php echo $row['nama_orang_tua']; ?>"
-                                            required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="keperluan">Keperluan</label>
-                                        <input type="text" class="form-control" id="keperluan" name="keperluan"
-                                            value="<?php echo $row['keperluan']; ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tanggal_pulang">Tanggal Pulang</label>
-                                        <input type="text" class="form-control" id="tanggal_pulang"
-                                            name="tanggal_pulang" value="<?php echo $row['tanggal_pulang']; ?>"
-                                            required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="petugas">Petugas</label>
-                                        <input type="text" class="form-control" id="petugas" name="petugas"
-                                            value="<?php echo $row['petugas']; ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="keterangan">Keterangan</label>
-                                        <input type="text" class="form-control" id="keterangan" name="keterangan"
-                                            value="<?php echo $row['keterangan']; ?>" required>
-                                    </div>
-                                    <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
-                                </form>
+
+                    <!-- Modal Edit Petugas -->
+                    <div class="modal fade" id="editPerijinanModal<?php echo $row['id']; ?>" tabindex="-1"
+                        aria-labelledby="editPerijinanModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editPerijinanModalLabel">Edit Perijinan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" method="POST">
+                                        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                        <div class="form-group">
+                                            <label for="nomor_induk">Nomor Induk</label>
+                                            <input type="text" class="form-control" id="nomor_induk" name="nomor_induk"
+                                                value="<?php echo $row['nomor_induk']; ?>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nama_siswa">Nama Siswa</label>
+                                            <input type="text" class="form-control" id="nama_siswa" name="nama_siswa"
+                                                value="<?php echo $row['nama_siswa']; ?>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="kelas">Kelas</label>
+                                            <input type="text" class="form-control" id="kelas" name="kelas"
+                                                value="<?php echo $row['kelas']; ?>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nama_orang_tua">Nama Orang Tua</label>
+                                            <input type="text" class="form-control" id="nama_orang_tua"
+                                                name="nama_orang_tua" value="<?php echo $row['nama_orang_tua']; ?>"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="keperluan">Keperluan</label>
+                                            <input type="text" class="form-control" id="keperluan" name="keperluan"
+                                                value="<?php echo $row['keperluan']; ?>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tanggal_pulang">Tanggal Pulang</label>
+                                            <input type="text" class="form-control" id="tanggal_pulang"
+                                                name="tanggal_pulang" value="<?php echo $row['tanggal_pulang']; ?>"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="petugas">Petugas</label>
+                                            <input type="text" class="form-control" id="petugas" name="petugas"
+                                                value="<?php echo $row['petugas']; ?>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="keterangan">Keterangan</label>
+                                            <input type="text" class="form-control" id="keterangan" name="keterangan"
+                                                value="<?php echo $row['keterangan']; ?>" required>
+                                        </div>
+                                        <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <?php foreach ($perijinan as $row): ?>
+            <!-- detail Modal -->
+            <div class="modal fade" id="detailModal<?= $row['id']; ?>" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                        <div class="modal-header bg-light text-black">
+                            <h5 class="modal-title">Detail Perijinan</h5>
+                            <button type="button" class="close text-black" data-dismiss="modal">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body" id="printArea<?= $row['id']; ?>">
+
+                            <table class="table table-bordered">
+
+                                <tr>
+                                    <th>Nama Siswa</th>
+                                    <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Nomor Induk</th>
+                                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Kelas</th>
+                                    <td><?= htmlspecialchars($row['kelas']); ?></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Tanggal Pulang</th>
+                                    <td>
+                                        <?= hariIndonesia($row['tanggal_pulang']); ?>,
+                                        <?= tanggalIndonesia($row['tanggal_pulang']); ?>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Jam</th>
+                                    <td><?= substr($row['tanggal_pulang'],11,5) ?>WIB</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Keperluan</th>
+                                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Petugas</th>
+                                    <td><?= htmlspecialchars($row['petugas']); ?></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Keterangan</th>
+                                    <td><?= htmlspecialchars($row['keterangan']); ?></td>
+                                </tr>
+
+                            </table>
+                            <button class="btn btn-primary rounded-pill" onclick="printData(<?= $row['id']; ?>)">
+                                🖨 Print Bukti
+                            </button>
+                            <button class="btn btn-secondary rounded-pill" data-dismiss="modal">
+                                <i class="fas fa-times"></i> Tutup
+                            </button>
+
+                        </div>
+
+                    </div>
                 </div>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+            </div>
+            <?php endforeach ?>
+        </div>
 
         <!-- Pagination -->
         <nav class="mb-5">
@@ -413,6 +508,34 @@ function tanggalIndonesia($tanggal) {
             });
         });
     });
+    </script>
+
+    <!-- Print Data dari Modal Detail -->
+    <script>
+    function printData(id) {
+
+        var isi = document.getElementById("printArea" + id).innerHTML;
+
+        var printWindow = window.open('', '', 'height=600,width=800');
+
+        printWindow.document.write('<html>');
+        printWindow.document.write('<head>');
+        printWindow.document.write('<title>Bukti Perijinan</title>');
+        printWindow.document.write(
+            '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">'
+        );
+        printWindow.document.write('</head>');
+        printWindow.document.write('<body>');
+
+        printWindow.document.write('<h3 style="text-align:center">BUKTI PERIJINAN SANTRI</h3>');
+        printWindow.document.write(isi);
+
+        printWindow.document.write('</body></html>');
+
+        printWindow.document.close();
+        printWindow.print();
+
+    }
     </script>
 </body>
 

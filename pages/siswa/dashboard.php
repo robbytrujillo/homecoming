@@ -119,7 +119,8 @@ $siswa = $stmt->fetch();
     </nav>
 
     <div class="container mt-5">
-        <h4 class="mt-5 mb-3">Selamat datang <strong><?= $siswa['nama_siswa'] ?></strong> di halaman utama homecoming
+        <h4 class="mt-5 mb-3">Selamat datang <strong style="color: red;"><?= $siswa['nama_siswa'] ?></strong> di halaman
+            utama homecoming
         </h4>
         <div class="row">
             <div class="col-md-4 bg-white">
