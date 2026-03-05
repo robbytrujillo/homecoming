@@ -68,6 +68,39 @@ $stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
 $stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
 $stmt->execute();
 $perijinan_laptop = $stmt->fetchAll();
+
+/* ======================
+   HARI INDO
+====================== */
+function hariIndonesia($tanggal) {
+    $hari = date('l', strtotime($tanggal));
+
+    $hariIndo = [
+        'Sunday'    => 'Minggu',
+        'Monday'    => 'Senin',
+        'Tuesday'   => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday'  => 'Kamis',
+        'Friday'    => 'Jumat',
+        'Saturday'  => 'Sabtu'
+    ];
+
+    return $hariIndo[$hari];
+}
+
+function tanggalIndonesia($tanggal) {
+
+    $bulan = [
+        1 => 'Januari','Februari','Maret','April','Mei','Juni',
+        'Juli','Agustus','September','Oktober','November','Desember'
+    ];
+
+    $tanggalExplode = explode('-', date('Y-m-d', strtotime($tanggal)));
+
+    return $tanggalExplode[2] . ' ' .
+           $bulan[(int)$tanggalExplode[1]] . ' ' .
+           $tanggalExplode[0];
+}
 ?>
 
 <!DOCTYPE html>
@@ -191,7 +224,7 @@ $perijinan_laptop = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tanggal Pengambilan</th>
+                    <th>Hari, Tanggal Pengambilan</th>
                     <th>Waktu</th>
                     <th>Nomor Induk</th>
                     <th>Nama Siswa</th>
@@ -215,7 +248,11 @@ $perijinan_laptop = $stmt->fetchAll();
                     <td><?= $nomor++; ?></td>
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
                     <!-- <td><?= htmlspecialchars($row['tanggal_pengambilan']); ?></td>                     -->
-                    <td><?= date('d F Y', strtotime($row['tanggal_pengambilan'])); ?></td>
+                    <!-- <td><?= date('d F Y', strtotime($row['tanggal_pengambilan'])); ?></td> -->
+                    <td>
+                        <?= hariIndonesia($row['tanggal_pengambilan']); ?>,
+                        <?= tanggalIndonesia($row['tanggal_pengambilan']); ?>
+                    </td>
                     <td><?php echo substr($row['tanggal_pengambilan'], 11, 5) ?></td>
                     <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>

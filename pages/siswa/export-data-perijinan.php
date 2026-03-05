@@ -30,6 +30,39 @@ $stmt = $pdo->prepare("
 
 $stmt->execute([$nomor_induk]);
 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+/* ======================
+   HARI INDO
+====================== */
+function hariIndonesia($tanggal) {
+    $hari = date('l', strtotime($tanggal));
+
+    $hariIndo = [
+        'Sunday'    => 'Minggu',
+        'Monday'    => 'Senin',
+        'Tuesday'   => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday'  => 'Kamis',
+        'Friday'    => 'Jumat',
+        'Saturday'  => 'Sabtu'
+    ];
+
+    return $hariIndo[$hari];
+}
+
+function tanggalIndonesia($tanggal) {
+
+    $bulan = [
+        1 => 'Januari','Februari','Maret','April','Mei','Juni',
+        'Juli','Agustus','September','Oktober','November','Desember'
+    ];
+
+    $tanggalExplode = explode('-', date('Y-m-d', strtotime($tanggal)));
+
+    return $tanggalExplode[2] . ' ' .
+           $bulan[(int)$tanggalExplode[1]] . ' ' .
+           $tanggalExplode[0];
+}
 ?>
 
 <html>
@@ -92,7 +125,8 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Tanggal Pulang</th>
+                        <th>Hari, Tanggal Pulang</th>
+                        <th>Waktu</th>
                         <th>Nama Siswa</th>
                         <th>Nomor Induk</th>
                         <th>Kelas</th>
@@ -108,7 +142,11 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 ?>
                     <tr>
                         <td><?= $i++; ?></td>
-                        <td><?= date('d F Y', strtotime($row['tanggal_pulang'])); ?></td>
+                        <td>
+                            <?= hariIndonesia($row['tanggal_pulang']); ?>,
+                            <?= tanggalIndonesia($row['tanggal_pulang']); ?>
+                        </td>
+                        <td><?= date('H:i', strtotime($row['tanggal_pulang'])); ?></td>
                         <td><?= $row['nama_siswa']; ?></td>
                         <td><?= $row['nomor_induk']; ?></td>
                         <td><?= $row['kelas']; ?></td>

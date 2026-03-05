@@ -48,22 +48,87 @@ $stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
 $stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
 $stmt->execute();
 $perijinan_laptop = $stmt->fetchAll();
+
+/* ======================
+   HARI INDO
+====================== */
+function hariIndonesia($tanggal) {
+    $hari = date('l', strtotime($tanggal));
+
+    $hariIndo = [
+        'Sunday'    => 'Minggu',
+        'Monday'    => 'Senin',
+        'Tuesday'   => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday'  => 'Kamis',
+        'Friday'    => 'Jumat',
+        'Saturday'  => 'Sabtu'
+    ];
+
+    return $hariIndo[$hari];
+}
+
+function tanggalIndonesia($tanggal) {
+
+    $bulan = [
+        1 => 'Januari','Februari','Maret','April','Mei','Juni',
+        'Juli','Agustus','September','Oktober','November','Desember'
+    ];
+
+    $tanggalExplode = explode('-', date('Y-m-d', strtotime($tanggal)));
+
+    return $tanggalExplode[2] . ' ' .
+           $bulan[(int)$tanggalExplode[1]] . ' ' .
+           $tanggalExplode[0];
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Perijinan Laptop - Pimpinan</title>
-    <link rel="icon" type="image/x-icon" href="../../assets/logo.png">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/ihbs-logo.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+    /* poppins */
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Poppins", sans-serif;
+        font-weight: bold;
+    }
+
+    p,
+    a,
+    input,
+    strong,
+    tr,
+    th,
+    td,
+    button,
+    div {
+        font-family: "Poppins", sans-serif;
+    }
+    </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light container stiky-top">
         <img src="../../assets/homecoming-logo.png" style="width: 150px; margin-left: 0%; margin-top: 0%">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -72,14 +137,15 @@ $perijinan_laptop = $stmt->fetchAll();
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a style="color: #28A745"  class="nav-link" href="data-perijinan-laptop.php"><b>Data Perijinan Laptop</b></a>
+                    <a style="color: #28A745" class="nav-link" href="data-perijinan-laptop.php"><b>Data Perijinan
+                            Laptop</b></a>
                 </li>
                 <!-- <li class="nav-item">
                     <a  class="nav-link" href="data-kedatangan.php">Data Kedatangan</a>
                 </li> -->
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="data_kedatangan.php">Data Kedatangan</a>
-                </li> -->                
+                </li> -->
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="form_kedatangan.php">Input Kedatangan</a>
                 </li> -->
@@ -129,7 +195,9 @@ $perijinan_laptop = $stmt->fetchAll();
 
         <!-- Input Pencarian -->
         <div class="form-group">
-            <input type="text" id="searchInput" class="form-control" style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i class="fas fa-search" style="position: absolute"></i>
+            <input type="text" id="searchInput" class="form-control"
+                style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i
+                class="fas fa-search" style="position: absolute"></i>
         </div>
 
         <!-- Tabel Data Petugas -->
@@ -137,11 +205,12 @@ $perijinan_laptop = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tanggal Pengambilan</th>
+                    <th>Hari,Tanggal Pengambilan</th>
+                    <th>Waktu</th>
                     <th>Nama Siswa</th>
                     <th>Nomor Induk</th>
                     <th>Kelas</th>
-                    <th>Perijinan</th>                    
+                    <th>Perijinan</th>
                     <th>Alasan Membawa Laptop</th>
                     <!-- <th>Persetujuan</th> -->
                     <!-- <th>Aksi</th> -->
@@ -160,25 +229,32 @@ $perijinan_laptop = $stmt->fetchAll();
                     <td><?= $nomor++; ?></td>
                     <!-- <td><?= $row['nomor_induk']; ?></td> -->
                     <!-- <td><?= htmlspecialchars($row['tanggal_pulang']); ?></td>                     -->
-                    <td><?= date('d F Y', strtotime($row['tanggal_pengambilan'])); ?></td>                    
+                    <!-- <td><?= date('l, F Y', strtotime($row['tanggal_pengambilan'])); ?></td> -->
+                    <td>
+                        <?= hariIndonesia($row['tanggal_pengambilan']); ?>,
+                        <?= tanggalIndonesia($row['tanggal_pengambilan']); ?>
+                    </td>
+
+                    <td><?= date('H:i', strtotime($row['tanggal_pengambilan'])); ?></td>
                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
                     <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                     <td><?= htmlspecialchars($row['kelas']); ?></td>
                     <!-- <td><?= $row['nama_orang_tua']; ?></td> -->
                     <td><?= htmlspecialchars($row['perijinan']); ?></td>
-                    
+
                     <td><?= htmlspecialchars($row['alasan_membawa_laptop']); ?></td>
                     <!-- <td><?= htmlspecialchars($row['persetujuan']); ?></td> -->
                     <!-- <td> -->
-                        <!-- <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editIjinLaptopModal<?php echo $row['id']; ?>">Edit</button> -->
-                        <!-- <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a> -->
+                    <!-- <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editIjinLaptopModal<?php echo $row['id']; ?>">Edit</button> -->
+                    <!-- <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a> -->
                     <!-- </td> -->
                 </tr>
 
-                
+
 
                 <!-- Modal Edit Petugas -->
-                <div class="modal fade" id="editIjinLaptopModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="editIjinLaptopModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editIjinLaptopModal<?php echo $row['id']; ?>" tabindex="-1"
+                    aria-labelledby="editIjinLaptopModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -192,34 +268,42 @@ $perijinan_laptop = $stmt->fetchAll();
                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                     <div class="form-group">
                                         <label for="tanggal_pengambilan">Tanggal Pengambilan</label>
-                                        <input type="text" class="form-control" id="tanggal_pengambilan" name="tanggal_pengambilan" value="<?php echo $row['tanggal_pengambilan']; ?>" required>
+                                        <input type="text" class="form-control" id="tanggal_pengambilan"
+                                            name="tanggal_pengambilan"
+                                            value="<?php echo $row['tanggal_pengambilan']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="<?php echo $row['nama_siswa']; ?>" required>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa"
+                                            value="<?php echo $row['nama_siswa']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="nomor_induk">Nomor Induk</label>
-                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" value="<?php echo $row['nomor_induk']; ?>" required>
+                                        <input type="text" class="form-control" id="nomor_induk" name="nomor_induk"
+                                            value="<?php echo $row['nomor_induk']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="kelas">Kelas</label>
-                                        <input type="text" class="form-control" id="kelas" name="kelas" value="<?php echo $row['kelas']; ?>" required>
+                                        <input type="text" class="form-control" id="kelas" name="kelas"
+                                            value="<?php echo $row['kelas']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="perijinan">Perijinan</label>
-                                        <input type="text" class="form-control" id="perijinan" name="perijinan" value="<?php echo $row['perijinan']; ?>" required>
+                                        <input type="text" class="form-control" id="perijinan" name="perijinan"
+                                            value="<?php echo $row['perijinan']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="alasan_membawa_laptop">Alasan Membawa Laptop</label>
-                                        <input type="text" class="form-control" id="alasan_membawa_laptop" name="alasan_membawa_laptop" value="<?php echo $row['alasan_membawa_laptop']; ?>" required>
+                                        <input type="text" class="form-control" id="alasan_membawa_laptop"
+                                            name="alasan_membawa_laptop"
+                                            value="<?php echo $row['alasan_membawa_laptop']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="persetujuan">Persetujuan</label>
                                         <select class="form-control" id="persetujuan" name="persetujuan" required>
                                             <option value="belum">Belum</option>
                                             <option value="sudah">Sudah</option>
-                                        </select> 
+                                        </select>
                                     </div>
                                     <button type="submit" name="edit" class="btn btn-primary">Ubah</button>
                                 </form>
@@ -238,9 +322,9 @@ $perijinan_laptop = $stmt->fetchAll();
                     <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
                 </li>
                 <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
-                    <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
-                        <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
-                    </li>
+                <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
+                </li>
                 <?php endfor; ?>
                 <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
                     <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
@@ -303,10 +387,12 @@ $perijinan_laptop = $stmt->fetchAll();
         $("#searchInput").on("keyup", function() {
             var value = $(this).val().toLowerCase(); // Ambil nilai input dan ubah ke lowercase
             $("#dataTable tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1); // Tampilkan/sembunyikan baris yang sesuai
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -
+                    1); // Tampilkan/sembunyikan baris yang sesuai
             });
         });
     });
     </script>
 </body>
+
 </html>

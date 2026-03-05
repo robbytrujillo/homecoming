@@ -183,17 +183,56 @@ $pimpinan = $stmt->fetch();
         </div>
 
         <div class="row mt-4">
-            <div class="col-md-8">
-                <canvas id="lineChart"></canvas>
-            </div>
-            <div class="col-md-4">
-                <canvas id="pieChart"></canvas>
+            <div class="col-md-6">
+                <!-- <canvas id="lineChart"></canvas> -->
+                <div class="card text-black bg-light mb-3 rounded-3 border-0 shadow-lg">
+                    <!-- <div class="card-header">
+                        <label class="btn btn-light btn-sm rounded-pill text-black"><b>Perijinan Pulang</b></label>
+                    </div> -->
+                    <div class="card-body">
+                        <label class="btn btn-light btn-sm rounded-pill text-black"><b>
+                                <h4>Keterangan</h4>
+                            </b></label><br>
+                        <label class="btn btn-light btn-sm rounded-pill text-black"><b>
+                                <h5>1. Perijinan Pulang</h5>
+                            </b></label>
+                        <label class="rounded-pill text-black">
+                            <p class="text-align: left">Menampilkan jumlah total santri
+                                yang mengajukan atau mendapatkan izin untuk pulang dari mahad saat perpulangan atau
+                                liburan.</p>
+                        </label>
+                        <label class="btn btn-light btn-sm rounded-pill text-black"><b>
+                                <h5>2. Data Kedatangan</h5>
+                            </b></label>
+                        <label class="rounded-pill text-black">
+                            <p class="text-align: left">Menampilkan data santri yang telah kembali ke mahad dari rumah.
+                            </p>
+                        </label>
+                        <label class="btn btn-light btn-sm rounded-pill text-black"><b>
+                                <h5>3. Perijinan Laptop</h5>
+                            </b></label>
+                        <label class="rounded-pill text-black">
+                            <p class="text-align: left">Menampilkan data santri yang mendapatkan izin membawa pulang
+                                laptop ke rumah.</p>
+                        </label>
+                        <label class="btn btn-light btn-sm rounded-pill text-black"><b>
+                                <h5>4. Pengembalian
+                                    Laptop</h5>
+                            </b></label>
+                        <label class="rounded-pill text-black">
+                            <p class="text-align: left">Menampilkan data siswa yang sudah mengembalikan laptop ke
+                                ma'had.
+                            </p>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <canvas id="pieChart"></canvas>
+        </div>
     </div>
-    <br><br>
-
-
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

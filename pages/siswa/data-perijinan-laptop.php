@@ -16,6 +16,39 @@ $siswa_id = $_SESSION['user_id'];
 $stmt = $pdo->prepare("SELECT * FROM perijinan_laptop WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_pengambilan DESC");
 $stmt->execute([$siswa_id]);
 $perijinan_laptop = $stmt->fetchAll();
+
+/* ======================
+   HARI INDO
+====================== */
+function hariIndonesia($tanggal) {
+    $hari = date('l', strtotime($tanggal));
+
+    $hariIndo = [
+        'Sunday'    => 'Minggu',
+        'Monday'    => 'Senin',
+        'Tuesday'   => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday'  => 'Kamis',
+        'Friday'    => 'Jumat',
+        'Saturday'  => 'Sabtu'
+    ];
+
+    return $hariIndo[$hari];
+}
+
+function tanggalIndonesia($tanggal) {
+
+    $bulan = [
+        1 => 'Januari','Februari','Maret','April','Mei','Juni',
+        'Juli','Agustus','September','Oktober','November','Desember'
+    ];
+
+    $tanggalExplode = explode('-', date('Y-m-d', strtotime($tanggal)));
+
+    return $tanggalExplode[2] . ' ' .
+           $bulan[(int)$tanggalExplode[1]] . ' ' .
+           $tanggalExplode[0];
+}
 ?>
 
 <!DOCTYPE html>
@@ -110,7 +143,7 @@ $perijinan_laptop = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tanggal Pengambilan</th>
+                    <th>Hari, Tanggal Pengambilan</th>
                     <th>Waktu</th>
                     <th>Nomor Induk</th>
                     <th>Nama Siswa</th>
@@ -126,7 +159,11 @@ $perijinan_laptop = $stmt->fetchAll();
 
                     <td><?php echo $key + 1; ?></td>
                     <!-- <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td> -->
-                    <td><?php echo date('d F Y', strtotime($row['tanggal_pengambilan'])); ?></td>
+                    <!-- <td><?php echo date('d F Y', strtotime($row['tanggal_pengambilan'])); ?></td> -->
+                    <td>
+                        <?= hariIndonesia($row['tanggal_pengambilan']); ?>,
+                        <?= tanggalIndonesia($row['tanggal_pengambilan']); ?>
+                    </td>
                     <td><?php echo substr($row['tanggal_pengambilan'], 11, 5) ?></td>
                     <td><?php echo $row['nomor_induk']; ?></td>
                     <td><?php echo $row['nama_siswa']; ?></td>

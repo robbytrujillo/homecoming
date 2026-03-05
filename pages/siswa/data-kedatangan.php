@@ -35,6 +35,39 @@ $kedatangan = $stmt->fetchAll();
 // $stmt = $pdo->prepare("SELECT * FROM kedatangan WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_datang DESC");
 // $stmt->execute([$siswa_id]);
 // $kedatangan = $stmt->fetchAll();
+
+/* ======================
+   HARI INDO
+====================== */
+function hariIndonesia($tanggal) {
+    $hari = date('l', strtotime($tanggal));
+
+    $hariIndo = [
+        'Sunday'    => 'Minggu',
+        'Monday'    => 'Senin',
+        'Tuesday'   => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday'  => 'Kamis',
+        'Friday'    => 'Jumat',
+        'Saturday'  => 'Sabtu'
+    ];
+
+    return $hariIndo[$hari];
+}
+
+function tanggalIndonesia($tanggal) {
+
+    $bulan = [
+        1 => 'Januari','Februari','Maret','April','Mei','Juni',
+        'Juli','Agustus','September','Oktober','November','Desember'
+    ];
+
+    $tanggalExplode = explode('-', date('Y-m-d', strtotime($tanggal)));
+
+    return $tanggalExplode[2] . ' ' .
+           $bulan[(int)$tanggalExplode[1]] . ' ' .
+           $tanggalExplode[0];
+}
 ?>
 
 <!DOCTYPE html>
@@ -127,7 +160,7 @@ $kedatangan = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tanggal Kedatangan</th>
+                    <th>Hari, Tanggal Kedatangan</th>
                     <th>Waktu</th>
                     <th>Nama Siswa</th>
                     <th>Nomor Induk</th>
@@ -141,7 +174,11 @@ $kedatangan = $stmt->fetchAll();
                 <?php foreach ($kedatangan as $key => $row): ?>
                 <tr>
                     <td><?php echo $key + 1; ?></td>
-                    <td><?php echo date('d F Y', strtotime($row['tanggal_datang'])); ?></td>
+                    <!-- <td><?php echo date('d F Y', strtotime($row['tanggal_datang'])); ?></td> -->
+                    <td>
+                        <?= hariIndonesia($row['tanggal_datang']); ?>,
+                        <?= tanggalIndonesia($row['tanggal_datang']); ?>
+                    </td>
                     <!-- <td><?php echo date('H:i', strtotime($row['tanggal_datang'])); ?></td> -->
                     <td><?php echo substr($row['tanggal_datang'], 11, 5) ?></td>
                     <td><?php echo $row['nama_siswa']; ?></td>

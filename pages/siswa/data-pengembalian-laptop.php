@@ -11,6 +11,39 @@ $siswa_id = $_SESSION['user_id'];
 $stmt = $pdo->prepare("SELECT * FROM pengembalian_laptop WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_pengembalian DESC");
 $stmt->execute([$siswa_id]);
 $perijinan_laptop = $stmt->fetchAll();
+
+/* ======================
+   HARI INDO
+====================== */
+function hariIndonesia($tanggal) {
+    $hari = date('l', strtotime($tanggal));
+
+    $hariIndo = [
+        'Sunday'    => 'Minggu',
+        'Monday'    => 'Senin',
+        'Tuesday'   => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday'  => 'Kamis',
+        'Friday'    => 'Jumat',
+        'Saturday'  => 'Sabtu'
+    ];
+
+    return $hariIndo[$hari];
+}
+
+function tanggalIndonesia($tanggal) {
+
+    $bulan = [
+        1 => 'Januari','Februari','Maret','April','Mei','Juni',
+        'Juli','Agustus','September','Oktober','November','Desember'
+    ];
+
+    $tanggalExplode = explode('-', date('Y-m-d', strtotime($tanggal)));
+
+    return $tanggalExplode[2] . ' ' .
+           $bulan[(int)$tanggalExplode[1]] . ' ' .
+           $tanggalExplode[0];
+}
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +122,7 @@ $perijinan_laptop = $stmt->fetchAll();
     </nav>
 
     <div class="container mt-4 mb-5">
-        <h2 class="mt-5 mb-3">Data Pengembalian Laptop</h2>
+        <h2 class="mt-5 mb-3" style="text-align: center;">Data Pengembalian Laptop</h2>
         <div class="mt-3">
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
             <a href="export-data-pengembalian-laptop.php" class="btn btn-info btn-md text-white rounded-pill">Cetak</a>
@@ -108,7 +141,8 @@ $perijinan_laptop = $stmt->fetchAll();
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tanggal Pengembalian</th>
+                    <th>Hari, Tanggal Pengembalian</th>
+                    <th>Waktu</th>
                     <th>Nama Siswa</th>
                     <th>Nomor Induk Siswa</th>
                     <th>Kelas</th>
@@ -123,6 +157,10 @@ $perijinan_laptop = $stmt->fetchAll();
 
                     <td><?php echo $key + 1; ?></td>
                     <!-- <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td> -->
+                    <td>
+                        <?= hariIndonesia($row['tanggal_pengembalian']); ?>,
+                        <?= tanggalIndonesia($row['tanggal_pengembalian']); ?>
+                    </td>
                     <td><?php echo date('d F Y', strtotime($row['tanggal_pengembalian'])); ?></td>
                     <td><?php echo $row['nama_siswa']; ?></td>
                     <td><?php echo $row['nomor_induk']; ?></td>
