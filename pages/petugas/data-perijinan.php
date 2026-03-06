@@ -61,6 +61,7 @@ $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
 // Hitung total data
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM perijinan");
+$stmt->execute();
 $jumlah_data = $stmt->fetchColumn();
 $total_halaman = ceil($jumlah_data / $batas);
 
@@ -113,7 +114,13 @@ function tanggalIndonesia($tanggal) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Perijinan - Petugas</title>
     <link rel="icon" type="image/x-icon" href="../../assets/img/ihbs-logo.png">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
     <link rel="stylesheet" href="../../css/style.css">
 
     <!-- Google Font -->
@@ -147,6 +154,41 @@ function tanggalIndonesia($tanggal) {
     .modal-body table th {
         width: 30%;
         background: #f8f9fa;
+    }
+
+
+
+    /* ======================
+   UKURAN KARTU PRINT
+====================== */
+    @media print {
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .print-card {
+            width: 350px;
+            border: 1px solid #000;
+            padding: 15px;
+            margin: auto;
+            font-size: 14px;
+        }
+
+        .no-print {
+            display: none;
+        }
+
+        table {
+            font-size: 13px;
+        }
+
+        h4 {
+            font-weight: bold;
+            text-align: center;
+        }
+
     }
     </style>
 </head>
@@ -368,17 +410,23 @@ function tanggalIndonesia($tanggal) {
                             </button>
                         </div>
 
-                        <div class="modal-body" id="printArea<?= $row['id']; ?>">
+                        <div class="modal-body print-card" id="printArea<?= $row['id']; ?>">
 
+                            <div style="text-align:center;">
+                                <img src="../../assets/img/logo-sma.png" width="60">
+                                <br><br>
+                                <h4>BUKTI PERIJINAN SANTRI</h4>
+                            </div>
+                            <br>
                             <table class="table table-bordered">
 
                                 <tr>
-                                    <th>Nama Siswa</th>
+                                    <th>Nama</th>
                                     <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
                                 </tr>
 
                                 <tr>
-                                    <th>Nomor Induk</th>
+                                    <th>NIS</th>
                                     <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
                                 </tr>
 
@@ -388,7 +436,7 @@ function tanggalIndonesia($tanggal) {
                                 </tr>
 
                                 <tr>
-                                    <th>Tanggal Pulang</th>
+                                    <th>Tanggal</th>
                                     <td>
                                         <?= hariIndonesia($row['tanggal_pulang']); ?>,
                                         <?= tanggalIndonesia($row['tanggal_pulang']); ?>
@@ -397,7 +445,7 @@ function tanggalIndonesia($tanggal) {
 
                                 <tr>
                                     <th>Jam</th>
-                                    <td><?= substr($row['tanggal_pulang'],11,5) ?>WIB</td>
+                                    <td><?= date('H:i', strtotime($row['tanggal_pulang'])) ?> WIB</td>
                                 </tr>
 
                                 <tr>
@@ -406,22 +454,30 @@ function tanggalIndonesia($tanggal) {
                                 </tr>
 
                                 <tr>
-                                    <th>Petugas</th>
-                                    <td><?= htmlspecialchars($row['petugas']); ?></td>
-                                </tr>
-
-                                <tr>
                                     <th>Keterangan</th>
                                     <td><?= htmlspecialchars($row['keterangan']); ?></td>
                                 </tr>
 
                             </table>
-                            <button class="btn btn-primary rounded-pill" onclick="printData(<?= $row['id']; ?>)">
-                                🖨 Print Bukti
-                            </button>
-                            <button class="btn btn-secondary rounded-pill" data-dismiss="modal">
-                                <i class="fas fa-times"></i> Tutup
-                            </button>
+
+                            <br>
+
+                            <div style="text-align: center;">
+                                Depok, <?= tanggalIndonesia($row['tanggal_pulang']); ?><br>
+                                Petugas
+                                <br><br><br>
+                                <b><?= htmlspecialchars($row['petugas']); ?></b>
+                            </div>
+                            <br>
+                            <div class="no-print mt-3" style="text-align: center">
+                                <button class="btn btn-primary rounded-pill" onclick="printData(<?= $row['id']; ?>)">
+                                    <i class="fas fa-save"></i> Print Bukti
+                                </button>
+
+                                <button class="btn btn-secondary rounded-pill" data-dismiss="modal">
+                                    Tutup
+                                </button>
+                            </div>
 
                         </div>
 
@@ -429,12 +485,13 @@ function tanggalIndonesia($tanggal) {
                 </div>
             </div>
             <?php endforeach ?>
+
         </div>
 
         <!-- Pagination -->
         <nav class="mb-5">
             <ul class="pagination">
-                <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
+                <li class="page-item <?= ($halaman <= 1) ? 'disabled' : ''; ?>">
                     <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
                 </li>
                 <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
@@ -442,7 +499,7 @@ function tanggalIndonesia($tanggal) {
                     <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
                 </li>
                 <?php endfor; ?>
-                <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
+                <li class="page-item <?= ($halaman >= $total_halaman) ? 'disabled' : ''; ?>">
                     <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
                 </li>
             </ul>
@@ -521,20 +578,53 @@ function tanggalIndonesia($tanggal) {
         printWindow.document.write('<html>');
         printWindow.document.write('<head>');
         printWindow.document.write('<title>Bukti Perijinan</title>');
+
+        // Google Font Poppins
+        printWindow.document.write(
+            '<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">'
+        );
+
         printWindow.document.write(
             '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">'
         );
+
+        printWindow.document.write(`
+    <style>
+        body{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .print-card{
+            width:350px;
+            border:1px solid #000;
+            padding:15px;
+            font-size:14px;
+        }
+
+        table{
+            font-size:13px;
+        }
+
+        .no-print{
+            display:none;
+        }
+    </style>
+    `);
+
         printWindow.document.write('</head>');
         printWindow.document.write('<body>');
 
-        printWindow.document.write('<h3 style="text-align:center">BUKTI PERIJINAN SANTRI</h3>');
+        printWindow.document.write('<div class="print-card">');
         printWindow.document.write(isi);
+        printWindow.document.write('</div>');
 
         printWindow.document.write('</body></html>');
 
         printWindow.document.close();
         printWindow.print();
-
     }
     </script>
 </body>
