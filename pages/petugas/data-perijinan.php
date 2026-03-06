@@ -41,7 +41,7 @@ if (isset($_POST['edit'])) {
         $id
     ]);
     
-    header('Location: data_perijinan.php');
+    header('Location: data-perijinan.php');
     exit;
 }
 
@@ -50,7 +50,7 @@ if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
     $stmt = $pdo->prepare("DELETE FROM perijinan WHERE id = ?");
     $stmt->execute([$id]);
-    header('Location: data_perijinan.php');
+    header('Location: data-perijinan.php');
     exit;
 }
 
