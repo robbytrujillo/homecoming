@@ -152,7 +152,7 @@ function tanggalIndonesia($tanggal) {
     /* ======================
    UKURAN KARTU PRINT
 ====================== */
-    @media print {
+    /* @media print {
 
         body {
             margin: 0;
@@ -178,6 +178,23 @@ function tanggalIndonesia($tanggal) {
         h4 {
             font-weight: bold;
             text-align: center;
+        }
+
+    } */
+
+    @media print {
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .print-card {
+            width: 350px;
+            border: 1px solid #000;
+            padding: 15px;
+            margin: auto;
+            font-size: 14px;
         }
 
     }
@@ -470,7 +487,7 @@ function tanggalIndonesia($tanggal) {
     <!-- Pagination -->
     <nav class="mb-5">
         <ul class="pagination">
-            <li class="page-item <?= ($halaman <= 1) ? 'active' : ''; ?>">
+            <li class="page-item <?= ($halaman <= 1) ? 'disabled' : ''; ?>">
                 <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
             </li>
             <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
@@ -478,7 +495,7 @@ function tanggalIndonesia($tanggal) {
                 <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
             </li>
             <?php endfor; ?>
-            <li class="page-item <?= ($halaman >= $total_halaman) ? 'active' : ''; ?>">
+            <li class="page-item <?= ($halaman >= $total_halaman) ? 'disabled' : ''; ?>">
                 <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
             </li>
         </ul>
@@ -577,11 +594,11 @@ function tanggalIndonesia($tanggal) {
         }
 
         .print-card{
-            width:350px;
-            border:1px solid #000;
-            padding:15px;
-            font-size:14px;
-        }
+    width:500px;
+    border:2px solid #000;
+    padding:30px;
+    font-size:16px;
+}
 
         table{
             font-size:13px;
