@@ -155,6 +155,9 @@ if (isset($_POST['tambah'])) {
                                     <div class="col-md-6">
                                         <input type="date" class="form-control" id="tanggal_pengembalian"
                                             name="tanggal_pengembalian" value="<?= date('Y-m-d'); ?>" required>
+                                        <small class="text-success">
+                                            Hari: <span id="hari_pengembalian"></span>
+                                        </small>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="time" class="form-control" id="jam_pengembalian"
@@ -241,7 +244,7 @@ if (isset($_POST['tambah'])) {
     </script>
 
     <!-- Jam Otomatis -->
-    <script>
+    <!-- <script>
     document.addEventListener("DOMContentLoaded", function() {
         let now = new Date();
         let hours = String(now.getHours()).padStart(2, '0');
@@ -249,8 +252,74 @@ if (isset($_POST['tambah'])) {
 
         document.getElementById("jam_pengembalian").value = hours + ":" + minutes;
     });
-    </script>
+    </script> -->
 
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        // =========================
+        // SET TANGGAL & JAM SEKARANG
+        // =========================
+
+        let now = new Date();
+
+        let year = now.getFullYear();
+        let month = String(now.getMonth() + 1).padStart(2, '0');
+        let day = String(now.getDate()).padStart(2, '0');
+
+        let hours = String(now.getHours()).padStart(2, '0');
+        let minutes = String(now.getMinutes()).padStart(2, '0');
+
+        let tanggalSekarang = year + "-" + month + "-" + day;
+        let jamSekarang = hours + ":" + minutes;
+
+        // isi otomatis jika kosong
+        if (!document.getElementById("tanggal_pengembalian").value) {
+            document.getElementById("tanggal_pengembalian").value = tanggalSekarang;
+        }
+
+        if (!document.getElementById("jam_pengembalian").value) {
+            document.getElementById("jam_pengembalian").value = jamSekarang;
+        }
+
+        // =========================
+        // TAMPILKAN HARI
+        // =========================
+
+        function tampilkanHari() {
+
+            let tanggal = document.getElementById("tanggal_pengembalian").value;
+
+            if (tanggal) {
+
+                let hariList = [
+                    "Minggu",
+                    "Senin",
+                    "Selasa",
+                    "Rabu",
+                    "Kamis",
+                    "Jumat",
+                    "Sabtu"
+                ];
+
+                let date = new Date(tanggal);
+
+                let hari = hariList[date.getDay()];
+
+                document.getElementById("hari_pengembalian").innerHTML = hari;
+
+            }
+
+        }
+
+        // jalankan saat halaman dibuka
+        tampilkanHari();
+
+        // jalankan saat tanggal diubah
+        document.getElementById("tanggal_pengembalian").addEventListener("change", tampilkanHari);
+
+    });
+    </script>
 
 </body>
 
