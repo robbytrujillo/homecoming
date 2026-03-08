@@ -77,7 +77,7 @@ function hariIndonesia($tanggal) {
     $hari = date('l', strtotime($tanggal));
 
     $hariIndo = [
-        'Sunday'    => 'Minggu',
+        'Sunday'    => 'Ahad',
         'Monday'    => 'Senin',
         'Tuesday'   => 'Selasa',
         'Wednesday' => 'Rabu',
@@ -437,7 +437,7 @@ function tanggalIndonesia($tanggal) {
                                 </tr> -->
 
                                 <tr>
-                                    <th>Alasan Membawa Laptop</th>
+                                    <th>Alasan </th>
                                     <td><?= htmlspecialchars($row['alasan_membawa_laptop']); ?></td>
                                 </tr>
 

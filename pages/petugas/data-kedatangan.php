@@ -84,7 +84,7 @@ function hariIndonesia($tanggal) {
     $hari = date('l', strtotime($tanggal));
 
     $hariIndo = [
-        'Sunday'    => 'Minggu',
+        'Sunday'    => 'Ahad',
         'Monday'    => 'Senin',
         'Tuesday'   => 'Selasa',
         'Wednesday' => 'Rabu',
@@ -179,7 +179,7 @@ function tanggalIndonesia($tanggal) {
             font-size: 14px;
         }
 
-        .no-print {
+        /* .no-print {
             display: none;
         }
 
@@ -190,7 +190,7 @@ function tanggalIndonesia($tanggal) {
         h4 {
             font-weight: bold;
             text-align: center;
-        }
+        } */
 
     }
     </style>
@@ -620,10 +620,10 @@ function tanggalIndonesia($tanggal) {
         }
 
         .print-card{
-            width:350px;
-            border:1px solid #000;
-            padding:15px;
-            font-size:14px;
+            width:500px;
+            border:2px solid #000;
+            padding:30px;
+            font-size:16px;
         }
 
         table{

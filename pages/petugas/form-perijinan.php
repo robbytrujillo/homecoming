@@ -355,7 +355,7 @@ if (isset($_POST['tambah'])) {
             if (tanggal) {
 
                 let hariList = [
-                    "Minggu",
+                    "Ahad",
                     "Senin",
                     "Selasa",
                     "Rabu",

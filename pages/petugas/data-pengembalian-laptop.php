@@ -200,6 +200,8 @@ function tanggalIndonesia($tanggal) {
             font-size: 14px;
         }
 
+
+
     }
     </style>
 </head>
@@ -298,11 +300,11 @@ function tanggalIndonesia($tanggal) {
                 </thead>
                 <tbody>
                     <?php 
-                    $nomor = $halaman_awal + 1;
-                    
-                    // foreach ($perijinan as $key => $row): 
-                    foreach ($perijinan as $row): 
-                    ?>
+                        $nomor = $halaman_awal + 1;
+                        
+                        // foreach ($perijinan as $key => $row): 
+                        foreach ($perijinan as $row): 
+                        ?>
                     <tr>
                         <!-- <td><?php echo $key + 1; ?></td> -->
                         <td><?= $nomor++; ?></td>
@@ -334,12 +336,10 @@ function tanggalIndonesia($tanggal) {
                             </button>
                         </td>
                         <!-- <td>
-                            <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
-                            <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                        </td> -->
+                                <button class="btn btn-warning btn-sm rounded-pill" data-toggle="modal" data-target="#editPetugasModal<?php echo $row['id']; ?>">Edit</button>
+                                <a href="data_petugas.php?hapus=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                            </td> -->
                     </tr>
-
-
 
                     <!-- Modal Edit Petugas -->
                     <div class="modal fade" id="editPerijinanModal<?php echo $row['id']; ?>" tabindex="-1"
@@ -597,11 +597,11 @@ function tanggalIndonesia($tanggal) {
         }
 
         .print-card{
-    width:500px;
-    border:2px solid #000;
-    padding:30px;
-    font-size:16px;
-}
+            width:500px;
+            border:2px solid #000;
+            padding:30px;
+            font-size:16px;
+        }
 
         table{
             font-size:13px;
