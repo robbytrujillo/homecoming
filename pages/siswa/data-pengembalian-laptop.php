@@ -6,11 +6,22 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'siswa') {
 }
 require '../../includes/db.php';
 
+// pagination
+$batas = 10;
+$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+$halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+// Hitung total data
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM pengembalian_laptop");
+$stmt->execute();
+$jumlah_data = $stmt->fetchColumn();
+$total_halaman = ceil($jumlah_data / $batas);
+
 // Ambil data perijinan siswa yang login
 $siswa_id = $_SESSION['user_id'];
 $stmt = $pdo->prepare("SELECT * FROM pengembalian_laptop WHERE nomor_induk = (SELECT nomor_induk FROM siswa WHERE id = ?) ORDER BY tanggal_pengembalian DESC");
 $stmt->execute([$siswa_id]);
-$perijinan_laptop = $stmt->fetchAll();
+$pengembalian_laptop = $stmt->fetchAll();
 
 /* ======================
    HARI INDO
@@ -19,7 +30,7 @@ function hariIndonesia($tanggal) {
     $hari = date('l', strtotime($tanggal));
 
     $hariIndo = [
-        'Sunday'    => 'Minggu',
+        'Sunday'    => 'Ahad',
         'Monday'    => 'Senin',
         'Tuesday'   => 'Selasa',
         'Wednesday' => 'Rabu',
@@ -57,6 +68,9 @@ function tanggalIndonesia($tanggal) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -83,6 +97,46 @@ function tanggalIndonesia($tanggal) {
     button,
     div {
         font-family: "Poppins", sans-serif;
+    }
+
+    .modal-body table th {
+        width: 30%;
+        background: #f8f9fa;
+    }
+
+
+
+    /* ======================
+   UKURAN KARTU PRINT
+====================== */
+    @media print {
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .print-card {
+            width: 350px;
+            border: 1px solid #000;
+            padding: 15px;
+            margin: auto;
+            font-size: 14px;
+        }
+
+        /* .no-print {
+            display: none;
+        }
+
+        table {
+            font-size: 13px;
+        }
+
+        h4 {
+            font-weight: bold;
+            text-align: center;
+        } */
+
     }
     </style>
 </head>
@@ -137,41 +191,168 @@ function tanggalIndonesia($tanggal) {
                 class="fas fa-search" style="position: absolute"></i>
         </div>
 
-        <table class="table table-bordered" id="dataTable">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Hari, Tanggal Pengembalian</th>
-                    <th>Waktu</th>
-                    <th>Nama Siswa</th>
-                    <th>Nomor Induk Siswa</th>
-                    <th>Kelas</th>
-                    <th>Petugas</th>
-                    <th>Keterangan</th>
-                    <!-- <th>Persetujuan</th> -->
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($perijinan_laptop as $key => $row): ?>
-                <tr>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Waktu Pengembalian</th>
+                        <!-- <th>Waktu</th> -->
+                        <th>Nama Siswa</th>
+                        <!-- <th>Nomor Induk Siswa</th> -->
+                        <!-- <th>Kelas</th> -->
+                        <!-- <th>Petugas</th> -->
+                        <th>Keterangan</th>
+                        <!-- <th>Persetujuan</th> -->
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($pengembalian_laptop as $key => $row): ?>
+                    <tr>
 
-                    <td><?php echo $key + 1; ?></td>
-                    <!-- <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td> -->
-                    <td>
-                        <?= hariIndonesia($row['tanggal_pengembalian']); ?>,
-                        <?= tanggalIndonesia($row['tanggal_pengembalian']); ?>
-                    </td>
-                    <td><?php echo date('d F Y', strtotime($row['tanggal_pengembalian'])); ?></td>
-                    <td><?php echo $row['nama_siswa']; ?></td>
-                    <td><?php echo $row['nomor_induk']; ?></td>
-                    <td><?php echo $row['kelas']; ?></td>
-                    <td><?php echo $row['petugas']; ?></td>
-                    <td><?php echo $row['keterangan']; ?></td>
-                    <!-- <td><?php echo $row['persetujuan']; ?></td> -->
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                        <td><?php echo $key + 1; ?></td>
+                        <!-- <td><?php echo date('d/m/Y', strtotime($row['tanggal_pulang'])); ?></td> -->
+                        <td>
+                            <?= hariIndonesia($row['tanggal_pengembalian']); ?>,
+                            <?= tanggalIndonesia($row['tanggal_pengembalian']); ?>
+                            <br>
+                            <small style="color: red;">Jam: <?= substr($row['tanggal_pengembalian'],11,5) ?> WIB</small>
+                        </td>
+                        <!-- <td><?php echo date('d F Y', strtotime($row['tanggal_pengembalian'])); ?></td> -->
+                        <td><?php echo $row['nama_siswa']; ?>
+                            <br>
+                            <small style="color: red;">Kelas: <?= htmlspecialchars($row['kelas']); ?></small>
+                        </td>
+                        <!-- <td><?php echo $row['nomor_induk']; ?></td> -->
+                        <!-- <td><?php echo $row['kelas']; ?></td> -->
+                        <!-- <td><?php echo $row['petugas']; ?></td> -->
+                        <td><?php echo $row['keterangan']; ?></td>
+                        <!-- <td><?php echo $row['persetujuan']; ?></td> -->
+                        <td>
+                            <button class="btn btn-info btn-sm rounded-pill" data-toggle="modal"
+                                data-target="#detailModal<?= $row['id']; ?>">
+                                Detail
+                            </button>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <?php foreach ($pengembalian as $row): ?>
+            <!-- detail Modal -->
+            <div class="modal fade" id="detailModal<?= $row['id']; ?>" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                        <div class="modal-header bg-light text-black">
+                            <h5 class="modal-title">Detail Pengembalian</h5>
+                            <button type="button" class="close text-black" data-dismiss="modal">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body print-card" id="printArea<?= $row['id']; ?>">
+
+                            <div style="text-align:center;">
+                                <img src="../../assets/img/logo-sma.png" width="60">
+                                <br><br>
+                                <h4>BUKTI PENGEMBALIAN LAPTOP</h4>
+                            </div>
+                            <br>
+                            <table class="table table-bordered">
+
+                                <tr>
+                                    <th>Nama</th>
+                                    <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
+                                </tr>
+
+                                <tr>
+                                    <th>NIS</th>
+                                    <td><?= htmlspecialchars($row['nomor_induk']); ?></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Kelas</th>
+                                    <td><?= htmlspecialchars($row['kelas']); ?></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <td>
+                                        <?= hariIndonesia($row['tanggal_pengembalian']); ?>,
+                                        <?= tanggalIndonesia($row['tanggal_pengembalian']); ?>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Jam</th>
+                                    <td><?= date('H:i', strtotime($row['tanggal_pengembalian'])) ?> WIB</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Keperluan</th>
+                                    <td><?= htmlspecialchars($row['keperluan']); ?></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Keterangan</th>
+                                    <td><?= htmlspecialchars($row['keterangan']); ?></td>
+                                </tr>
+
+                            </table>
+
+                            <br>
+
+                            <div style="text-align: center;">
+                                Depok, <?= tanggalIndonesia($row['tanggal_pengembalian']); ?><br>
+                                Petugas
+                                <br><br><br>
+                                <b><?= htmlspecialchars($row['petugas']); ?></b>
+                            </div>
+                            <br>
+                            <div class="no-print mt-3" style="text-align: center">
+                                <button class="btn btn-primary rounded-pill" onclick="printData(<?= $row['id']; ?>)">
+                                    <i class="fas fa-save"></i> Print Bukti
+                                </button>
+
+                                <button class="btn btn-secondary rounded-pill" data-dismiss="modal">
+                                    Tutup
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <?php endforeach ?>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mb-5">
+            <ul class="pagination">
+                <li class="page-item <?= ($halaman <= 1) ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman - 1; ?>">Previous</a>
+                </li>
+                <?php for ($x = 1; $x <= $total_halaman; $x++): ?>
+                <li class="page-item <?= ($halaman == $x) ? 'active' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $x; ?>"><?= $x; ?></a>
+                </li>
+                <?php endfor; ?>
+                <li class="page-item <?= ($halaman >= $total_halaman) ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?halaman=<?= $halaman + 1; ?>">Next</a>
+                </li>
+            </ul>
+
+            <!-- <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?halaman=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?halaman=2">2</a></li>
+            </ul> -->
+
+        </nav>
+
     </div>
 
     <!-- Footer -->
@@ -194,8 +375,66 @@ function tanggalIndonesia($tanggal) {
     });
     </script>
 
+    <!-- Print Data dari Modal Detail -->
+    <script>
+    function printData(id) {
 
+        var isi = document.getElementById("printArea" + id).innerHTML;
 
+        var printWindow = window.open('', '', 'height=600,width=800');
+
+        printWindow.document.write('<html>');
+        printWindow.document.write('<head>');
+        printWindow.document.write('<title>Bukti Perijinan</title>');
+
+        // Google Font Poppins
+        printWindow.document.write(
+            '<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">'
+        );
+
+        printWindow.document.write(
+            '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">'
+        );
+
+        printWindow.document.write(`
+    <style>
+        body{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .print-card{
+            width:500px;
+            border:2px solid #000;
+            padding:30px;
+            font-size:16px;
+        }
+
+        table{
+            font-size:13px;
+        }
+
+        .no-print{
+            display:none;
+        }
+    </style>
+    `);
+
+        printWindow.document.write('</head>');
+        printWindow.document.write('<body>');
+
+        printWindow.document.write('<div class="print-card">');
+        printWindow.document.write(isi);
+        printWindow.document.write('</div>');
+
+        printWindow.document.write('</body></html>');
+
+        printWindow.document.close();
+        printWindow.print();
+    }
+    </script>
 </body>
 
 </html>

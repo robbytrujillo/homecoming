@@ -54,7 +54,7 @@ function hariIndonesia($tanggal) {
     $hari = date('l', strtotime($tanggal));
 
     $hariIndo = [
-        'Sunday'    => 'Minggu',
+        'Sunday'    => 'Ahad',
         'Monday'    => 'Senin',
         'Tuesday'   => 'Selasa',
         'Wednesday' => 'Rabu',
