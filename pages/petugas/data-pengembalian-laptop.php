@@ -52,7 +52,7 @@ if (isset($_GET['hapus'])) {
 }
 
 // pagination
-$batas = 5;
+$batas = 10;
 $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
@@ -67,7 +67,7 @@ $stmt = $pdo->prepare("SELECT * FROM pengembalian_laptop ORDER BY tanggal_pengem
 $stmt->bindValue(':offset', $halaman_awal, PDO::PARAM_INT);
 $stmt->bindValue(':batas', $batas, PDO::PARAM_INT);
 $stmt->execute();
-$perijinan = $stmt->fetchAll();
+$pengembalian_laptop = $stmt->fetchAll();
 
 /* ======================
    HARI INDO
@@ -303,7 +303,7 @@ function tanggalIndonesia($tanggal) {
                         $nomor = $halaman_awal + 1;
                         
                         // foreach ($perijinan as $key => $row): 
-                        foreach ($perijinan as $row): 
+                        foreach ($pengembalian_laptop as $row): 
                         ?>
                     <tr>
                         <!-- <td><?php echo $key + 1; ?></td> -->
@@ -397,7 +397,7 @@ function tanggalIndonesia($tanggal) {
         </tbody>
         </table>
 
-        <?php foreach ($perijinan as $row): ?>
+        <?php foreach ($pengembalian_laptop as $row): ?>
         <!-- detail Modal -->
         <div class="modal fade" id="detailModal<?= $row['id']; ?>" tabindex="-1">
             <div class="modal-dialog modal-lg">

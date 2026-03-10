@@ -176,8 +176,8 @@ function tanggalIndonesia($tanggal) {
     </nav>
 
     <div class="container mt-4 mb-5">
-        <h2 class="mt-5 mb-3" style="text-align: center;">Data Pengembalian Laptop</h2>
-        <div class="mt-3">
+        <h2 class="mt-3 mb-3" style="text-align: center;">Data Pengembalian Laptop</h2>
+        <div>
             <a href="dashboard.php" class="btn btn-success btn-md text-white rounded-pill">Kembali</a>
             <a href="export-data-pengembalian-laptop.php" class="btn btn-info btn-md text-white rounded-pill">Cetak</a>
             <!-- <button class="btn btn-success" data-toggle="modal" data-target="#uploadCSVModal">Upload CSV</button>
@@ -187,10 +187,11 @@ function tanggalIndonesia($tanggal) {
         <!-- Input Pencarian -->
         <div class="form-group">
             <input type="text" id="searchInput" class="form-control"
-                style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel"><i
-                class="fas fa-search" style="position: absolute"></i>
+                style="width: 200px; margin-left: 82%; margin-top: 1%" placeholder="Cari Data Tabel">
+            <i class="fas fa-search" style="position: absolute"></i>
         </div>
 
+        <!-- Table Data Siswa -->
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable">
                 <thead>
@@ -240,7 +241,7 @@ function tanggalIndonesia($tanggal) {
                 </tbody>
             </table>
 
-            <?php foreach ($pengembalian as $row): ?>
+            <?php foreach ($pengembalian_laptop as $row): ?>
             <!-- detail Modal -->
             <div class="modal fade" id="detailModal<?= $row['id']; ?>" tabindex="-1">
                 <div class="modal-dialog modal-lg">
